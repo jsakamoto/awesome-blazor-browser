@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AwesomeBlazor.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace AwesomeBlazorBrowser.Components
 {
@@ -27,6 +26,17 @@ namespace AwesomeBlazorBrowser.Components
         {
             group.SelectionState = group.SelectionState != SelectionState.Selected ? SelectionState.Selected : SelectionState.Unselected;
             return this.OnChangeGroupSelection.InvokeAsync(group);
+        }
+
+        private Task OnClickExpandBox(AwesomeResourceGroup group)
+        {
+            group.Expanded = !group.Expanded;
+            return Task.CompletedTask;
+        }
+
+        public string GetSubGroupsHeight(AwesomeResourceGroup group)
+        {
+            return group.Expanded ? (group.SubGroups.Count * 26) + "px" : "0";
         }
 
         private Task _OnChangeSubGroupSelection(AwesomeResourceGroup group)

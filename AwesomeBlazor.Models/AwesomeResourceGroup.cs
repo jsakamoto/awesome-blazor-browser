@@ -32,6 +32,8 @@ namespace AwesomeBlazor.Models
 
         public bool Visible { get; set; } = true;
 
+        public bool Expanded { get; set; } = true;
+
         public string Title { get; }
 
         public string TitleHtml { get; }

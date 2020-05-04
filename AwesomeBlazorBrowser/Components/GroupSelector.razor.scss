@@ -5,7 +5,7 @@
     & > .group {
 
         &:not(.visible) {
-            a {
+            a.link {
                 color: #444;
                 cursor: default;
                 pointer-events: none;
@@ -18,10 +18,32 @@
 
         & > .group-title {
             white-space: nowrap;
+
+            & > .expand-box {
+                display: inline-block;
+                color: $default-text-color;
+                text-decoration: none;
+                transition: transform linear 0.2s;
+
+                &:before {
+                    content: $icon-expand-more;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        &.expanded {
+            & > .group-title {
+                & > .expand-box {
+                    transform: rotate(-180deg);
+                }
+            }
         }
     }
 
     .sub-group {
         margin-left: 10px;
+        overflow: hidden;
+        transition: height linear 0.2s;
     }
 }
