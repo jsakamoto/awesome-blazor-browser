@@ -23,15 +23,15 @@ a {
       text-decoration: none; }
 
 @font-face {
-  font-family: "custom-icon-powered-by-icomoon";
-  src: url("fonts/custom-icon-powered-by-icomoon.ttf?g437rm") format("truetype"), url("fonts/custom-icon-powered-by-icomoon.woff?g437rm") format("woff"), url("fonts/custom-icon-powered-by-icomoon.svg?g437rm#custom-icon-powered-by-icomoon") format("svg");
+  font-family: "Awesome-Blazor-Browser-Icons";
+  src: url("fonts/Awesome-Blazor-Browser-Icons.ttf?dia7uy") format("truetype"), url("fonts/Awesome-Blazor-Browser-Icons.woff?dia7uy") format("woff"), url("fonts/Awesome-Blazor-Browser-Icons.svg?dia7uy#Awesome-Blazor-Browser-Icons") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block; }
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "custom-icon-powered-by-icomoon" !important;
+  font-family: "Awesome-Blazor-Browser-Icons" !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -48,11 +48,65 @@ a {
 .icon-checkbox-checked:before {
   content: ""; }
 
+.icon-checkbox-indeterminate:before {
+  content: ""; }
+
 .icon-expand-less:before {
   content: ""; }
 
 .icon-expand-more:before {
   content: ""; }
+
+.icon-link:before {
+  content: ""; }
+
+.icon-logo-blazor-large:before {
+  content: ""; }
+
+.icon-mark-github:before {
+  content: ""; }
+
+.toggle-box {
+  font-family: "Awesome-Blazor-Browser-Icons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  position: relative;
+  transition: color linear 0.2s;
+  color: #0366d6;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  vertical-align: middle; }
+  .toggle-box input {
+    display: none; }
+  .toggle-box:hover {
+    color: #75b5fd; }
+  .toggle-box:after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border-radius: 16px;
+    background-color: #75b5fd;
+    z-index: -1;
+    opacity: 0.5;
+    transform: scale(0);
+    top: -26px;
+    left: -4px;
+    transition: transform ease-out 0.1s; }
+  .toggle-box:active:after {
+    transform: scale(1); }
+  .toggle-box:before {
+    font-size: 24px; }
+  .toggle-box.unselected:before {
+    content: ""; }
+  .toggle-box.selected:before {
+    content: ""; }
+  .toggle-box.selectedany:before {
+    content: ""; }
 
 app {
   display: block;
@@ -83,12 +137,12 @@ app {
     top: 72px;
     left: 0;
     bottom: 38px;
-    width: 240px; }
+    width: 260px; }
   app > .main {
     display: block;
     position: absolute;
     top: 72px;
-    left: 240px;
+    left: 260px;
     bottom: 38px;
     right: 0;
     overflow-x: hidden;
@@ -113,12 +167,17 @@ app {
   justify-content: left;
   align-items: center; }
   .app-bar > .app-text {
+    position: relative;
     margin-left: 16px;
     padding-left: 46px;
-    background-image: url(images/blazor-logo.png);
-    background-repeat: no-repeat;
-    background-position: 0 5px;
     min-width: 280px; }
+    .app-bar > .app-text:after {
+      font-family: "Awesome-Blazor-Browser-Icons";
+      content: "";
+      font-size: 32px;
+      position: absolute;
+      top: -2px;
+      left: 0; }
     .app-bar > .app-text a {
       color: #86bfff; }
     .app-bar > .app-text > .app-title {
@@ -153,13 +212,14 @@ app {
   right: 0; }
   .groups-panel > .header {
     border-bottom: solid 1px #ccc;
-    text-align: center;
-    height: 32px;
-    line-height: 32px;
-    font-size: 12px; }
+    padding-left: 20px;
+    height: 48px;
+    line-height: 48px; }
+    .groups-panel > .header > .text {
+      font-weight: 600; }
   .groups-panel > .selector {
     position: absolute;
-    top: 33px;
+    top: 49px;
     left: 0;
     bottom: 0;
     right: 0;
@@ -167,56 +227,31 @@ app {
     overflow-y: auto;
     padding: 10px 10px 10px 20px; }
 
-.group-selector > .group:not(.visible) a {
+.group-selector > .group:not(.visible) a.link {
   color: #444;
   cursor: default;
   pointer-events: none; }
-  .group-selector > .group:not(.visible) a:hover {
+  .group-selector > .group:not(.visible) a.link:hover {
     text-decoration: none; }
-
-.group-selector > .group.disabled a {
-  color: #ccc; }
-
-.group-selector > .group input {
-  display: none; }
 
 .group-selector > .group > .group-title {
   white-space: nowrap; }
-  .group-selector > .group > .group-title > label.icon {
-    position: relative;
-    transition: color linear 0.2s;
-    color: #0366d6;
-    font-size: 24px;
-    vertical-align: middle; }
-    .group-selector > .group > .group-title > label.icon:hover {
-      color: #75b5fd; }
-    .group-selector > .group > .group-title > label.icon:before {
-      content: ""; }
-    .group-selector > .group > .group-title > label.icon:after {
-      content: '';
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      position: absolute;
-      border-radius: 16px;
-      background-color: #75b5fd;
-      z-index: -1;
-      opacity: 0.5;
-      transform: scale(0);
-      top: -4px;
-      left: -4px;
-      transition: transform ease-out 0.1s; }
-    .group-selector > .group > .group-title > label.icon:active:after {
-      transform: scale(1); }
+  .group-selector > .group > .group-title > .expand-box {
+    display: inline-block;
+    color: #24292e;
+    text-decoration: none;
+    transition: transform linear 0.2s; }
+    .group-selector > .group > .group-title > .expand-box:before {
+      content: "";
+      font-size: 18px; }
 
-.group-selector > .group.selected > .group-title > label.icon:before {
-  content: ""; }
-
-.group-selector > .group.disabled > .group-title > label.icon:before {
-  color: #ccc; }
+.group-selector > .group.expanded > .group-title > .expand-box {
+  transform: rotate(-180deg); }
 
 .group-selector .sub-group {
-  margin-left: 10px; }
+  margin-left: 10px;
+  overflow: hidden;
+  transition: height linear 0.2s; }
 
 .awesome-blazor-contents {
   margin-top: -20px;
@@ -230,6 +265,7 @@ app {
       position: relative;
       font-size: 1.5em;
       font-weight: 600;
+      color: #24292e;
       margin-top: 24px;
       margin-bottom: 16px;
       line-height: 1.25;
@@ -240,10 +276,17 @@ app {
         width: 22px;
         height: 1.5em;
         left: -24px;
-        background-repeat: no-repeat;
-        background-position: center; }
-      .awesome-blazor-contents > .group > .group-title:hover > .group-anchor {
-        background-image: url(images/link.svg); }
+        display: flex;
+        align-items: center;
+        text-decoration: none; }
+        .awesome-blazor-contents > .group > .group-title > .group-anchor:after {
+          font-family: "Awesome-Blazor-Browser-Icons";
+          content: "";
+          font-size: 16px;
+          color: #24292e;
+          visibility: hidden; }
+      .awesome-blazor-contents > .group > .group-title:hover > .group-anchor:after {
+        visibility: visible; }
     .awesome-blazor-contents > .group blockquote {
       padding: 0 1em;
       color: #6a737d;
@@ -302,16 +345,26 @@ footer {
   align-items: center;
   justify-content: flex-end; }
   footer > .footer-item {
+    position: relative;
     margin-right: 20px;
     color: #666;
     height: 24px;
-    line-height: 24px;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: left center; }
+    line-height: 24px; }
     footer > .footer-item.blazor {
-      padding-left: 24px;
-      background-image: url(images/blazor-logo-gray.png); }
+      padding-left: 24px; }
+      footer > .footer-item.blazor:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }
     footer > .footer-item.github {
-      padding-left: 24px;
-      background-image: url(images/mark-github.svg); }
+      padding-left: 24px; }
+      footer > .footer-item.github:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }
