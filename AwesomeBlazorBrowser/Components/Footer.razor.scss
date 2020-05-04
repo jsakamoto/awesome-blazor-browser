@@ -23,12 +23,12 @@
 
         &.blazor {
             padding-left: 24px;
-            background-image: url(css/images/blazor-logo-gray.png);
+            background-image: url(wwwroot/css/images/blazor-logo-gray.png);
         }
 
         &.github {
             padding-left: 24px;
-            background-image: url(css/images/mark-github.svg);
+            background-image: url(wwwroot/css/images/mark-github.svg);
         }
     }
 }
