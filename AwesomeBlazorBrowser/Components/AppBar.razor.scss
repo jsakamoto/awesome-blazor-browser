@@ -1,0 +1,58 @@
+﻿.app-bar {
+    background-color: #24292e;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    & > .app-text {
+        margin-left: 16px;
+        padding-left: 46px;
+        background-image: url(css/images/blazor-logo.png);
+        background-repeat: no-repeat;
+        background-position: 0 5px;
+        min-width: 280px;
+
+        a {
+            color: #86bfff;
+        }
+
+        & > .app-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        & > .app-description {
+            font-size: 14px;
+            color: #ccc;
+        }
+    }
+
+    & > .search-box {
+        margin-left: 16px;
+        margin-right: 16px;
+        flex-grow: 1;
+        display: flex;
+
+        input {
+            background-color: #3F4448;
+            flex-grow: 1;
+            border: none;
+            height: 28px;
+            padding-left: 10px;
+            border-radius: 4px;
+            color: #fff;
+            outline: none;
+
+            &:focus {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+    }
+}

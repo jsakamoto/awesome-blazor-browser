@@ -1,0 +1,106 @@
+﻿.awesome-blazor-contents {
+    margin-top: -20px;
+    padding: 12px 12px 12px 32px;
+    max-width: 900px;
+
+    & > .group {
+        display: none;
+
+        &.visible {
+            display: block;
+        }
+
+        & > .group-title {
+            position: relative;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            padding-bottom: .3em;
+            border-bottom: 1px solid #eaecef;
+
+            & > .group-anchor {
+                position: absolute;
+                width: 22px;
+                height: 1.5em;
+                left: -24px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            &:hover > .group-anchor {
+                background-image: url(css/images/link.svg);
+            }
+        }
+
+        blockquote {
+            padding: 0 1em;
+            color: #6a737d;
+            border-left: .25em solid #dfe2e5;
+            margin: 0 0 16px 0;
+        }
+
+        & > .resources {
+            margin-left: 10px;
+
+            & > .resource {
+                margin-bottom: 10px;
+                display: none;
+
+                &.visible {
+                    display: block;
+                }
+
+                & > .resource-title {
+                    font-weight: 600;
+                }
+
+                & > .resource-description {
+                    margin-left: 10px;
+                }
+
+                & > .badges.has-badges {
+                    margin-top: 6px;
+                    margin-left: 10px;
+                    height: 24px;
+                    position: relative;
+
+                    & > .badge.last-commit {
+                        position: absolute;
+                        top: 0;
+                        left: 92px;
+                    }
+                }
+
+                & > .resource-description {
+                    img {
+                        vertical-align: middle;
+                    }
+                }
+
+                code {
+                    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+                    padding: .2em .4em;
+                    margin: 0;
+                    font-size: 85%;
+                    background-color: rgba(27,31,35,.05);
+                    border-radius: 3px;
+                }
+            }
+        }
+
+        & > .sub-groups > .awesome-blazor-contents {
+            padding-left: 0;
+
+            & > .group > .group-title {
+                font-size: 1.25em;
+                margin-top: 24px;
+                margin-bottom: 16px;
+                line-height: 1.25;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+﻿<div class="app-bar">
+    <div class="app-text">
+        <div class="app-title">
+            Awesome Blazor Browser
+        </div>
+        <div class="app-description">
+            This is a browser for
+            <a href="https://github.com/AdrienTorris/awesome-blazor" target="_blank">"Awesome Blazor"</a>.<br />
+            Special thanks to contributor's great works!
+        </div>
+    </div>
+
+    <div class="search-box">
+        @if (EnableSerachBox)
+        {
+            <input type="text" placeholder="Search" @bind="Keywords" @oninput="OnInputKeywords" />
+        }
+    </div>
+</div>

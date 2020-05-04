@@ -1,0 +1,42 @@
+﻿@import 'site.variables.scss';
+
+body, input[type=text] {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+}
+
+boyd {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+input[type=text] {
+    font-size: 14px;
+}
+
+a {
+    color: $default-link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &.clickable {
+        cursor: default;
+        user-select: none;
+        transition: color linear 0.2s;
+
+        &:hover {
+            color: $default-link-color-light;
+            text-decoration: none;
+        }
+    }
+}
+
+@import 'custom-icon.scss';
+@import 'App.razor.scss';
+@import 'Components/AppBar.razor.scss';
+@import 'Components/GroupsPanel.razor.scss';
+@import 'Components/GroupSelector.razor.scss';
+@import 'Components/Contents.razor.scss';
+@import 'Components/Footer.razor.scss';

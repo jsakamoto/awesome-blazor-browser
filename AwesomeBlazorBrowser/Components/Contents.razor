@@ -1,0 +1,54 @@
+﻿<div class="awesome-blazor-contents">
+    @foreach (var group in Groups)
+    {
+        var anchorName = group.GetAnchorName(this.ParentGroupAnchor);
+
+        <div class="@CssClass("group", new { group.Visible })" @key="group.Id">
+
+            <div class="group-title">
+                <a class="group-anchor" name="@anchorName" href="#@(anchorName)"></a>
+                @((MarkupString)group.TitleHtml)
+            </div>
+
+            @if (!string.IsNullOrEmpty(group.ParagraphsHtml))
+            {
+                <div class="paragraphs">
+                    @((MarkupString)group.ParagraphsHtml)
+                </div>
+            }
+
+            <div class="resources">
+                @foreach (var resource in group.Resources.Where(res => res != null))
+                {
+                    <div class="@CssClass("resource", new { resource.Visible })" @key="resource.Id">
+                        <div class="resource-title">
+                            <a href="@resource.ResourceUrl" target="_blank">
+                                @resource.Title
+                            </a>
+                        </div>
+                        <div class="@CssClass("badges", new {HasBadges = HasBadges(resource) })">
+                            @if (resource.GitHubStarsUrl != "")
+                            {
+                                <img src="@resource.GitHubStarsUrl" alt="GitHub Stars" class="badge github-stars" />
+                            }
+                            @if (resource.LastCommitUrl != "")
+                            {
+                                <img src="@resource.LastCommitUrl" alt="Last Commit" class="badge last-commit" />
+                            }
+                        </div>
+                        <div class="resource-description">
+                            @((MarkupString)resource.DescriptionHtml)
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (group.SubGroups.Any())
+            {
+                <div class="sub-groups">
+                    <Contents ParentGroupAnchor="@anchorName" Groups="group.SubGroups" />
+                </div>
+            }
+        </div>
+    }
+</div>

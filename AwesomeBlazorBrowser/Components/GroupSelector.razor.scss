@@ -1,0 +1,85 @@
+﻿@import '../custom-icon.variables.scss';
+@import '../site.variables.scss';
+
+.group-selector {
+    & > .group {
+
+        &:not(.visible) {
+            a {
+                color: #444;
+                cursor: default;
+                pointer-events: none;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &.disabled {
+            a {
+                color: #ccc;
+            }
+        }
+
+        input {
+            display: none;
+        }
+
+        & > .group-title {
+            white-space: nowrap;
+
+            & > label.icon {
+                position: relative;
+                transition: color linear 0.2s;
+                color: $default-link-color;
+                font-size: 24px;
+                vertical-align: middle;
+
+                &:hover {
+                    color: $default-link-color-light;
+                }
+
+                &:before {
+                    content: $icon-checkbox-blank;
+                }
+
+                &:after {
+                    content: '';
+                    display: inline-block;
+                    width: 32px;
+                    height: 32px;
+                    position: absolute;
+                    border-radius: 16px;
+                    background-color: $default-link-color-light;
+                    z-index: -1;
+                    opacity: 0.5;
+                    transform: scale(0);
+                    top: -4px;
+                    left: -4px;
+                    transition: transform ease-out 0.1s;
+                }
+
+                &:active:after {
+                    transform: scale(1);
+                }
+            }
+        }
+
+        &.selected {
+            & > .group-title > label.icon:before {
+                content: $icon-checkbox-checked;
+            }
+        }
+
+        &.disabled {
+            & > .group-title > label.icon:before {
+                color: #ccc;
+            }
+        }
+    }
+
+    .sub-group {
+        margin-left: 10px;
+    }
+}

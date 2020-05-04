@@ -1,0 +1,61 @@
+﻿$app-bar-height: 72px;
+$left-pane-width: 240px;
+$footer-height: 38px;
+
+app {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+
+    & > .header-pane {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: $app-bar-height;
+    }
+
+    & > .loading-mask {
+        position: absolute;
+        top: $app-bar-height;
+        left: 0;
+        bottom: $footer-height;
+        right: 0;
+        z-index: 1;
+        background-color: #fff;
+    }
+
+    & > .left-pane {
+        border-right: solid 1px #bbb;
+        display: block;
+        position: absolute;
+        top: $app-bar-height;
+        left: 0;
+        bottom: $footer-height;
+        width: $left-pane-width;
+    }
+
+    & > .main {
+        display: block;
+        position: absolute;
+        top: $app-bar-height;
+        left: $left-pane-width;
+        bottom: $footer-height;
+        right: 0;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    & > .footer-pane {
+        border-top: solid 1px #ccc;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: $footer-height;
+    }
+}
