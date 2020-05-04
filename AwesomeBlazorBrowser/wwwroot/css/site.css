@@ -66,6 +66,48 @@ a {
 .icon-mark-github:before {
   content: ""; }
 
+.toggle-box {
+  font-family: "Awesome-Blazor-Browser-Icons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  position: relative;
+  transition: color linear 0.2s;
+  color: #0366d6;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  vertical-align: middle; }
+  .toggle-box input {
+    display: none; }
+  .toggle-box:hover {
+    color: #75b5fd; }
+  .toggle-box:after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border-radius: 16px;
+    background-color: #75b5fd;
+    z-index: -1;
+    opacity: 0.5;
+    transform: scale(0);
+    top: -26px;
+    left: -4px;
+    transition: transform ease-out 0.1s; }
+  .toggle-box:active:after {
+    transform: scale(1); }
+  .toggle-box:before {
+    font-size: 24px; }
+  .toggle-box.unselected:before {
+    content: ""; }
+  .toggle-box.selected:before {
+    content: ""; }
+  .toggle-box.selectedany:before {
+    content: ""; }
+
 app {
   display: block;
   position: fixed;
@@ -170,13 +212,14 @@ app {
   right: 0; }
   .groups-panel > .header {
     border-bottom: solid 1px #ccc;
-    text-align: center;
-    height: 32px;
-    line-height: 32px;
-    font-size: 12px; }
+    padding-left: 20px;
+    height: 48px;
+    line-height: 48px; }
+    .groups-panel > .header > .text {
+      font-weight: 600; }
   .groups-panel > .selector {
     position: absolute;
-    top: 33px;
+    top: 49px;
     left: 0;
     bottom: 0;
     right: 0;
@@ -191,46 +234,8 @@ app {
   .group-selector > .group:not(.visible) a:hover {
     text-decoration: none; }
 
-.group-selector > .group.disabled a {
-  color: #ccc; }
-
-.group-selector > .group input {
-  display: none; }
-
 .group-selector > .group > .group-title {
   white-space: nowrap; }
-  .group-selector > .group > .group-title > label.icon {
-    position: relative;
-    transition: color linear 0.2s;
-    color: #0366d6;
-    font-size: 24px;
-    vertical-align: middle; }
-    .group-selector > .group > .group-title > label.icon:hover {
-      color: #75b5fd; }
-    .group-selector > .group > .group-title > label.icon:before {
-      content: ""; }
-    .group-selector > .group > .group-title > label.icon:after {
-      content: '';
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      position: absolute;
-      border-radius: 16px;
-      background-color: #75b5fd;
-      z-index: -1;
-      opacity: 0.5;
-      transform: scale(0);
-      top: -4px;
-      left: -4px;
-      transition: transform ease-out 0.1s; }
-    .group-selector > .group > .group-title > label.icon:active:after {
-      transform: scale(1); }
-
-.group-selector > .group.selected > .group-title > label.icon:before {
-  content: ""; }
-
-.group-selector > .group.disabled > .group-title > label.icon:before {
-  color: #ccc; }
 
 .group-selector .sub-group {
   margin-left: 10px; }

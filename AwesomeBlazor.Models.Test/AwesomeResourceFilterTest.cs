@@ -11,7 +11,7 @@ namespace AwesomeBlazor.Models.Test
             var contents = TestFixture.GetContentsForTest();
             var root = AwesomeBlazorParser.ParseMarkdown(contents);
 
-            root.UpdateVisibiltyByKeywordFilter(".net");
+            root.SubGroups.UpdateVisibiltyByKeywordFilter(".net");
             var visibleGroups = root.SubGroups.Where(g => g.Visible).ToArray();
             visibleGroups.Select(g => g.Title)
                 .Is("General", "Tutorials");
@@ -35,7 +35,7 @@ namespace AwesomeBlazor.Models.Test
             var contents = TestFixture.GetContentsForTest();
             var root = AwesomeBlazorParser.ParseMarkdown(contents);
 
-            root.UpdateVisibiltyByKeywordFilter("file2");
+            root.SubGroups.UpdateVisibiltyByKeywordFilter("file2");
             var visibleGroups = root.SubGroups.Where(g => g.Visible).ToArray();
             visibleGroups
                 .Select(g => g.Title)
@@ -60,7 +60,7 @@ namespace AwesomeBlazor.Models.Test
             var contents = TestFixture.GetContentsForTest();
             var root = AwesomeBlazorParser.ParseMarkdown(contents);
 
-            root.UpdateVisibiltyByKeywordFilter(".net shop microsoft");
+            root.SubGroups.UpdateVisibiltyByKeywordFilter(".net shop microsoft");
             var visibleGroups = root.SubGroups.Where(g => g.Visible).ToArray();
             visibleGroups
                 .Select(g => g.Title)

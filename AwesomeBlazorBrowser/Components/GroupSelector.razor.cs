@@ -16,9 +16,6 @@ namespace AwesomeBlazorBrowser.Components
         public IEnumerable<AwesomeResourceGroup> Groups { get; set; } = Enumerable.Empty<AwesomeResourceGroup>();
 
         [Parameter]
-        public bool Enable { get; set; } = true;
-
-        [Parameter]
         public EventCallback<AwesomeResourceGroup> OnChangeGroupSelection { get; set; }
 
         private async Task OnClickGroupLink(string anchorName)
@@ -26,9 +23,9 @@ namespace AwesomeBlazorBrowser.Components
             await JS.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
         }
 
-        private Task _OnChangeGroupSelection(AwesomeResourceGroup group, bool selected)
+        private Task OnClickToggleBox(AwesomeResourceGroup group)
         {
-            group.Selected = selected;
+            group.SelectionState = group.SelectionState != SelectionState.Selected ? SelectionState.Selected : SelectionState.Unselected;
             return this.OnChangeGroupSelection.InvokeAsync(group);
         }
 

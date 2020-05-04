@@ -5,10 +5,13 @@
     {
         var anchorName = group.GetAnchorName(ParentGroupAnchor);
 
-        <div class="@CssClass("group", new { group.Selected, Disabled = !this.Enable, group.Visible })">
+        <div class="@CssClass("group", new { group.Visible })">
             <div class="group-title">
-                <input id="@anchorName" type="checkbox" checked="@group.Selected" @onchange="(arg => _OnChangeGroupSelection(group, (bool)arg.Value))" disabled="@(!Enable)" />
-                <label for="@anchorName" class="icon icon-checkbox-checked" />
+
+                <label class="@CssClass("toggle-box", group.SelectionState.ToString().ToLower())">
+                    <input type="button" @onclick="@(() => OnClickToggleBox(group))" />
+                </label>
+
                 <a href="#@anchorName" @onclick="@(() => OnClickGroupLink(anchorName))" @onclick:preventDefault="true">
                     @group.Title
                 </a>
@@ -17,8 +20,7 @@
             <div class="sub-group">
                 <GroupSelector ParentGroupAnchor="@anchorName"
                                Groups="group.SubGroups"
-                               OnChangeGroupSelection="_OnChangeSubGroupSelection"
-                               Enable="group.Selected" />
+                               OnChangeGroupSelection="_OnChangeSubGroupSelection" />
             </div>
         </div>
     }

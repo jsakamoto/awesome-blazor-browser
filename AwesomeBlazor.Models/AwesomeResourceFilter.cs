@@ -1,22 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AwesomeBlazor.Models
 {
     public static class AwesomeResourceFilter
     {
-        public static void UpdateVisibiltyByKeywordFilter(this AwesomeResourceGroup group, string keywords)
+        public static void UpdateVisibiltyByKeywordFilter(this IEnumerable<AwesomeResourceGroup> groups, string keywords)
         {
             var keywordsArray = string.IsNullOrEmpty(keywords) ?
                 new string[0] :
                 keywords.ToLower().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            group.UpdateVisibiltyByKeywordFilter(keywordsArray);
+            groups.UpdateVisibiltyByKeywordFilter(keywordsArray);
+        }
+
+        private static void UpdateVisibiltyByKeywordFilter(this IEnumerable<AwesomeResourceGroup> groups, string[] keywords)
+        {
+            foreach (var group in groups)
+            {
+                group.UpdateVisibiltyByKeywordFilter(keywords);
+            }
         }
 
         private static void UpdateVisibiltyByKeywordFilter(this AwesomeResourceGroup group, string[] keywords)
         {
-            group.Visible = group.Selected;
+            group.Visible = group.SelectionState != SelectionState.Unselected;
             if (group.Visible)
             {
                 foreach (var resource in group.Resources)
@@ -26,10 +35,7 @@ namespace AwesomeBlazor.Models
                         resource.DescriptionText.ToLower().Contains(keyword));
                 }
 
-                foreach (var subGroup in group.SubGroups)
-                {
-                    subGroup.UpdateVisibiltyByKeywordFilter(keywords);
-                }
+                group.SubGroups.UpdateVisibiltyByKeywordFilter(keywords);
 
                 group.Visible =
                     (group.ParagraphsHtml != "" && !keywords.Any()) ||

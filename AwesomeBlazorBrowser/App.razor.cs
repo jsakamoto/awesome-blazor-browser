@@ -39,7 +39,7 @@ namespace AwesomeBlazorBrowser
 
         private void UpdateRootGroupVisibility()
         {
-            this.RootGroup.UpdateVisibiltyByKeywordFilter(Keywords);
+            this.RootGroup.SubGroups.UpdateVisibiltyByKeywordFilter(Keywords);
         }
 
         private void OnChangeGroupSelection()

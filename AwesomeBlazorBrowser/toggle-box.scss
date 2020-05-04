@@ -1,0 +1,61 @@
+﻿@import 'site.variables.scss';
+@import "icons.variables.scss";
+
+.toggle-box {
+    input {
+        display: none;
+    }
+
+    font-family: '#{$icomoon-font-family}';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1;
+    position: relative;
+    transition: color linear 0.2s;
+    color: $default-link-color;
+    font-size: 0;
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    vertical-align: middle;
+
+    &:hover {
+        color: $default-link-color-light;
+    }
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        border-radius: 16px;
+        background-color: $default-link-color-light;
+        z-index: -1;
+        opacity: 0.5;
+        transform: scale(0);
+        top: -26px;
+        left: -4px;
+        transition: transform ease-out 0.1s;
+    }
+
+    &:active:after {
+        transform: scale(1);
+    }
+
+    &:before {
+        font-size: 24px;
+    }
+
+    &.unselected:before {
+        content: $icon-checkbox-blank;
+    }
+
+    &.selected:before {
+        content: $icon-checkbox-checked;
+    }
+
+    &.selectedany:before {
+        content: $icon-checkbox-indeterminate;
+    }
+}

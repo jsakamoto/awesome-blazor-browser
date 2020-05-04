@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AwesomeBlazor.Models
@@ -8,7 +9,26 @@ namespace AwesomeBlazor.Models
     {
         public Guid Id { get; } = Guid.NewGuid();
 
-        public bool Selected { get; set; } = true;
+        private bool Selected = true;
+
+        public SelectionState SelectionState
+        {
+            get
+            {
+                if (!this.SubGroups.Any()) return Selected ? SelectionState.Selected : SelectionState.Unselected;
+                if (this.SubGroups.All(g => g.SelectionState == SelectionState.Unselected)) return SelectionState.Unselected;
+                if (this.SubGroups.All(g => g.SelectionState == SelectionState.Selected)) return SelectionState.Selected;
+                return SelectionState.SelectedAny;
+            }
+            set
+            {
+                if (!this.SubGroups.Any()) this.Selected = value == SelectionState.Selected;
+                foreach (var subGropup in SubGroups)
+                {
+                    subGropup.SelectionState = value;
+                }
+            }
+        }
 
         public bool Visible { get; set; } = true;
 

@@ -5,7 +5,6 @@ namespace AwesomeBlazor.Models.Test
 {
     public class AwesomeBlazorParserTest
     {
-
         [Fact]
         public void Parse_Test()
         {
@@ -19,38 +18,38 @@ namespace AwesomeBlazor.Models.Test
                     "Introduction", "General", "Sample Projects", "Tutorials");
 
             var topTitle = root.SubGroups[0];
-            topTitle.Selected.IsTrue();
+            topTitle.SelectionState.Is(SelectionState.Selected);
             topTitle.Resources.Any().IsFalse();
             topTitle.SubGroups.Any().IsFalse();
             topTitle.ParagraphsHtml.IsNot("");
 
             var specialEvent = root.SubGroups[1];
-            specialEvent.Selected.IsTrue();
+            specialEvent.SelectionState.Is(SelectionState.Selected);
             specialEvent.Resources.Any().IsFalse();
             specialEvent.SubGroups.Any().IsFalse();
             specialEvent.ParagraphsHtml.IsNot("");
 
             var introduction = root.SubGroups[2];
-            introduction.Selected.IsTrue();
+            introduction.SelectionState.Is(SelectionState.Selected);
             introduction.ParagraphsHtml.Is("");
             introduction.Resources.Any().IsFalse();
             introduction.SubGroups.Select(g => g.Title)
                 .Is("What is Blazor", "Get started");
 
             var whatsBlazor = introduction.SubGroups[0];
-            whatsBlazor.Selected.IsTrue();
+            whatsBlazor.SelectionState.Is(SelectionState.Selected);
             whatsBlazor.Resources.Any().IsFalse();
             whatsBlazor.SubGroups.Any().IsFalse();
             whatsBlazor.ParagraphsHtml.IsNot("");
 
             var getStarted = introduction.SubGroups[1];
-            getStarted.Selected.IsTrue();
+            getStarted.SelectionState.Is(SelectionState.Selected);
             getStarted.Resources.Any().IsFalse();
             getStarted.SubGroups.Any().IsFalse();
             getStarted.ParagraphsHtml.IsNot("");
 
             var general = root.SubGroups[3];
-            general.Selected.IsTrue();
+            general.SelectionState.Is(SelectionState.Selected);
             general.SubGroups.Any().IsFalse();
             general.ParagraphsHtml.Is("");
             general.Resources.Select(r => $"{r.Title} | {r.ResourceUrl}")
@@ -58,21 +57,21 @@ namespace AwesomeBlazor.Models.Test
                     "eShopOnBlazor | https://github.com/dotnet-architecture/eShopOnBlazor");
 
             var sampleProjects = root.SubGroups[4];
-            sampleProjects.Selected.IsTrue();
+            sampleProjects.SelectionState.Is(SelectionState.Selected);
             sampleProjects.ParagraphsHtml.Is("");
             sampleProjects.Resources.Any().IsFalse();
             sampleProjects.SubGroups.Select(g => g.Title)
                 .Is("Authentication", "Cloud");
 
             var authentication = sampleProjects.SubGroups[0];
-            authentication.Selected.IsTrue();
+            authentication.SelectionState.Is(SelectionState.Selected);
             authentication.SubGroups.Any().IsFalse();
             authentication.ParagraphsHtml.Is("");
             authentication.Resources.Select(r => $"{r.Title} | {r.ResourceUrl}")
                 .Is("BlazorBoilerplate | https://github.com/enkodellc/blazorboilerplate");
 
             var cloud = sampleProjects.SubGroups[1];
-            cloud.Selected.IsTrue();
+            cloud.SelectionState.Is(SelectionState.Selected);
             cloud.SubGroups.Any().IsFalse();
             cloud.ParagraphsHtml.Is("");
             cloud.Resources.Select(r => $"{r.Title} | {r.ResourceUrl}")
@@ -80,7 +79,7 @@ namespace AwesomeBlazor.Models.Test
                     "BlazorFile2Azure | https://github.com/daltskin/BlazorFile2Azure");
 
             var tutorials = root.SubGroups[5];
-            tutorials.Selected.IsTrue();
+            tutorials.SelectionState.Is(SelectionState.Selected);
             tutorials.SubGroups.Any().IsFalse();
             tutorials.ParagraphsHtml.Is("");
             tutorials.Resources.Select(r => $"{r.Title} | {r.ResourceUrl}")

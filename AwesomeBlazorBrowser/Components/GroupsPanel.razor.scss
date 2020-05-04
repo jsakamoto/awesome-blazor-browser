@@ -1,4 +1,4 @@
-﻿$groups-panel-header-height: 32px;
+﻿$groups-panel-header-height: 48px;
 
 .groups-panel {
     position: absolute;
@@ -9,10 +9,13 @@
 
     & > .header {
         border-bottom: solid 1px #ccc;
-        text-align: center;
+        padding-left: 20px;
         height: $groups-panel-header-height;
         line-height: $groups-panel-header-height;
-        font-size: 12px;
+
+        & > .text {
+            font-weight: 600;
+        }
     }
 
     & > .selector {

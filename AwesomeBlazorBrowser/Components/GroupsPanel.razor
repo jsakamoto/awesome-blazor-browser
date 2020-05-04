@@ -1,12 +1,13 @@
 ﻿<div class="groups-panel">
 
     <div class="header">
-        <a class="clickable" @onclick="OnClickSelectUnselectAll">
-            Select/Unselect All
-        </a>
+        <label class="@CssClass("toggle-box", Group.SelectionState.ToString().ToLower())">
+            <input type="button" @onclick="@(() => OnClickToggleBox(Group))" />
+        </label>
+        <span class="text">Categories</span>
     </div>
 
     <div class="selector">
-        <GroupSelector Groups="Groups" OnChangeGroupSelection="_OnChangeGroupSelection" />
+        <GroupSelector Groups="Group.SubGroups" OnChangeGroupSelection="_OnChangeGroupSelection" />
     </div>
 </div>
