@@ -1,8 +1,8 @@
-@import "custom-icon.variables.scss";
+@import "icons.variables.scss";
 
 @font-face {
     font-family: '#{$icomoon-font-family}';
-    src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?g437rm') format('truetype'), url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?g437rm') format('woff'), url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?g437rm##{$icomoon-font-family}') format('svg');
+    src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?dia7uy') format('truetype'), url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?dia7uy') format('woff'), url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?dia7uy##{$icomoon-font-family}') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -34,6 +34,12 @@
     }
 }
 
+.icon-checkbox-indeterminate {
+    &:before {
+        content: $icon-checkbox-indeterminate;
+    }
+}
+
 .icon-expand-less {
     &:before {
         content: $icon-expand-less;
@@ -43,5 +49,23 @@
 .icon-expand-more {
     &:before {
         content: $icon-expand-more;
+    }
+}
+
+.icon-link {
+    &:before {
+        content: $icon-link;
+    }
+}
+
+.icon-logo-blazor-large {
+    &:before {
+        content: $icon-logo-blazor-large;
+    }
+}
+
+.icon-mark-github {
+    &:before {
+        content: $icon-mark-github;
     }
 }

@@ -23,15 +23,15 @@ a {
       text-decoration: none; }
 
 @font-face {
-  font-family: "custom-icon-powered-by-icomoon";
-  src: url("fonts/custom-icon-powered-by-icomoon.ttf?g437rm") format("truetype"), url("fonts/custom-icon-powered-by-icomoon.woff?g437rm") format("woff"), url("fonts/custom-icon-powered-by-icomoon.svg?g437rm#custom-icon-powered-by-icomoon") format("svg");
+  font-family: "Awesome-Blazor-Browser-Icons";
+  src: url("fonts/Awesome-Blazor-Browser-Icons.ttf?dia7uy") format("truetype"), url("fonts/Awesome-Blazor-Browser-Icons.woff?dia7uy") format("woff"), url("fonts/Awesome-Blazor-Browser-Icons.svg?dia7uy#Awesome-Blazor-Browser-Icons") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block; }
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "custom-icon-powered-by-icomoon" !important;
+  font-family: "Awesome-Blazor-Browser-Icons" !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -48,11 +48,23 @@ a {
 .icon-checkbox-checked:before {
   content: ""; }
 
+.icon-checkbox-indeterminate:before {
+  content: ""; }
+
 .icon-expand-less:before {
   content: ""; }
 
 .icon-expand-more:before {
   content: ""; }
+
+.icon-link:before {
+  content: ""; }
+
+.icon-logo-blazor-large:before {
+  content: ""; }
+
+.icon-mark-github:before {
+  content: ""; }
 
 app {
   display: block;
@@ -113,12 +125,17 @@ app {
   justify-content: left;
   align-items: center; }
   .app-bar > .app-text {
+    position: relative;
     margin-left: 16px;
     padding-left: 46px;
-    background-image: url(images/blazor-logo.png);
-    background-repeat: no-repeat;
-    background-position: 0 5px;
     min-width: 280px; }
+    .app-bar > .app-text:after {
+      font-family: "Awesome-Blazor-Browser-Icons";
+      content: "";
+      font-size: 32px;
+      position: absolute;
+      top: -2px;
+      left: 0; }
     .app-bar > .app-text a {
       color: #86bfff; }
     .app-bar > .app-text > .app-title {
@@ -230,6 +247,7 @@ app {
       position: relative;
       font-size: 1.5em;
       font-weight: 600;
+      color: #24292e;
       margin-top: 24px;
       margin-bottom: 16px;
       line-height: 1.25;
@@ -240,10 +258,17 @@ app {
         width: 22px;
         height: 1.5em;
         left: -24px;
-        background-repeat: no-repeat;
-        background-position: center; }
-      .awesome-blazor-contents > .group > .group-title:hover > .group-anchor {
-        background-image: url(images/link.svg); }
+        display: flex;
+        align-items: center;
+        text-decoration: none; }
+        .awesome-blazor-contents > .group > .group-title > .group-anchor:after {
+          font-family: "Awesome-Blazor-Browser-Icons";
+          content: "";
+          font-size: 16px;
+          color: #24292e;
+          visibility: hidden; }
+      .awesome-blazor-contents > .group > .group-title:hover > .group-anchor:after {
+        visibility: visible; }
     .awesome-blazor-contents > .group blockquote {
       padding: 0 1em;
       color: #6a737d;
@@ -302,16 +327,26 @@ footer {
   align-items: center;
   justify-content: flex-end; }
   footer > .footer-item {
+    position: relative;
     margin-right: 20px;
     color: #666;
     height: 24px;
-    line-height: 24px;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: left center; }
+    line-height: 24px; }
     footer > .footer-item.blazor {
-      padding-left: 24px;
-      background-image: url(images/blazor-logo-gray.png); }
+      padding-left: 24px; }
+      footer > .footer-item.blazor:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }
     footer > .footer-item.github {
-      padding-left: 24px;
-      background-image: url(images/mark-github.svg); }
+      padding-left: 24px; }
+      footer > .footer-item.github:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }

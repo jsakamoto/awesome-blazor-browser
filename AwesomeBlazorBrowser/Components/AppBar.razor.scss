@@ -1,4 +1,6 @@
-﻿.app-bar {
+﻿@import "../icons.variables.scss";
+
+.app-bar {
     background-color: #24292e;
     color: #fff;
     position: absolute;
@@ -11,11 +13,19 @@
     align-items: center;
 
     & > .app-text {
+        position: relative;
         margin-left: 16px;
         padding-left: 46px;
-        background-image: url(wwwroot/css/images/blazor-logo.png);
-        background-repeat: no-repeat;
-        background-position: 0 5px;
+
+        &:after {
+            font-family: '#{$icomoon-font-family}';
+            content: $icon-logo-blazor-large;
+            font-size: 32px;
+            position: absolute;
+            top: -2px;
+            left: 0;
+        }
+
         min-width: 280px;
 
         a {

@@ -1,4 +1,6 @@
-﻿footer {
+﻿@import "../icons.variables.scss";
+
+footer {
     background-color: #eee;
     padding: 0 20px;
     overflow: hidden;
@@ -13,22 +15,36 @@
     justify-content: flex-end;
 
     & > .footer-item {
+        position: relative;
         margin-right: 20px;
         color: #666;
         height: 24px;
         line-height: 24px;
-        background-repeat: no-repeat;
-        background-size: 20px 20px;
-        background-position: left center;
 
         &.blazor {
+            &:after {
+                font-family: '#{$icomoon-font-family}';
+                content: $icon-logo-blazor-large;
+                font-size: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
             padding-left: 24px;
-            background-image: url(wwwroot/css/images/blazor-logo-gray.png);
         }
 
         &.github {
+            &:after {
+                font-family: '#{$icomoon-font-family}';
+                content: $icon-mark-github;
+                font-size: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
             padding-left: 24px;
-            background-image: url(wwwroot/css/images/mark-github.svg);
         }
     }
 }

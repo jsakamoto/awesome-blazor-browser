@@ -1,4 +1,6 @@
-﻿.awesome-blazor-contents {
+﻿@import "../icons.variables.scss";
+
+.awesome-blazor-contents {
     margin-top: -20px;
     padding: 12px 12px 12px 32px;
     max-width: 900px;
@@ -14,6 +16,7 @@
             position: relative;
             font-size: 1.5em;
             font-weight: 600;
+            color: rgb(36, 41, 46);
             margin-top: 24px;
             margin-bottom: 16px;
             line-height: 1.25;
@@ -25,12 +28,21 @@
                 width: 22px;
                 height: 1.5em;
                 left: -24px;
-                background-repeat: no-repeat;
-                background-position: center;
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+
+                &:after {
+                    font-family: '#{$icomoon-font-family}';
+                    content: $icon-link;
+                    font-size: 16px;
+                    color: rgb(36, 41, 46);
+                    visibility: hidden;
+                }
             }
 
-            &:hover > .group-anchor {
-                background-image: url(wwwroot/css/images/link.svg);
+            &:hover > .group-anchor:after {
+                visibility: visible;
             }
         }
 
