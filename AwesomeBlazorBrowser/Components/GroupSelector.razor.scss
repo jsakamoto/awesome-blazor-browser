@@ -1,6 +1,8 @@
 ﻿@import '../icons.variables.scss';
 @import '../site.variables.scss';
 
+$group-title-size: 26px;
+
 .group-selector {
     & > .group {
 
@@ -18,16 +20,25 @@
 
         & > .group-title {
             white-space: nowrap;
+            height: $group-title-size;
+            display: flex;
 
             & > .expand-box {
                 display: inline-block;
                 color: $default-text-color;
                 text-decoration: none;
                 transition: transform linear 0.2s;
+                width: $group-title-size;
+                height: $group-title-size;
 
                 &:before {
+                    display: inline-block;
                     content: $icon-expand-more;
                     font-size: 18px;
+                    width: $group-title-size;
+                    height: $group-title-size;
+                    line-height: $group-title-size;
+                    text-align: center;
                 }
             }
         }

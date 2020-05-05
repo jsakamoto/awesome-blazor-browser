@@ -94,7 +94,7 @@ a {
     z-index: -1;
     opacity: 0.5;
     transform: scale(0);
-    top: -26px;
+    top: -4px;
     left: -4px;
     transition: transform ease-out 0.1s; }
   .toggle-box:active:after {
@@ -214,8 +214,11 @@ app {
     border-bottom: solid 1px #ccc;
     padding-left: 20px;
     height: 48px;
-    line-height: 48px; }
+    line-height: 48px;
+    display: flex;
+    align-items: center; }
     .groups-panel > .header > .text {
+      display: inline-block;
       font-weight: 600; }
   .groups-panel > .selector {
     position: absolute;
@@ -235,15 +238,24 @@ app {
     text-decoration: none; }
 
 .group-selector > .group > .group-title {
-  white-space: nowrap; }
+  white-space: nowrap;
+  height: 26px;
+  display: flex; }
   .group-selector > .group > .group-title > .expand-box {
     display: inline-block;
     color: #24292e;
     text-decoration: none;
-    transition: transform linear 0.2s; }
+    transition: transform linear 0.2s;
+    width: 26px;
+    height: 26px; }
     .group-selector > .group > .group-title > .expand-box:before {
+      display: inline-block;
       content: "";
-      font-size: 18px; }
+      font-size: 18px;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center; }
 
 .group-selector > .group.expanded > .group-title > .expand-box {
   transform: rotate(-180deg); }

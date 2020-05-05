@@ -12,8 +12,11 @@
         padding-left: 20px;
         height: $groups-panel-header-height;
         line-height: $groups-panel-header-height;
+        display: flex;
+        align-items: center;
 
         & > .text {
+            display: inline-block;
             font-weight: 600;
         }
     }
