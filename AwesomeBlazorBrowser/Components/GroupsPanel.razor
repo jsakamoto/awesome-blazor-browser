@@ -1,7 +1,7 @@
 ﻿<div class="groups-panel">
 
     <div class="header">
-        <label class="@CssClass("toggle-box", Group.SelectionState.ToString().ToLower())">
+        <label class="@CssClass("toggle-box", Group.SelectionState)">
             <input type="button" @onclick="@(() => OnClickToggleBox(Group))" />
         </label>
         <span class="text">Categories</span>

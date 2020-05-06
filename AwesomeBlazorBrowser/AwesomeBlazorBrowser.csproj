@@ -16,7 +16,7 @@
     <!--<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />-->
     <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
     <PackageReference Include="Toolbelt.Blazor.DevServer.WithCssLiveReloader" Version="1.0.4" PrivateAssets="all" />
-    <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="1.0.0.2" />
+    <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,7 +10,7 @@
 
             <div class="group-title">
 
-                <label class="@CssClass("toggle-box", group.SelectionState.ToString().ToLower())">
+                <label class="@CssClass("toggle-box", group.SelectionState)">
                     <input type="button" @onclick="@(() => OnClickToggleBox(group))" />
                 </label>
 
