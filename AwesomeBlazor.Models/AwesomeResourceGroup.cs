@@ -67,5 +67,13 @@ namespace AwesomeBlazor.Models
             if (prefix == "") return AnchorName;
             else return prefix + "-" + AnchorName;
         }
+
+        public int GetExpandedDescendantsCount()
+        {
+            if (this.Expanded == false) return 0;
+            var childrenCount = this.SubGroups.Count;
+            var descendantsCount = this.SubGroups.Select(subGrp => subGrp.GetExpandedDescendantsCount()).Sum();
+            return childrenCount + descendantsCount;
+        }
     }
 }
