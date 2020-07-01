@@ -137,12 +137,12 @@ app {
     top: 72px;
     left: 0;
     bottom: 38px;
-    width: 260px; }
+    width: 280px; }
   app > .main {
     display: block;
     position: absolute;
     top: 72px;
-    left: 260px;
+    left: 280px;
     bottom: 38px;
     right: 0;
     overflow-x: hidden;
@@ -261,7 +261,7 @@ app {
   transform: rotate(-180deg); }
 
 .group-selector .sub-group {
-  margin-left: 10px;
+  padding-left: 10px;
   overflow: hidden;
   transition: height linear 0.2s; }
 
