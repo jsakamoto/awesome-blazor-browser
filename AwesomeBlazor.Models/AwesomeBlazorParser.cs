@@ -21,7 +21,7 @@ namespace AwesomeBlazor.Models
 
             var currentGroup = default(AwesomeResourceGroup);
             var awsomeBlazorRoot = new AwesomeResourceGroup();
-            var groups = new[] { awsomeBlazorRoot, null, null };
+            var groups = new[] { awsomeBlazorRoot };
 
             var paragraphs = new List<string>();
 
@@ -35,6 +35,7 @@ namespace AwesomeBlazor.Models
                     prevLineType = LineTypes.Group;
                     var title = groupMatch.Groups["title"].Value;
                     var level = Math.Max(1, groupMatch.Groups["level"].Value.Length - 1);
+                    if (groups.Length <= level) Array.Resize(ref groups, level + 1);
 
                     if (title == options.EndCategoryName) break;
 
@@ -135,12 +136,6 @@ namespace AwesomeBlazor.Models
                 descriptionHtml
             );
             return true;
-        }
-
-        internal static bool TryParseAsparagraph(string current, out string paragraph)
-        {
-            paragraph = null;
-            return false;
         }
     }
 }
