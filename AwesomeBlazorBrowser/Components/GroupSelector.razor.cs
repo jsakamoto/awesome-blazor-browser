@@ -15,7 +15,7 @@ namespace AwesomeBlazorBrowser.Components
         public IEnumerable<AwesomeResourceGroup> Groups { get; set; } = Enumerable.Empty<AwesomeResourceGroup>();
 
         [Parameter]
-        public EventCallback<AwesomeResourceGroup> OnChangeGroupSelection { get; set; }
+        public EventCallback<AwesomeResourceGroup> OnChangeGroupState { get; set; }
 
         private async Task OnClickGroupLink(string anchorName)
         {
@@ -25,23 +25,24 @@ namespace AwesomeBlazorBrowser.Components
         private Task OnClickToggleBox(AwesomeResourceGroup group)
         {
             group.SelectionState = group.SelectionState != SelectionState.Selected ? SelectionState.Selected : SelectionState.Unselected;
-            return this.OnChangeGroupSelection.InvokeAsync(group);
+            return this.OnChangeGroupState.InvokeAsync(group);
         }
 
         private Task OnClickExpandBox(AwesomeResourceGroup group)
         {
             group.Expanded = !group.Expanded;
-            return Task.CompletedTask;
+            return this.OnChangeGroupState.InvokeAsync(group);
         }
 
         public string GetSubGroupsHeight(AwesomeResourceGroup group)
         {
-            return group.Expanded ? (group.SubGroups.Count * 26) + "px" : "0";
+            var expandedDescendantsCount = group.GetExpandedDescendantsCount();
+            return (expandedDescendantsCount * 26) + "px";
         }
 
-        private Task _OnChangeSubGroupSelection(AwesomeResourceGroup group)
+        private Task _OnChangeSubGroupState(AwesomeResourceGroup group)
         {
-            return this.OnChangeGroupSelection.InvokeAsync(group);
+            return this.OnChangeGroupState.InvokeAsync(group);
         }
     }
 }
