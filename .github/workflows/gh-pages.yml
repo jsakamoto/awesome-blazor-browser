@@ -20,7 +20,7 @@ jobs:
 
       # Publish the site
       - name: Publish
-        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c Release -o public -p:GHPages=true
+        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c Release -o public -p:GHPages=true -p:PublishProfile="for GitHub Pages"
 
       - name: PreRendering
         run: dotnet run --project AwesomeBlazorBrowser.PreRenderer/AwesomeBlazorBrowser.PreRenderer.csproj -c Release -- public/wwwroot/index.html
