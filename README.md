@@ -1,4 +1,4 @@
-# Awesome Blazor Browser
+# Awesome Blazor Browser [![github pages](https://github.com/jsakamoto/awesome-blazor-browser/workflows/github%20pages/badge.svg)](https://github.com/jsakamoto/awesome-blazor-browser/actions?query=workflow%3A%22github+pages%22)
 
 This is a Blazor WebAssembly web app for browsing the **"Awesome Blazor"** resources.
 
