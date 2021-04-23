@@ -22,7 +22,7 @@ jobs:
 
       # Publish the site
       - name: Publish
-        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c Release -o public -p:GHPages=true -p:PublishProfile="for GitHub Pages"
+        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c Release -o public -p:GHPages=true
 
       # Deploy the site
       - name: Deploy
