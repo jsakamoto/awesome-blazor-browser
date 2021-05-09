@@ -108,7 +108,7 @@ a {
   .toggle-box.selected-any:before {
     content: ""; }
 
-app {
+#app {
   display: block;
   position: fixed;
   top: 0;
@@ -116,13 +116,13 @@ app {
   bottom: 0;
   right: 0;
   padding: 10px; }
-  app > .header-pane {
+  #app > .header-pane {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 72px; }
-  app > .loading-mask {
+  #app > .loading-mask {
     position: absolute;
     top: 72px;
     left: 0;
@@ -130,7 +130,7 @@ app {
     right: 0;
     z-index: 1;
     background-color: #fff; }
-  app > .left-pane {
+  #app > .left-pane {
     border-right: solid 1px #bbb;
     display: block;
     position: absolute;
@@ -138,7 +138,7 @@ app {
     left: 0;
     bottom: 38px;
     width: 280px; }
-  app > .main {
+  #app > .main {
     display: block;
     position: absolute;
     top: 72px;
@@ -147,7 +147,7 @@ app {
     right: 0;
     overflow-x: hidden;
     overflow-y: scroll; }
-  app > .footer-pane {
+  #app > .footer-pane {
     border-top: solid 1px #ccc;
     position: absolute;
     left: 0;
