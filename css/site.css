@@ -1,0 +1,382 @@
+﻿@charset "UTF-8";
+body, input[type=text] {
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji; }
+
+body {
+  font-size: 16px;
+  line-height: 1.5; }
+
+input[type=text] {
+  font-size: 14px; }
+
+a {
+  color: #0366d6;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+  a.clickable {
+    cursor: default;
+    user-select: none;
+    transition: color linear 0.2s; }
+    a.clickable:hover {
+      color: #75b5fd;
+      text-decoration: none; }
+
+@font-face {
+  font-family: "Awesome-Blazor-Browser-Icons";
+  src: url("fonts/Awesome-Blazor-Browser-Icons.ttf?dia7uy") format("truetype"), url("fonts/Awesome-Blazor-Browser-Icons.woff?dia7uy") format("woff"), url("fonts/Awesome-Blazor-Browser-Icons.svg?dia7uy#Awesome-Blazor-Browser-Icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; }
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "Awesome-Blazor-Browser-Icons" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-checkbox-blank:before {
+  content: ""; }
+
+.icon-checkbox-checked:before {
+  content: ""; }
+
+.icon-checkbox-indeterminate:before {
+  content: ""; }
+
+.icon-expand-less:before {
+  content: ""; }
+
+.icon-expand-more:before {
+  content: ""; }
+
+.icon-link:before {
+  content: ""; }
+
+.icon-logo-blazor-large:before {
+  content: ""; }
+
+.icon-mark-github:before {
+  content: ""; }
+
+.toggle-box {
+  font-family: "Awesome-Blazor-Browser-Icons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  position: relative;
+  transition: color linear 0.2s;
+  color: #0366d6;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  vertical-align: middle; }
+  .toggle-box input {
+    display: none; }
+  .toggle-box:hover {
+    color: #75b5fd; }
+  .toggle-box:after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border-radius: 16px;
+    background-color: #75b5fd;
+    z-index: -1;
+    opacity: 0.5;
+    transform: scale(0);
+    top: -4px;
+    left: -4px;
+    transition: transform ease-out 0.1s; }
+  .toggle-box:active:after {
+    transform: scale(1); }
+  .toggle-box:before {
+    font-size: 24px; }
+  .toggle-box.unselected:before {
+    content: ""; }
+  .toggle-box.selected:before {
+    content: ""; }
+  .toggle-box.selected-any:before {
+    content: ""; }
+
+#app {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 10px; }
+  #app > .header-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px; }
+  #app > .loading-mask {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    bottom: 38px;
+    right: 0;
+    z-index: 1;
+    background-color: #fff; }
+  #app > .left-pane {
+    border-right: solid 1px #bbb;
+    display: block;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    bottom: 38px;
+    width: 280px; }
+  #app > .main {
+    display: block;
+    position: absolute;
+    top: 72px;
+    left: 280px;
+    bottom: 38px;
+    right: 0;
+    overflow-x: hidden;
+    overflow-y: scroll; }
+  #app > .footer-pane {
+    border-top: solid 1px #ccc;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 38px; }
+
+.app-bar {
+  background-color: #24292e;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: left;
+  align-items: center; }
+  .app-bar > .app-text {
+    position: relative;
+    margin-left: 16px;
+    padding-left: 46px;
+    min-width: 280px; }
+    .app-bar > .app-text:after {
+      font-family: "Awesome-Blazor-Browser-Icons";
+      content: "";
+      font-size: 32px;
+      position: absolute;
+      top: -2px;
+      left: 0; }
+    .app-bar > .app-text a {
+      color: #86bfff; }
+    .app-bar > .app-text > .app-title {
+      font-weight: 600;
+      font-size: 18px; }
+    .app-bar > .app-text > .app-description {
+      font-size: 14px;
+      color: #ccc; }
+  .app-bar > .search-box {
+    margin-left: 16px;
+    margin-right: 16px;
+    flex-grow: 1;
+    display: flex; }
+    .app-bar > .search-box input {
+      background-color: #3F4448;
+      flex-grow: 1;
+      border: none;
+      height: 28px;
+      padding-left: 10px;
+      border-radius: 4px;
+      color: #fff;
+      outline: none; }
+      .app-bar > .search-box input:focus {
+        background-color: #fff;
+        color: #000; }
+
+.groups-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+  .groups-panel > .header {
+    border-bottom: solid 1px #ccc;
+    padding-left: 20px;
+    height: 48px;
+    line-height: 48px;
+    display: flex;
+    align-items: center; }
+    .groups-panel > .header > .text {
+      display: inline-block;
+      font-weight: 600; }
+  .groups-panel > .selector {
+    position: absolute;
+    top: 49px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px 10px 10px 20px; }
+
+.group-selector > .group:not(.visible) a.link {
+  color: #444;
+  cursor: default;
+  pointer-events: none; }
+  .group-selector > .group:not(.visible) a.link:hover {
+    text-decoration: none; }
+
+.group-selector > .group > .group-title {
+  white-space: nowrap;
+  height: 26px;
+  display: flex; }
+  .group-selector > .group > .group-title > .expand-box {
+    display: inline-block;
+    color: #24292e;
+    text-decoration: none;
+    transition: transform linear 0.2s;
+    width: 26px;
+    height: 26px; }
+    .group-selector > .group > .group-title > .expand-box:before {
+      display: inline-block;
+      content: "";
+      font-size: 18px;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center; }
+
+.group-selector > .group.expanded > .group-title > .expand-box {
+  transform: rotate(-180deg); }
+
+.group-selector .sub-group {
+  padding-left: 10px;
+  overflow: hidden;
+  transition: height linear 0.2s; }
+
+.awesome-blazor-contents {
+  margin-top: -20px;
+  padding: 12px 12px 12px 32px;
+  max-width: 900px; }
+  .awesome-blazor-contents > .group {
+    display: none; }
+    .awesome-blazor-contents > .group.visible {
+      display: block; }
+    .awesome-blazor-contents > .group > .group-title {
+      position: relative;
+      font-size: 1.5em;
+      font-weight: 600;
+      color: #24292e;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      line-height: 1.25;
+      padding-bottom: .3em;
+      border-bottom: 1px solid #eaecef; }
+      .awesome-blazor-contents > .group > .group-title > .group-anchor {
+        position: absolute;
+        width: 22px;
+        height: 1.5em;
+        left: -24px;
+        display: flex;
+        align-items: center;
+        text-decoration: none; }
+        .awesome-blazor-contents > .group > .group-title > .group-anchor:after {
+          font-family: "Awesome-Blazor-Browser-Icons";
+          content: "";
+          font-size: 16px;
+          color: #24292e;
+          visibility: hidden; }
+      .awesome-blazor-contents > .group > .group-title:hover > .group-anchor:after {
+        visibility: visible; }
+    .awesome-blazor-contents > .group blockquote {
+      padding: 0 1em;
+      color: #6a737d;
+      border-left: .25em solid #dfe2e5;
+      margin: 0 0 16px 0; }
+    .awesome-blazor-contents > .group > .resources {
+      margin-left: 10px; }
+      .awesome-blazor-contents > .group > .resources > .resource {
+        margin-bottom: 10px;
+        display: none; }
+        .awesome-blazor-contents > .group > .resources > .resource.visible {
+          display: block; }
+        .awesome-blazor-contents > .group > .resources > .resource > .resource-title {
+          font-weight: 600; }
+        .awesome-blazor-contents > .group > .resources > .resource > .resource-description {
+          margin-left: 10px; }
+        .awesome-blazor-contents > .group > .resources > .resource > .badges.has-badges {
+          margin-top: 6px;
+          margin-left: 10px;
+          height: 24px;
+          position: relative; }
+          .awesome-blazor-contents > .group > .resources > .resource > .badges.has-badges > .badge.last-commit {
+            position: absolute;
+            top: 0;
+            left: 92px; }
+        .awesome-blazor-contents > .group > .resources > .resource > .resource-description img {
+          vertical-align: middle; }
+        .awesome-blazor-contents > .group > .resources > .resource code {
+          font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+          padding: .2em .4em;
+          margin: 0;
+          font-size: 85%;
+          background-color: rgba(27, 31, 35, 0.05);
+          border-radius: 3px; }
+    .awesome-blazor-contents > .group > .sub-groups > .awesome-blazor-contents {
+      padding-left: 0; }
+      .awesome-blazor-contents > .group > .sub-groups > .awesome-blazor-contents > .group > .group-title {
+        font-size: 1.25em;
+        margin-top: 24px;
+        margin-bottom: 16px;
+        line-height: 1.25;
+        padding-bottom: 0;
+        border-bottom: none; }
+
+footer {
+  background-color: #eee;
+  padding: 0 20px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; }
+  footer > .footer-item {
+    position: relative;
+    margin-right: 20px;
+    color: #666;
+    height: 24px;
+    line-height: 24px; }
+    footer > .footer-item.blazor {
+      padding-left: 24px; }
+      footer > .footer-item.blazor:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }
+    footer > .footer-item.github {
+      padding-left: 24px; }
+      footer > .footer-item.github:after {
+        font-family: "Awesome-Blazor-Browser-Icons";
+        content: "";
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0; }
