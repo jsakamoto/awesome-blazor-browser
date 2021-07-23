@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       # Checkout the code
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.100-preview.5.21302.13
+          dotnet-version: 6.0.100-preview.6.21355.2
 
       # Publish the site
       - name: Publish
