@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FindRazorSourceFile.WebAssembly" Version="1.0.0-preview.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0-preview.6.21355.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-preview.6.21355.2" PrivateAssets="all" />
     <!--<PackageReference Include="Toolbelt.Blazor.DevServer.WithCssLiveReloader" Version="1.0.4" PrivateAssets="all" />-->
