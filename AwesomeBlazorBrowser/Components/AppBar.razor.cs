@@ -1,5 +1,4 @@
-﻿using System;
-using System.Timers;
+﻿using System.Timers;
 using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser.Components
@@ -8,7 +7,7 @@ namespace AwesomeBlazorBrowser.Components
     {
         private string Keywords = "";
 
-        private readonly Timer DebounceTimer = new Timer(interval: 500) { AutoReset = false };
+        private readonly System.Timers.Timer DebounceTimer = new System.Timers.Timer(interval: 500) { AutoReset = false };
 
         [Parameter]
         public bool EnableSerachBox { get; set; }
