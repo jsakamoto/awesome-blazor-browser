@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AwesomeBlazor.Models;
+﻿using AwesomeBlazor.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser.Components

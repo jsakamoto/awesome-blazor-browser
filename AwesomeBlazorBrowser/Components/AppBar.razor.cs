@@ -17,7 +17,7 @@ namespace AwesomeBlazorBrowser.Components
 
         protected override void OnInitialized()
         {
-            this.DebounceTimer.Elapsed += DebounceTimer_Elapsed;
+            this.DebounceTimer.Elapsed += this.DebounceTimer_Elapsed;
         }
 
         private void OnInputKeywords(ChangeEventArgs args)
@@ -34,7 +34,7 @@ namespace AwesomeBlazorBrowser.Components
 
         public void Dispose()
         {
-            this.DebounceTimer.Elapsed -= DebounceTimer_Elapsed;
+            this.DebounceTimer.Elapsed -= this.DebounceTimer_Elapsed;
             this.DebounceTimer.Dispose();
         }
     }

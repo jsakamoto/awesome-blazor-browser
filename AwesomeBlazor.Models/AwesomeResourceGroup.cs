@@ -15,7 +15,7 @@ namespace AwesomeBlazor.Models
         {
             get
             {
-                if (!this.SubGroups.Any()) return Selected ? SelectionState.Selected : SelectionState.Unselected;
+                if (!this.SubGroups.Any()) return this.Selected ? SelectionState.Selected : SelectionState.Unselected;
                 if (this.SubGroups.All(g => g.SelectionState == SelectionState.Unselected)) return SelectionState.Unselected;
                 if (this.SubGroups.All(g => g.SelectionState == SelectionState.Selected)) return SelectionState.Selected;
                 return SelectionState.SelectedAny;
@@ -23,7 +23,7 @@ namespace AwesomeBlazor.Models
             set
             {
                 if (!this.SubGroups.Any()) this.Selected = value == SelectionState.Selected;
-                foreach (var subGropup in SubGroups)
+                foreach (var subGropup in this.SubGroups)
                 {
                     subGropup.SelectionState = value;
                 }
@@ -52,20 +52,20 @@ namespace AwesomeBlazor.Models
 
         public AwesomeResourceGroup(string title, string titleHtml)
         {
-            Title = title;
-            TitleHtml = titleHtml;
-            AnchorName = Regex.Replace(title, "[^a-zA-Z0-9]", "-").ToLower();
+            this.Title = title;
+            this.TitleHtml = titleHtml;
+            this.AnchorName = Regex.Replace(title, "[^a-zA-Z0-9]", "-").ToLower();
         }
 
         public override string ToString()
         {
-            return $"{Title}";
+            return $"{this.Title}";
         }
 
         public string GetAnchorName(string prefix = "")
         {
-            if (prefix == "") return AnchorName;
-            else return prefix + "-" + AnchorName;
+            if (prefix == "") return this.AnchorName;
+            else return prefix + "-" + this.AnchorName;
         }
 
         public int GetExpandedDescendantsCount()

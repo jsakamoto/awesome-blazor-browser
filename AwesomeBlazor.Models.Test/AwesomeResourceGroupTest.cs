@@ -1,5 +1,4 @@
-﻿using System;
-using AwesomeBlazor.Models;
+﻿using AwesomeBlazor.Models;
 using AwesomeBlazor.Models.Test;
 using Xunit;
 
