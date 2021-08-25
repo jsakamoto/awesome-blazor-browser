@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AwesomeBlazor.Models;
+﻿using AwesomeBlazor.Models;
 
 namespace AwesomeBlazorBrowser
 {
@@ -24,22 +22,22 @@ namespace AwesomeBlazorBrowser
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (ParsingComplete == true && Loading == true)
+            if (this.ParsingComplete == true && this.Loading == true)
             {
-                Loading = false;
-                StateHasChanged();
+                this.Loading = false;
+                this.StateHasChanged();
 
-                var uriFragment = new Uri(NavigationManager.Uri).Fragment;
+                var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
                 if (uriFragment != "")
                 {
-                    await JS.ScrollToAnchorAsync(uriFragment, smooth: false);
+                    await this.JS.ScrollToAnchorAsync(uriFragment, smooth: false);
                 }
             }
         }
 
         private void UpdateRootGroupVisibility()
         {
-            this.RootGroup.SubGroups.UpdateVisibiltyByKeywordFilter(Keywords);
+            this.RootGroup.SubGroups.UpdateVisibiltyByKeywordFilter(this.Keywords);
         }
 
         private void OnChangeGroupState()

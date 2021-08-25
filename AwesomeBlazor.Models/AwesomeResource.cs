@@ -22,17 +22,17 @@ namespace AwesomeBlazor.Models
 
         public AwesomeResource(string title, string resourceUrl, string gitHubStarsUrl, string lastCommitUrl, string descriptionText, string descriptionHtml)
         {
-            Title = title;
-            ResourceUrl = resourceUrl;
-            GitHubStarsUrl = gitHubStarsUrl;
-            LastCommitUrl = lastCommitUrl;
-            DescriptionText = descriptionText;
-            DescriptionHtml = descriptionHtml;
+            this.Title = title;
+            this.ResourceUrl = resourceUrl;
+            this.GitHubStarsUrl = gitHubStarsUrl;
+            this.LastCommitUrl = lastCommitUrl;
+            this.DescriptionText = descriptionText;
+            this.DescriptionHtml = descriptionHtml;
         }
 
         public override string ToString()
         {
-            return $"{Title}";
+            return $"{this.Title}";
         }
     }
 }

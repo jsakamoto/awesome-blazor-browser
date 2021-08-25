@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AwesomeBlazor.Models;
+﻿using AwesomeBlazor.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser.Components
@@ -19,7 +16,7 @@ namespace AwesomeBlazorBrowser.Components
 
         private async Task OnClickGroupLink(string anchorName)
         {
-            await JS.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
+            await this.JS.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
         }
 
         private Task OnClickToggleBox(AwesomeResourceGroup group)
