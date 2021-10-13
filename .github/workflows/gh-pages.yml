@@ -18,17 +18,13 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.100-rc.1.21458.32
-      - name: List .NET Workload
-        run: dotnet workload list
-      - name: Search .NET WebAssembly Tools
-        run: dotnet workload search wasm-tool
-      - name: Install .NET WebAssembly Tools
-        run: dotnet workload install wasm-tools
+          dotnet-version: 6.0.100-rc.2.21505.57
+      #- name: Install .NET WebAssembly Tools
+      #  run: dotnet workload install wasm-tools
 
       # Publish the site
       - name: Publish
-        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c Release -o public -p:GHPages=true
+        run: dotnet publish AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj -c:Release -o:public -p:GHPages=true
 
       # Deploy the site
       - name: Deploy
