@@ -19,8 +19,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.100-rc.2.21505.57
-      #- name: Install .NET WebAssembly Tools
-      #  run: dotnet workload install wasm-tools
+      - name: Install .NET WebAssembly Tools
+        run: dotnet workload install wasm-tools
 
       # Publish the site
       - name: Publish
