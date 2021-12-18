@@ -1,48 +1,46 @@
-﻿using AwesomeBlazor.Models;
-using AwesomeBlazor.Models.Test;
-using Xunit;
+﻿using Xunit;
 
-namespace AwesomeBlazor.Test
+namespace AwesomeBlazor.Models.Test;
+
+public class AwesomeResourceGroupTest
 {
-    public class AwesomeResourceGroupTest
+    [Fact]
+    public void SelectionState_Test()
     {
-        [Fact]
-        public void SelectionState_Test()
+        var contents = TestFixture.GetContentsForTest();
+        var root = AwesomeBlazorParser.ParseMarkdown(contents);
+
+        var parentGroup = root.SubGroups[4];
+        var childGroup1 = parentGroup.SubGroups[0];
+        var childGroup2 = parentGroup.SubGroups[1];
+
+        childGroup1.SelectionState = SelectionState.Unselected;
+        parentGroup.SelectionState.Is(SelectionState.SelectedAny);
+
+        parentGroup.SelectionState = SelectionState.Selected;
+        childGroup1.SelectionState.Is(SelectionState.Selected);
+        childGroup2.SelectionState.Is(SelectionState.Selected);
+
+        childGroup1.SelectionState = SelectionState.Unselected;
+        childGroup2.SelectionState = SelectionState.Unselected;
+        parentGroup.SelectionState.Is(SelectionState.Unselected);
+
+        childGroup1.SelectionState = SelectionState.Selected;
+        childGroup2.SelectionState = SelectionState.Selected;
+        parentGroup.SelectionState.Is(SelectionState.Selected);
+
+        parentGroup.SelectionState = SelectionState.Unselected;
+        childGroup1.SelectionState.Is(SelectionState.Unselected);
+        childGroup2.SelectionState.Is(SelectionState.Unselected);
+    }
+
+    [Fact]
+    public void GetExpandedDescendantsCount_Test()
+    {
+        var root = new AwesomeResourceGroup
         {
-            var contents = TestFixture.GetContentsForTest();
-            var root = AwesomeBlazorParser.ParseMarkdown(contents);
-
-            var parentGroup = root.SubGroups[4];
-            var childGroup1 = parentGroup.SubGroups[0];
-            var childGroup2 = parentGroup.SubGroups[1];
-
-            childGroup1.SelectionState = SelectionState.Unselected;
-            parentGroup.SelectionState.Is(SelectionState.SelectedAny);
-
-            parentGroup.SelectionState = SelectionState.Selected;
-            childGroup1.SelectionState.Is(SelectionState.Selected);
-            childGroup2.SelectionState.Is(SelectionState.Selected);
-
-            childGroup1.SelectionState = SelectionState.Unselected;
-            childGroup2.SelectionState = SelectionState.Unselected;
-            parentGroup.SelectionState.Is(SelectionState.Unselected);
-
-            childGroup1.SelectionState = SelectionState.Selected;
-            childGroup2.SelectionState = SelectionState.Selected;
-            parentGroup.SelectionState.Is(SelectionState.Selected);
-
-            parentGroup.SelectionState = SelectionState.Unselected;
-            childGroup1.SelectionState.Is(SelectionState.Unselected);
-            childGroup2.SelectionState.Is(SelectionState.Unselected);
-        }
-
-        [Fact]
-        public void GetExpandedDescendantsCount_Test()
-        {
-            var root = new AwesomeResourceGroup
-            {
-                Expanded = true,
-                SubGroups = {
+            Expanded = true,
+            SubGroups = {
                     new AwesomeResourceGroup { }, // 1
                     new AwesomeResourceGroup {    // 2
                         Expanded = true,
@@ -60,8 +58,7 @@ namespace AwesomeBlazor.Test
                         }
                     }
                 }
-            };
-            root.GetExpandedDescendantsCount().Is(6);
-        }
+        };
+        root.GetExpandedDescendantsCount().Is(6);
     }
 }
