@@ -10,7 +10,7 @@ public partial class AppBar : IDisposable
     private readonly System.Timers.Timer DebounceTimer = new System.Timers.Timer(interval: 500) { AutoReset = false };
 
     [Parameter]
-    public bool EnableSerachBox { get; set; }
+    public bool EnableSearchBox { get; set; }
 
     [Parameter]
     public EventCallback<string> OnChangeKeywords { get; set; }
