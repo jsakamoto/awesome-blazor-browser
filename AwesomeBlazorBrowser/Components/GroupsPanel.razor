@@ -4,7 +4,7 @@
         <label class="@CssClass("toggle-box", Group.SelectionState)">
             <input type="button" @onclick="@(() => OnClickToggleBox(Group))" />
         </label>
-        <span class="text">Categories</span>
+         <input type="text" placeholder="Categories" @bind="Keywords" @oninput="OnInputCategories" />
     </div>
 
     <div class="selector">
