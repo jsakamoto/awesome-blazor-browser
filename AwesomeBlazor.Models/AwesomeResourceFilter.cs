@@ -32,7 +32,8 @@ namespace AwesomeBlazor.Models
                 {
                     resource.Visible = keywords.All(keyword =>
                         resource.Title.ToLower().Contains(keyword) ||
-                        resource.DescriptionText.ToLower().Contains(keyword));
+                        resource.DescriptionText.ToLower().Contains(keyword) ||
+                        group.Title.ToLower().Contains(keyword));
                 }
 
                 group.SubGroups.UpdateVisibiltyByKeywordFilter(keywords);
