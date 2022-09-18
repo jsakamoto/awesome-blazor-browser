@@ -1,4 +1,6 @@
-﻿$app-bar-height: 72px;
+﻿@import "site.mixin.scss";
+
+$app-bar-height: 72px;
 $left-pane-width: 280px;
 $footer-height: 38px;
 
@@ -10,6 +12,7 @@ $footer-height: 38px;
     bottom: 0;
     right: 0;
     padding: 10px;
+    background-color: var(--default-back-color);
 
     & > .header-pane {
         position: absolute;
@@ -26,11 +29,11 @@ $footer-height: 38px;
         bottom: $footer-height;
         right: 0;
         z-index: 1;
-        background-color: #fff;
+        background-color: var(--default-back-color);
     }
 
     & > .left-pane {
-        border-right: solid 1px #bbb;
+        border-right: solid 1px var(--default-border-color);
         display: block;
         position: absolute;
         top: $app-bar-height;
@@ -48,10 +51,12 @@ $footer-height: 38px;
         right: 0;
         overflow-x: hidden;
         overflow-y: scroll;
+
+        @include scrollbar-color(var(--scrollbar-thumb-color), var(--scrollbar-back-color));
     }
 
     & > .footer-pane {
-        border-top: solid 1px #ccc;
+        border-top: solid 1px var(--default-border-color);
         position: absolute;
         left: 0;
         right: 0;

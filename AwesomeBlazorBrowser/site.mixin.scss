@@ -1,0 +1,20 @@
+﻿@mixin scrollbar-color($thumb-color, $back-color) {
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    & {
+        scrollbar-width: thin;
+        scrollbar-color: $thumb-color $back-color;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $back-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb-color;
+        border-radius: 6px;
+        border: solid 2px $back-color;
+    }
+}

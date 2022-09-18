@@ -1,5 +1,4 @@
-﻿@import "../site.variables.scss";
-@import "../icons.variables.scss";
+﻿@import "../icons.variables.scss";
 
 .awesome-blazor-contents {
     margin-top: -20px;
@@ -17,12 +16,12 @@
             position: relative;
             font-size: 1.5em;
             font-weight: 600;
-            color: $default-text-color;
+            color: var(--default-text-color);
             margin-top: 24px;
             margin-bottom: 16px;
             line-height: 1.25;
             padding-bottom: .3em;
-            border-bottom: 1px solid #eaecef;
+            border-bottom: 1px solid var(--header-text-line-color);
 
             & > .group-anchor {
                 position: absolute;
@@ -37,7 +36,7 @@
                     font-family: '#{$icomoon-font-family}';
                     content: $icon-link;
                     font-size: 16px;
-                    color: $default-text-color;
+                    color: var(--default-text-color);
                     visibility: hidden;
                 }
             }
@@ -49,8 +48,8 @@
 
         blockquote {
             padding: 0 1em;
-            color: #6a737d;
-            border-left: .25em solid #dfe2e5;
+            color: var(--quote-text-color);
+            border-left: .25em solid var(--quote-text-line-color);
             margin: 0 0 16px 0;
         }
 

@@ -1,14 +1,16 @@
 ﻿@import '../icons.variables.scss';
-@import '../site.variables.scss';
 
 $group-title-size: 26px;
 
 .group-selector {
     & > .group {
+        a.link {
+            transition: color linear 0.2s;
+        }
 
         &:not(.visible) {
             a.link {
-                color: #ccc;
+                color: var(--deadlink-text-color);
                 cursor: default;
                 pointer-events: none;
 
@@ -25,7 +27,7 @@ $group-title-size: 26px;
 
             & > .expand-box {
                 display: inline-block;
-                color: $default-text-color;
+                color: var(--default-text-color);
                 text-decoration: none;
                 transition: transform linear 0.2s;
                 width: $group-title-size;

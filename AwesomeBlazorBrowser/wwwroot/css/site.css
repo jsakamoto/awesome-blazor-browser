@@ -1,5 +1,55 @@
-﻿body, input[type=text] {
+﻿:root {
+  --default-back-color: #ffffff;
+  --default-text-color: #24292f;
+  --default-link-color: #0366d6;
+  --default-link-color-light: #75b5fd;
+  --default-border-color: #d0d7de;
+  --quote-text-color: #6a737d;
+  --quote-text-line-color: #dfe2e5;
+  --header-text-line-color: #d8dee4;
+  --weaked-text-color: #c0c0c0;
+  --deadlink-text-color: #c0c0c0;
+  --appbar-back-color: #24292e;
+  --appbar-text-color: #ffffff;
+  --searchbox-back-color: var(--appbar-back-color);
+  --searchbox-back-color-focused: #ffffff;
+  --searchbox-border-color: #57606a;
+  --searchbox-text-color: #ffffff;
+  --searchbox-text-color-focused: #000000;
+  --footer-back-color: #e0e0e0;
+  --footer-text-color: #606060;
+  --scrollbar-back-color: #f1f1f1;
+  --scrollbar-thumb-color: #a8a8a8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --default-back-color: #22272e;
+    --default-text-color: #aebac6;
+    --default-link-color: #449bf1;
+    --default-link-color-light: #70b2ef;
+    --default-border-color: #454c55;
+    --header-text-line-color: #454c55;
+    --weaked-text-color: #77838f;
+    --deadlink-text-color: #586168;
+    --quote-text-color: #768390;
+    --quote-text-line-color: #444c56;
+    --appbar-back-color: #2d333b;
+    --appbar-text-color: var(---default-text-color);
+    --searchbox-back-color: #22272e;
+    --searchbox-back-color-focused: #2d333b;
+    --searchbox-border-color: #454c55;
+    --searchbox-text-color: #aebac6;
+    --searchbox-text-color-focused: #aebac6;
+    --footer-back-color: var(--appbar-back-color);
+    --footer-text-color: var(--weaked-text-color);
+    --scrollbar-back-color: #424242;
+    --scrollbar-thumb-color: #7b7b7b;
+  }
+}
+body, input[type=text] {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  color: var(--default-text-color);
 }
 
 body {
@@ -12,7 +62,7 @@ input[type=text] {
 }
 
 a {
-  color: #0366d6;
+  color: var(--default-link-color);
   text-decoration: none;
 }
 a:hover {
@@ -24,7 +74,7 @@ a.clickable {
   transition: color linear 0.2s;
 }
 a.clickable:hover {
-  color: #75b5fd;
+  color: var(--default-link-color-light);
   text-decoration: none;
 }
 
@@ -88,7 +138,7 @@ a.clickable:hover {
   line-height: 1;
   position: relative;
   transition: color linear 0.2s;
-  color: #0366d6;
+  color: var(--default-link-color);
   font-size: 0;
   width: 24px;
   height: 24px;
@@ -99,7 +149,7 @@ a.clickable:hover {
   display: none;
 }
 .toggle-box:hover {
-  color: #75b5fd;
+  color: var(--default-link-color-light);
 }
 .toggle-box:after {
   content: "";
@@ -108,11 +158,11 @@ a.clickable:hover {
   height: 32px;
   position: absolute;
   border-radius: 16px;
-  background-color: #75b5fd;
+  background-color: var(--default-link-color-light);
   z-index: -1;
   opacity: 0.5;
   transform: scale(0);
-  top: -4px;
+  top: -5px;
   left: -4px;
   transition: transform ease-out 0.1s;
 }
@@ -140,6 +190,7 @@ a.clickable:hover {
   bottom: 0;
   right: 0;
   padding: 10px;
+  background-color: var(--default-back-color);
 }
 #app > .header-pane {
   position: absolute;
@@ -155,10 +206,10 @@ a.clickable:hover {
   bottom: 38px;
   right: 0;
   z-index: 1;
-  background-color: #fff;
+  background-color: var(--default-back-color);
 }
 #app > .left-pane {
-  border-right: solid 1px #bbb;
+  border-right: solid 1px var(--default-border-color);
   display: block;
   position: absolute;
   top: 72px;
@@ -176,8 +227,23 @@ a.clickable:hover {
   overflow-x: hidden;
   overflow-y: scroll;
 }
+#app > .main::-webkit-scrollbar {
+  width: 12px;
+}
+#app > .main {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-back-color);
+}
+#app > .main::-webkit-scrollbar-track {
+  background: var(--scrollbar-back-color);
+}
+#app > .main::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 6px;
+  border: solid 2px var(--scrollbar-back-color);
+}
 #app > .footer-pane {
-  border-top: solid 1px #ccc;
+  border-top: solid 1px var(--default-border-color);
   position: absolute;
   left: 0;
   right: 0;
@@ -186,8 +252,8 @@ a.clickable:hover {
 }
 
 .app-bar {
-  background-color: #24292e;
-  color: #fff;
+  background-color: var(--appbar-back-color);
+  color: var(--appbar-text-color);
   position: absolute;
   top: 0;
   left: 0;
@@ -220,7 +286,9 @@ a.clickable:hover {
 }
 .app-bar > .app-text > .app-description {
   font-size: 14px;
-  color: #ccc;
+  color: var(--weaked-text-color);
+  line-height: 14px;
+  margin-top: -4px;
 }
 .app-bar > .search-box {
   margin-left: 16px;
@@ -229,18 +297,18 @@ a.clickable:hover {
   display: flex;
 }
 .app-bar > .search-box input {
-  background-color: #3F4448;
+  background-color: var(--searchbox-back-color);
   flex-grow: 1;
-  border: none;
+  border: solid 1px var(--searchbox-border-color);
   height: 28px;
   padding-left: 10px;
   border-radius: 4px;
-  color: #fff;
+  color: var(--searchbox-text-color);
   outline: none;
 }
 .app-bar > .search-box input:focus {
-  background-color: #fff;
-  color: #000;
+  background-color: var(--searchbox-back-color-focused);
+  color: var(--searchbox-text-color-focused);
 }
 
 .groups-panel {
@@ -251,7 +319,7 @@ a.clickable:hover {
   right: 0;
 }
 .groups-panel > .header {
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px var(--default-border-color);
   padding-left: 20px;
   height: 48px;
   line-height: 48px;
@@ -272,9 +340,27 @@ a.clickable:hover {
   overflow-y: auto;
   padding: 10px 10px 10px 20px;
 }
+.groups-panel > .selector::-webkit-scrollbar {
+  width: 12px;
+}
+.groups-panel > .selector {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-back-color);
+}
+.groups-panel > .selector::-webkit-scrollbar-track {
+  background: var(--scrollbar-back-color);
+}
+.groups-panel > .selector::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 6px;
+  border: solid 2px var(--scrollbar-back-color);
+}
 
+.group-selector > .group a.link {
+  transition: color linear 0.2s;
+}
 .group-selector > .group:not(.visible) a.link {
-  color: #ccc;
+  color: var(--deadlink-text-color);
   cursor: default;
   pointer-events: none;
 }
@@ -288,7 +374,7 @@ a.clickable:hover {
 }
 .group-selector > .group > .group-title > .expand-box {
   display: inline-block;
-  color: #24292e;
+  color: var(--default-text-color);
   text-decoration: none;
   transition: transform linear 0.2s;
   width: 26px;
@@ -327,12 +413,12 @@ a.clickable:hover {
   position: relative;
   font-size: 1.5em;
   font-weight: 600;
-  color: #24292e;
+  color: var(--default-text-color);
   margin-top: 24px;
   margin-bottom: 16px;
   line-height: 1.25;
   padding-bottom: 0.3em;
-  border-bottom: 1px solid #eaecef;
+  border-bottom: 1px solid var(--header-text-line-color);
 }
 .awesome-blazor-contents > .group > .group-title > .group-anchor {
   position: absolute;
@@ -347,7 +433,7 @@ a.clickable:hover {
   font-family: "Awesome-Blazor-Browser-Icons";
   content: "\e905";
   font-size: 16px;
-  color: #24292e;
+  color: var(--default-text-color);
   visibility: hidden;
 }
 .awesome-blazor-contents > .group > .group-title:hover > .group-anchor:after {
@@ -355,8 +441,8 @@ a.clickable:hover {
 }
 .awesome-blazor-contents > .group blockquote {
   padding: 0 1em;
-  color: #6a737d;
-  border-left: 0.25em solid #dfe2e5;
+  color: var(--quote-text-color);
+  border-left: 0.25em solid var(--quote-text-line-color);
   margin: 0 0 16px 0;
 }
 .awesome-blazor-contents > .group > .resources {
@@ -410,7 +496,7 @@ a.clickable:hover {
 }
 
 footer {
-  background-color: #eee;
+  background-color: var(--footer-back-color);
   padding: 0 20px;
   overflow: hidden;
   position: absolute;
@@ -426,7 +512,7 @@ footer {
 footer > .footer-item {
   position: relative;
   margin-right: 20px;
-  color: #666;
+  color: var(--footer-text-color);
   height: 24px;
   line-height: 24px;
 }

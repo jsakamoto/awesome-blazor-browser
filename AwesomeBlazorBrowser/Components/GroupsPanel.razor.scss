@@ -1,4 +1,5 @@
-﻿$groups-panel-header-height: 48px;
+﻿@import "../site.mixin.scss";
+$groups-panel-header-height: 48px;
 
 .groups-panel {
     position: absolute;
@@ -8,7 +9,7 @@
     right: 0;
 
     & > .header {
-        border-bottom: solid 1px #ccc;
+        border-bottom: solid 1px var(--default-border-color);
         padding-left: 20px;
         height: $groups-panel-header-height;
         line-height: $groups-panel-header-height;
@@ -30,5 +31,7 @@
         overflow-x: hidden;
         overflow-y: auto;
         padding: 10px 10px 10px 20px;
+
+        @include scrollbar-color(var(--scrollbar-thumb-color), var(--scrollbar-back-color));
     }
 }

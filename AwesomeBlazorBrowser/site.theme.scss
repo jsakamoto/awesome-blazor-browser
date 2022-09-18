@@ -1,0 +1,51 @@
+﻿// light theme
+:root {
+    --default-back-color: #ffffff;
+    --default-text-color: #24292f;
+    --default-link-color: #0366d6;
+    --default-link-color-light: #75b5fd;
+    --default-border-color: #d0d7de;
+    --quote-text-color: #6a737d;
+    --quote-text-line-color: #dfe2e5;
+    --header-text-line-color: #d8dee4;
+    --weaked-text-color: #c0c0c0;
+    --deadlink-text-color: #c0c0c0;
+    --appbar-back-color: #24292e;
+    --appbar-text-color: #ffffff;
+    --searchbox-back-color: var(--appbar-back-color);
+    --searchbox-back-color-focused: #ffffff;
+    --searchbox-border-color: #57606a;
+    --searchbox-text-color: #ffffff;
+    --searchbox-text-color-focused: #000000;
+    --footer-back-color: #e0e0e0;
+    --footer-text-color: #606060;
+    --scrollbar-back-color: #f1f1f1;
+    --scrollbar-thumb-color: #a8a8a8;
+}
+
+// dark theme
+@media (prefers-color-scheme: dark) {
+    :root {
+        --default-back-color: #22272e;
+        --default-text-color: #aebac6;
+        --default-link-color: #449bf1;
+        --default-link-color-light: #70b2ef;
+        --default-border-color: #454c55;
+        --header-text-line-color: #454c55;
+        --weaked-text-color: #77838f;
+        --deadlink-text-color: #586168;
+        --quote-text-color: #768390;
+        --quote-text-line-color: #444c56;
+        --appbar-back-color: #2d333b;
+        --appbar-text-color: var(---default-text-color);
+        --searchbox-back-color: #22272e;
+        --searchbox-back-color-focused: #2d333b;
+        --searchbox-border-color: #454c55;
+        --searchbox-text-color: #aebac6;
+        --searchbox-text-color-focused: #aebac6;
+        --footer-back-color: var(--appbar-back-color);
+        --footer-text-color: var(--weaked-text-color);
+        --scrollbar-back-color: #424242;
+        --scrollbar-thumb-color: #7b7b7b;
+    }
+}

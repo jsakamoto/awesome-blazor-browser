@@ -1,8 +1,8 @@
 ﻿@import "../icons.variables.scss";
 
 .app-bar {
-    background-color: #24292e;
-    color: #fff;
+    background-color: var(--appbar-back-color);
+    color: var(--appbar-text-color);
     position: absolute;
     top: 0;
     left: 0;
@@ -39,7 +39,9 @@
 
         & > .app-description {
             font-size: 14px;
-            color: #ccc;
+            color: var(--weaked-text-color);
+            line-height: 14px;
+            margin-top: -4px;
         }
     }
 
@@ -50,18 +52,18 @@
         display: flex;
 
         input {
-            background-color: #3F4448;
+            background-color: var(--searchbox-back-color);
             flex-grow: 1;
-            border: none;
+            border: solid 1px var(--searchbox-border-color);
             height: 28px;
             padding-left: 10px;
             border-radius: 4px;
-            color: #fff;
+            color: var(--searchbox-text-color);
             outline: none;
 
             &:focus {
-                background-color: #fff;
-                color: #000;
+                background-color: var(--searchbox-back-color-focused);
+                color: var(--searchbox-text-color-focused);
             }
         }
     }

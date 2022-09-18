@@ -1,7 +1,7 @@
 ﻿@import "../icons.variables.scss";
 
 footer {
-    background-color: #eee;
+    background-color: var(--footer-back-color);
     padding: 0 20px;
     overflow: hidden;
     position: absolute;
@@ -17,7 +17,7 @@ footer {
     & > .footer-item {
         position: relative;
         margin-right: 20px;
-        color: #666;
+        color: var(--footer-text-color);
         height: 24px;
         line-height: 24px;
 

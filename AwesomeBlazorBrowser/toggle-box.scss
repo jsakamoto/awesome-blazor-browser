@@ -1,5 +1,4 @@
-﻿@import 'site.variables.scss';
-@import "icons.variables.scss";
+﻿@import "icons.variables.scss";
 
 .toggle-box {
     input {
@@ -12,7 +11,7 @@
     line-height: 1;
     position: relative;
     transition: color linear 0.2s;
-    color: $default-link-color;
+    color: var(--default-link-color);
     font-size: 0;
     width: 24px;
     height: 24px;
@@ -20,7 +19,7 @@
     vertical-align: middle;
 
     &:hover {
-        color: $default-link-color-light;
+        color: var(--default-link-color-light);
     }
 
     &:after {
@@ -30,11 +29,11 @@
         height: 32px;
         position: absolute;
         border-radius: 16px;
-        background-color: $default-link-color-light;
+        background-color: var(--default-link-color-light);
         z-index: -1;
         opacity: 0.5;
         transform: scale(0);
-        top: -4px;
+        top: -5px;
         left: -4px;
         transition: transform ease-out 0.1s;
     }
