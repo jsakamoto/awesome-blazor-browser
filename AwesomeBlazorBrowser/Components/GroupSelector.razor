@@ -3,7 +3,7 @@
 <div class="group-selector">
     @foreach (var group in Groups)
     {
-        var hasSubGrou = group.SubGroups.Any();
+        var hasSubGroup = group.SubGroups.Any();
         var anchorName = group.GetAnchorName(ParentGroupAnchor);
 
         <div class="@CssClass("group", new { group.Expanded, group.Visible })">
@@ -18,14 +18,14 @@
                     @group.Title
                 </a>
 
-                @if (hasSubGrou)
+                @if (hasSubGroup)
                 {
                     <a class="icon expand-box" @onclick="@(() => OnClickExpandBox(group))">
                     </a>
                 }
             </div>
 
-            @if (hasSubGrou)
+            @if (hasSubGroup)
             {
                 <div class="sub-group" style="height:@GetSubGroupsHeight(group);">
                     <GroupSelector ParentGroupAnchor="@anchorName"
