@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser;
 
-public partial class App
+public partial class App : IAsyncDisposable
 {
     [Inject] HttpClient HttpClient { get; init; } = null!;
 
     [Inject] NavigationManager NavigationManager { get; init; } = null!;
 
-    [Inject] public HelperScriptService HelperScript { get; init; } = null!;
+    [Inject] public IServiceProvider ServiceProvider { get; init; } = null!;
+
+    private HelperScriptService? _HelperScript;
 
     private AwesomeResourceGroup RootGroup = new();
 
@@ -36,12 +38,14 @@ public partial class App
             this.Loading = false;
             this.StateHasChanged();
 
+            this._HelperScript = this.ServiceProvider.GetRequiredService<HelperScriptService>();
             var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
             if (uriFragment != "")
             {
-                await this.HelperScript.ScrollToAnchorAsync(uriFragment, smooth: false);
+                await this._HelperScript.ScrollToAnchorAsync(uriFragment, smooth: false);
             }
         }
+
     }
 
     private void UpdateRootGroupVisibility()
@@ -74,5 +78,10 @@ public partial class App
     private void OnClickGroupLink()
     {
         this.GroupPanelExpanded = false;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_HelperScript != null) await _HelperScript.DisposeAsync();
     }
 }

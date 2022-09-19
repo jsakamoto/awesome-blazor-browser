@@ -5,7 +5,7 @@ namespace AwesomeBlazorBrowser.Components;
 
 public partial class GroupSelector
 {
-    [Inject] public HelperScriptService HelperScript { get; init; } = null!;
+    [CascadingParameter] public HelperScriptService HelperScript { get; init; } = null!;
 
     [Parameter]
     public string ParentGroupAnchor { get; set; } = "";
