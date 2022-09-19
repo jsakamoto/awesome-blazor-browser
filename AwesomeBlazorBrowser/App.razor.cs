@@ -45,7 +45,6 @@ public partial class App : IAsyncDisposable
                 await this._HelperScript.ScrollToAnchorAsync(uriFragment, smooth: false);
             }
         }
-
     }
 
     private void UpdateRootGroupVisibility()
@@ -67,6 +66,8 @@ public partial class App : IAsyncDisposable
         this.UpdateRootGroupVisibility();
 
         var nextUrl = this.NavigationManager.GetUriWithQueryParameter("k", keywords);
+        var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
+        if (uriFragment != "") nextUrl += uriFragment;
         this.NavigationManager.NavigateTo(nextUrl, new NavigationOptions() { ReplaceHistoryEntry = true });
     }
 
