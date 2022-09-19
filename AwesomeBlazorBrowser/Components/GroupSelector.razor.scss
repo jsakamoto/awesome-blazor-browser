@@ -57,6 +57,6 @@ $group-title-size: 26px;
     .sub-group {
         padding-left: 10px;
         overflow: hidden;
-        transition: height linear 0.2s;
+        transition: height ease 0.2s;
     }
 }

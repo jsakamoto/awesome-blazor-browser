@@ -395,7 +395,7 @@ a.clickable:hover {
 .group-selector .sub-group {
   padding-left: 10px;
   overflow: hidden;
-  transition: height linear 0.2s;
+  transition: height ease 0.2s;
 }
 
 .awesome-blazor-contents {
