@@ -1,4 +1,4 @@
-export function scrollToAnchor(anchorName, smooth, changeUrl) {
+export const scrollToAnchor = (anchorName, smooth, changeUrl) => {
     const element = document.querySelector(`a[name=${anchorName}]`);
     if (element !== null) {
         element.scrollIntoView({ behavior: smooth === true ? 'smooth' : 'auto' });
@@ -7,11 +7,21 @@ export function scrollToAnchor(anchorName, smooth, changeUrl) {
             history.pushState(null, document.title, `${href}#${anchorName}`);
         }
     }
-}
-function locationHashChanged() {
-    const hash = location.hash.split('#').pop() || '';
-    if (hash !== '') {
-        scrollToAnchor(hash, false, false);
-    }
-}
-window.onhashchange = locationHashChanged;
+};
+export const getCurrentTheme = () => {
+    return localStorage.getItem("theme") || "theme-system-default";
+};
+export const setCurrentTheme = (theme) => {
+    localStorage.setItem("theme", theme);
+    document.body.classList.remove("theme-system-default", "theme-light-mode", "theme-dark-mode");
+    document.body.classList.add(theme);
+};
+export const installHashWatcher = () => {
+    const locationHashChanged = () => {
+        const hash = location.hash.split('#').pop() || '';
+        if (hash !== '') {
+            scrollToAnchor(hash, false, false);
+        }
+    };
+    window.addEventListener("hashchange", locationHashChanged);
+};

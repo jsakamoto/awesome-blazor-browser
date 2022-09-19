@@ -75,3 +75,21 @@
         content: $icon-menu;
     }
 }
+
+.icon-settings {
+    &:before {
+        content: $icon-settings;
+    }
+}
+
+.icon-light-mode {
+    &:before {
+        content: $icon-light-mode;
+    }
+}
+
+.icon-dark-mode {
+    &:before {
+        content: $icon-dark-mode;
+    }
+}

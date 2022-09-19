@@ -1,0 +1,26 @@
+﻿<div class="settings">
+    <div class="theme">
+        <h3>Theme</h3>
+        <div>
+            <label>
+                <input type="radio" name="theme" checked="@(_Theme == Theme.SystemDefault)" @onclick="@(() => OnClickTheme(Theme.SystemDefault))" />
+                <span class="icon icon-light-mode"></span>
+                <span>System Default</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="theme" checked="@(_Theme == Theme.LightMode)" @onclick="@(() => OnClickTheme(Theme.LightMode))" />
+                <span class="icon icon-light-mode"></span>
+                <span>Light</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="theme" checked="@(_Theme == Theme.DarkMode)" @onclick="@(() => OnClickTheme(Theme.DarkMode))" />
+                <span class="icon icon-dark-mode"></span>
+                <span>Dark</span>
+            </label>
+        </div>
+    </div>
+</div>

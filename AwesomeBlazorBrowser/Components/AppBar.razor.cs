@@ -12,14 +12,13 @@ public partial class AppBar : IDisposable
 
     [Inject] public NavigationManager NavigationManager { get; init; } = null!;
 
-    [Parameter]
-    public bool EnableSearchBox { get; set; }
+    [Parameter] public bool EnableSearchBox { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnChangeKeywords { get; set; }
+    [Parameter] public EventCallback<string> OnChangeKeywords { get; set; }
 
-    [Parameter]
-    public EventCallback OnClickGroupPanelMenu { get; set; }
+    [Parameter] public EventCallback OnClickGroupPanelMenu { get; set; }
+
+    [Parameter] public EventCallback OnClickSettings { get; set; }
 
     protected override void OnInitialized()
     {

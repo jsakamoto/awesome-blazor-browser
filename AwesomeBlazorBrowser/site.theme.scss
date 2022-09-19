@@ -1,5 +1,5 @@
 ﻿// light theme
-:root {
+@mixin theme-light-mode {
     --default-back-color: #ffffff;
     --default-text-color: #24292f;
     --default-link-color: #0366d6;
@@ -24,28 +24,40 @@
 }
 
 // dark theme
+@mixin theme-dark-mode {
+    --default-back-color: #22272e;
+    --default-text-color: #aebac6;
+    --default-link-color: #449bf1;
+    --default-link-color-light: #70b2ef;
+    --default-border-color: #454c55;
+    --header-text-line-color: #454c55;
+    --weaked-text-color: #77838f;
+    --deadlink-text-color: #586168;
+    --quote-text-color: #768390;
+    --quote-text-line-color: #444c56;
+    --appbar-back-color: #2d333b;
+    --appbar-text-color: var(---default-text-color);
+    --searchbox-back-color: #22272e;
+    --searchbox-back-color-focused: #2d333b;
+    --searchbox-border-color: #454c55;
+    --searchbox-text-color: #aebac6;
+    --searchbox-text-color-focused: #aebac6;
+    --footer-back-color: var(--appbar-back-color);
+    --footer-text-color: var(--weaked-text-color);
+    --scrollbar-back-color: #424242;
+    --scrollbar-thumb-color: #7b7b7b;
+}
+
+body.theme-system-default, body.theme-light-mode {
+    @include theme-light-mode();
+}
+
 @media (prefers-color-scheme: dark) {
-    :root {
-        --default-back-color: #22272e;
-        --default-text-color: #aebac6;
-        --default-link-color: #449bf1;
-        --default-link-color-light: #70b2ef;
-        --default-border-color: #454c55;
-        --header-text-line-color: #454c55;
-        --weaked-text-color: #77838f;
-        --deadlink-text-color: #586168;
-        --quote-text-color: #768390;
-        --quote-text-line-color: #444c56;
-        --appbar-back-color: #2d333b;
-        --appbar-text-color: var(---default-text-color);
-        --searchbox-back-color: #22272e;
-        --searchbox-back-color-focused: #2d333b;
-        --searchbox-border-color: #454c55;
-        --searchbox-text-color: #aebac6;
-        --searchbox-text-color-focused: #aebac6;
-        --footer-back-color: var(--appbar-back-color);
-        --footer-text-color: var(--weaked-text-color);
-        --scrollbar-back-color: #424242;
-        --scrollbar-thumb-color: #7b7b7b;
+    body.theme-system-default, body.theme-dark-mode {
+        @include theme-dark-mode();
     }
+}
+
+body.theme-dark-mode {
+    @include theme-dark-mode();
 }

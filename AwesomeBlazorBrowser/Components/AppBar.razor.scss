@@ -58,18 +58,20 @@
             visibility: visible;
         }
 
-        .icon-menu {
-            //border:solid 1px red;
+        .icon-menu, .icon-settings {
             color: var(--appbar-text-color);
             text-decoration: none;
             font-size: 24px;
-            display: none;
             padding: 8px;
             transition: color ease 0.2s;
 
             &:hover {
                 color: #fff;
             }
+        }
+
+        .icon-menu {
+            display: none;
         }
 
         input {
@@ -107,10 +109,6 @@
 
             .icon-menu {
                 display: inline-block;
-            }
-
-            input {
-                margin: 0 8px 0 0;
             }
         }
     }

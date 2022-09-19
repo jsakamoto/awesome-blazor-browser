@@ -1,4 +1,4 @@
-﻿:root {
+﻿body.theme-system-default, body.theme-light-mode {
   --default-back-color: #ffffff;
   --default-text-color: #24292f;
   --default-link-color: #0366d6;
@@ -23,7 +23,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  body.theme-system-default, body.theme-dark-mode {
     --default-back-color: #22272e;
     --default-text-color: #aebac6;
     --default-link-color: #449bf1;
@@ -47,6 +47,30 @@
     --scrollbar-thumb-color: #7b7b7b;
   }
 }
+body.theme-dark-mode {
+  --default-back-color: #22272e;
+  --default-text-color: #aebac6;
+  --default-link-color: #449bf1;
+  --default-link-color-light: #70b2ef;
+  --default-border-color: #454c55;
+  --header-text-line-color: #454c55;
+  --weaked-text-color: #77838f;
+  --deadlink-text-color: #586168;
+  --quote-text-color: #768390;
+  --quote-text-line-color: #444c56;
+  --appbar-back-color: #2d333b;
+  --appbar-text-color: var(---default-text-color);
+  --searchbox-back-color: #22272e;
+  --searchbox-back-color-focused: #2d333b;
+  --searchbox-border-color: #454c55;
+  --searchbox-text-color: #aebac6;
+  --searchbox-text-color-focused: #aebac6;
+  --footer-back-color: var(--appbar-back-color);
+  --footer-text-color: var(--weaked-text-color);
+  --scrollbar-back-color: #424242;
+  --scrollbar-thumb-color: #7b7b7b;
+}
+
 body, input[type=text] {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
   color: var(--default-text-color);
@@ -136,6 +160,18 @@ a.clickable:hover {
   content: "\e908";
 }
 
+.icon-settings:before {
+  content: "\e909";
+}
+
+.icon-light-mode:before {
+  content: "\e90a";
+}
+
+.icon-dark-mode:before {
+  content: "\e90b";
+}
+
 .toggle-box {
   font-family: "Awesome-Blazor-Browser-Icons";
   -webkit-font-smoothing: antialiased;
@@ -222,13 +258,28 @@ a.clickable:hover {
   bottom: 38px;
   width: 280px;
   transition: left ease 0.2s;
+  z-index: 1;
+  background-color: var(--default-back-color);
+}
+#app > .right-pane {
+  border-left: solid 1px var(--default-border-color);
+  display: block;
+  position: absolute;
+  top: 72px;
+  right: -181px;
+  bottom: 38px;
+  width: 180px;
+  transition: right ease 0.2s;
   z-index: 2;
   background-color: var(--default-back-color);
 }
-#app > .left-pane-mask {
+#app > .right-pane.settings-panel-expanded {
+  right: 0;
+}
+#app > .main-mask {
   display: block;
   position: absolute;
-  top: 100px;
+  top: 72px;
   bottom: 38px;
   left: 0;
   right: 0;
@@ -237,6 +288,10 @@ a.clickable:hover {
   pointer-events: none;
   opacity: 0;
   transition: opacity ease 0.2s;
+}
+#app > .main-mask.settings-panel-expanded {
+  opacity: 0.5;
+  pointer-events: all;
 }
 #app > .main {
   display: block;
@@ -278,12 +333,19 @@ a.clickable:hover {
   }
   #app > .left-pane {
     top: 100px;
-    left: -280px;
+    left: -281px;
+    z-index: 2;
   }
   #app > .left-pane.group-panel-expanded {
     left: 0;
   }
-  #app > .left-pane-mask.group-panel-expanded {
+  #app > .right-pane {
+    top: 100px;
+  }
+  #app > .main-mask {
+    top: 100px;
+  }
+  #app > .main-mask.group-panel-expanded {
     opacity: 0.5;
     pointer-events: all;
   }
@@ -346,16 +408,18 @@ a.clickable:hover {
 .app-bar > .search-box.enable-search-box {
   visibility: visible;
 }
-.app-bar > .search-box .icon-menu {
+.app-bar > .search-box .icon-menu, .app-bar > .search-box .icon-settings {
   color: var(--appbar-text-color);
   text-decoration: none;
   font-size: 24px;
-  display: none;
   padding: 8px;
   transition: color ease 0.2s;
 }
-.app-bar > .search-box .icon-menu:hover {
+.app-bar > .search-box .icon-menu:hover, .app-bar > .search-box .icon-settings:hover {
   color: #fff;
+}
+.app-bar > .search-box .icon-menu {
+  display: none;
 }
 .app-bar > .search-box input {
   background-color: var(--searchbox-back-color);
@@ -387,9 +451,6 @@ a.clickable:hover {
   }
   .app-bar > .search-box .icon-menu {
     display: inline-block;
-  }
-  .app-bar > .search-box input {
-    margin: 0 8px 0 0;
   }
 }
 
@@ -632,4 +693,18 @@ footer > .footer-item.github:after {
   footer > .footer-item:last-child {
     margin-right: 0;
   }
+}
+
+.settings {
+  padding: 4px 0 0 10px;
+  font-size: 14px;
+}
+.settings h3:first-child {
+  margin-top: 0;
+}
+.settings h3 {
+  margin-bottom: 0;
+}
+.settings > .theme .icon {
+  margin-right: 4px;
 }
