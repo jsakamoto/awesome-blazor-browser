@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Markdig;
@@ -15,7 +16,7 @@ namespace AwesomeBlazor.Models
             Resource
         }
 
-        public static AwesomeResourceGroup ParseMarkdown(string markdownContents, AwesomeBlazorParserOptions options = null)
+        public static AwesomeResourceGroup ParseMarkdown(string markdownContents, AwesomeBlazorParserOptions? options = null)
         {
             options ??= new AwesomeBlazorParserOptions();
 
@@ -103,7 +104,7 @@ namespace AwesomeBlazor.Models
                 .Trim();
         }
 
-        internal static bool TryParseAsResource(string contents, out AwesomeResource resource)
+        internal static bool TryParseAsResource(string contents, [NotNullWhen(true)] out AwesomeResource? resource)
         {
             resource = null;
 

@@ -94,6 +94,7 @@ public class AwesomeBlazorParserTest
             out var resource
         ).IsTrue();
 
+        resource.IsNotNull();
         resource.Title.Is("Fizz Buzz");
         resource.ResourceUrl.Is("https://github.com/fizz/buzz");
         resource.GitHubStarsUrl.Is("");
@@ -113,6 +114,7 @@ public class AwesomeBlazorParserTest
             out var resource
         ).IsTrue();
 
+        resource.IsNotNull();
         resource.Title.Is("Foo Bar");
         resource.ResourceUrl.Is("https://github.com/foo/bar");
         resource.GitHubStarsUrl.Is("https://img.shields.io/github/stars/foo/bar?style=flat-square&cacheSeconds=604800&logo=foo");
@@ -134,7 +136,7 @@ public class AwesomeBlazorParserTest
             out var resource
         ).IsTrue();
 
-
+        resource.IsNotNull();
         resource.Title.Is("Fizz Buzz");
         resource.ResourceUrl.Is("https://github.com/fizz/buzz");
         resource.GitHubStarsUrl.Is("");
@@ -151,6 +153,7 @@ public class AwesomeBlazorParserTest
             out var resource
         ).IsTrue();
 
+        resource.IsNotNull();
         resource.Title.Is("Fizz Buzz");
         resource.ResourceUrl.Is("https://github.com/fizz/buzz");
         resource.GitHubStarsUrl.Is("");

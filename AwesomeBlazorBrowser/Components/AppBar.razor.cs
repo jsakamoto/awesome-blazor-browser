@@ -33,12 +33,12 @@ public partial class AppBar : IDisposable
 
     private void OnInputKeywords(ChangeEventArgs args)
     {
-        this.Keywords = args.Value.ToString();
+        this.Keywords = args.Value?.ToString() ?? "";
         this.DebounceTimer.Stop();
         this.DebounceTimer.Start();
     }
 
-    private void DebounceTimer_Elapsed(object sender, ElapsedEventArgs e)
+    private void DebounceTimer_Elapsed(object? sender, ElapsedEventArgs e)
     {
         this.OnChangeKeywords.InvokeAsync(this.Keywords);
     }

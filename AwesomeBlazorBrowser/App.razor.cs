@@ -83,6 +83,6 @@ public partial class App : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (_HelperScript != null) await _HelperScript.DisposeAsync();
+        if (this._HelperScript != null) await this._HelperScript.DisposeAsync();
     }
 }
