@@ -5,6 +5,8 @@ namespace AwesomeBlazorBrowser.Components;
 
 public partial class GroupSelector
 {
+    [Inject] public HelperScriptService HelperScript { get; init; } = null!;
+
     [Parameter]
     public string ParentGroupAnchor { get; set; } = "";
 
@@ -19,7 +21,7 @@ public partial class GroupSelector
 
     private async Task _OnClickGroupLink(string anchorName)
     {
-        await this.JS.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
+        await this.HelperScript.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
         await this.OnClickGroupLink.InvokeAsync();
     }
 

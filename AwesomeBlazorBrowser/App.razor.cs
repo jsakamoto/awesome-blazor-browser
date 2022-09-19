@@ -1,10 +1,17 @@
 ﻿using AwesomeBlazor.Models;
+using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser;
 
 public partial class App
 {
-    private AwesomeResourceGroup RootGroup = new AwesomeResourceGroup();
+    [Inject] HttpClient HttpClient { get; init; } = null!;
+
+    [Inject] NavigationManager NavigationManager { get; init; } = null!;
+
+    [Inject] public HelperScriptService HelperScript { get; init; } = null!;
+
+    private AwesomeResourceGroup RootGroup = new();
 
     private string Keywords = "";
 
@@ -32,7 +39,7 @@ public partial class App
             var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
             if (uriFragment != "")
             {
-                await this.JS.ScrollToAnchorAsync(uriFragment, smooth: false);
+                await this.HelperScript.ScrollToAnchorAsync(uriFragment, smooth: false);
             }
         }
     }
