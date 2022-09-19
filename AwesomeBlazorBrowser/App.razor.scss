@@ -1,6 +1,8 @@
 ﻿@import "site.mixin.scss";
+@import "site.variables.scss";
 
 $app-bar-height: 72px;
+$app-bar-height-large: 100px;
 $left-pane-width: 280px;
 $footer-height: 38px;
 
@@ -28,7 +30,7 @@ $footer-height: 38px;
         left: 0;
         bottom: $footer-height;
         right: 0;
-        z-index: 1;
+        z-index: 3;
         background-color: var(--default-back-color);
     }
 
@@ -40,6 +42,23 @@ $footer-height: 38px;
         left: 0;
         bottom: $footer-height;
         width: $left-pane-width;
+        transition: left ease 0.2s;
+        z-index: 2;
+        background-color: var(--default-back-color);
+    }
+
+    & > .left-pane-mask {
+        display: block;
+        position: absolute;
+        top: $app-bar-height-large;
+        bottom: $footer-height;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background-color: #000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity ease 0.2s;
     }
 
     & > .main {
@@ -51,6 +70,7 @@ $footer-height: 38px;
         right: 0;
         overflow-x: hidden;
         overflow-y: scroll;
+        transition: left ease 0.2s;
 
         @include scrollbar-color(var(--scrollbar-thumb-color), var(--scrollbar-back-color));
     }
@@ -62,5 +82,36 @@ $footer-height: 38px;
         right: 0;
         bottom: 0;
         height: $footer-height;
+    }
+
+    @media (max-width: $breakpoints-sm) {
+        & > .header-pane {
+            height: $app-bar-height-large;
+        }
+
+        & > .left-pane {
+            top: $app-bar-height-large;
+            left: -1 * $left-pane-width;
+
+            &.group-panel-expanded {
+                left: 0;
+            }
+        }
+
+        & > .left-pane-mask {
+            &.group-panel-expanded {
+                opacity: 0.5;
+                pointer-events: all;
+            }
+        }
+
+        & > .main {
+            top: $app-bar-height-large;
+            left: 0;
+        }
+
+        & > .loading-mask {
+            top: $app-bar-height-large;
+        }
     }
 }

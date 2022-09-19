@@ -12,6 +12,8 @@ public partial class App
 
     private bool Loading = true;
 
+    private bool GroupPanelExpanded = false;
+
     protected override async Task OnInitializedAsync()
     {
         var url = "https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/master/README.md";
@@ -49,5 +51,15 @@ public partial class App
     {
         this.Keywords = keywords;
         this.UpdateRootGroupVisibility();
+    }
+
+    private void OnClickGroupPanelMenu()
+    {
+        this.GroupPanelExpanded = !this.GroupPanelExpanded;
+    }
+
+    private void OnClickGroupLink()
+    {
+        this.GroupPanelExpanded = false;
     }
 }

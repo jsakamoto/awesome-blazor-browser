@@ -15,6 +15,9 @@ public partial class AppBar : IDisposable
     [Parameter]
     public EventCallback<string> OnChangeKeywords { get; set; }
 
+    [Parameter]
+    public EventCallback OnClickGroupPanelMenu { get; set; }
+
     protected override void OnInitialized()
     {
         this.DebounceTimer.Elapsed += this.DebounceTimer_Elapsed;

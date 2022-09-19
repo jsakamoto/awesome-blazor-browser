@@ -14,9 +14,13 @@ public partial class GroupSelector
     [Parameter]
     public EventCallback<AwesomeResourceGroup> OnChangeGroupState { get; set; }
 
-    private async Task OnClickGroupLink(string anchorName)
+    [Parameter]
+    public EventCallback OnClickGroupLink { get; set; }
+
+    private async Task _OnClickGroupLink(string anchorName)
     {
         await this.JS.ScrollToAnchorAsync(anchorName, smooth: true, changeUrl: true);
+        await this.OnClickGroupLink.InvokeAsync();
     }
 
     private Task OnClickToggleBox(AwesomeResourceGroup group)

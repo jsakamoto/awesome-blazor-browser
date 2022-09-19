@@ -1,43 +1,48 @@
 {
   "selection": [
     {
-      "order": 20,
+      "order": 23,
       "name": "checkbox-blank",
       "prevSize": 32
     },
     {
-      "order": 21,
+      "order": 24,
       "name": "checkbox-checked",
       "prevSize": 32
     },
     {
-      "order": 22,
+      "order": 25,
       "name": "checkbox-indeterminate",
       "prevSize": 32
     },
     {
-      "order": 23,
+      "order": 26,
       "name": "expand-less",
       "prevSize": 32
     },
     {
-      "order": 24,
+      "order": 27,
       "name": "expand-more",
       "prevSize": 32
     },
     {
-      "order": 25,
+      "order": 28,
       "name": "link",
       "prevSize": 32
     },
     {
-      "order": 26,
+      "order": 29,
       "name": "logo-blazor-large",
       "prevSize": 32
     },
     {
-      "order": 27,
+      "order": 30,
       "name": "mark-github",
+      "prevSize": 32
+    },
+    {
+      "order": 31,
+      "name": "menu_black_24dp",
       "prevSize": 32
     }
   ],
@@ -47,7 +52,7 @@
       "width": 24,
       "height": 24
     },
-    "iconsHash": 81490830
+    "iconsHash": 739937485
   },
   "height": 1024,
   "prevSize": 32,
@@ -132,6 +137,16 @@
         "mark-github"
       ],
       "defaultCode": 59655
+    },
+    {
+      "paths": [
+        "M128 768h768v-85.333h-768v85.333zM128 554.667h768v-85.333h-768v85.333zM128 256v85.333h768v-85.333h-768z"
+      ],
+      "grid": 0,
+      "tags": [
+        "menu_black_24dp"
+      ],
+      "defaultCode": 59656
     }
   ],
   "colorThemes": [],

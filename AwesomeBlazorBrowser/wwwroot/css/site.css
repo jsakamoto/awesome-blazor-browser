@@ -55,6 +55,7 @@ body, input[type=text] {
 body {
   font-size: 16px;
   line-height: 1.5;
+  background-color: var(--default-back-color);
 }
 
 input[type=text] {
@@ -131,6 +132,10 @@ a.clickable:hover {
   content: "\e907";
 }
 
+.icon-menu:before {
+  content: "\e908";
+}
+
 .toggle-box {
   font-family: "Awesome-Blazor-Browser-Icons";
   -webkit-font-smoothing: antialiased;
@@ -205,7 +210,7 @@ a.clickable:hover {
   left: 0;
   bottom: 38px;
   right: 0;
-  z-index: 1;
+  z-index: 3;
   background-color: var(--default-back-color);
 }
 #app > .left-pane {
@@ -216,6 +221,22 @@ a.clickable:hover {
   left: 0;
   bottom: 38px;
   width: 280px;
+  transition: left ease 0.2s;
+  z-index: 2;
+  background-color: var(--default-back-color);
+}
+#app > .left-pane-mask {
+  display: block;
+  position: absolute;
+  top: 100px;
+  bottom: 38px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: #000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity ease 0.2s;
 }
 #app > .main {
   display: block;
@@ -226,6 +247,7 @@ a.clickable:hover {
   right: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+  transition: left ease 0.2s;
 }
 #app > .main::-webkit-scrollbar {
   width: 12px;
@@ -249,6 +271,29 @@ a.clickable:hover {
   right: 0;
   bottom: 0;
   height: 38px;
+}
+@media (max-width: 600px) {
+  #app > .header-pane {
+    height: 100px;
+  }
+  #app > .left-pane {
+    top: 100px;
+    left: -280px;
+  }
+  #app > .left-pane.group-panel-expanded {
+    left: 0;
+  }
+  #app > .left-pane-mask.group-panel-expanded {
+    opacity: 0.5;
+    pointer-events: all;
+  }
+  #app > .main {
+    top: 100px;
+    left: 0;
+  }
+  #app > .loading-mask {
+    top: 100px;
+  }
 }
 
 .app-bar {
@@ -295,6 +340,22 @@ a.clickable:hover {
   margin-right: 16px;
   flex-grow: 1;
   display: flex;
+  align-items: center;
+  visibility: hidden;
+}
+.app-bar > .search-box.enable-search-box {
+  visibility: visible;
+}
+.app-bar > .search-box .icon-menu {
+  color: var(--appbar-text-color);
+  text-decoration: none;
+  font-size: 24px;
+  display: none;
+  padding: 8px;
+  transition: color ease 0.2s;
+}
+.app-bar > .search-box .icon-menu:hover {
+  color: #fff;
 }
 .app-bar > .search-box input {
   background-color: var(--searchbox-back-color);
@@ -309,6 +370,27 @@ a.clickable:hover {
 .app-bar > .search-box input:focus {
   background-color: var(--searchbox-back-color-focused);
   color: var(--searchbox-text-color-focused);
+}
+@media (max-width: 600px) {
+  .app-bar {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .app-bar > .app-text > .app-description {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  .app-bar > .search-box {
+    width: 100%;
+    flex-grow: 0;
+    margin-top: 6px;
+  }
+  .app-bar > .search-box .icon-menu {
+    display: inline-block;
+  }
+  .app-bar > .search-box input {
+    margin: 0 8px 0 0;
+  }
 }
 
 .groups-panel {

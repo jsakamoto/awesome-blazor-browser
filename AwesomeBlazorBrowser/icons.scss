@@ -69,3 +69,9 @@
         content: $icon-mark-github;
     }
 }
+
+.icon-menu {
+    &:before {
+        content: $icon-menu;
+    }
+}

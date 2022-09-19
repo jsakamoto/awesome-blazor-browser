@@ -1,4 +1,5 @@
 ﻿@import "../icons.variables.scss";
+@import "../site.variables.scss";
 
 .app-bar {
     background-color: var(--appbar-back-color);
@@ -50,6 +51,26 @@
         margin-right: 16px;
         flex-grow: 1;
         display: flex;
+        align-items: center;
+        visibility: hidden;
+
+        &.enable-search-box {
+            visibility: visible;
+        }
+
+        .icon-menu {
+            //border:solid 1px red;
+            color: var(--appbar-text-color);
+            text-decoration: none;
+            font-size: 24px;
+            display: none;
+            padding: 8px;
+            transition: color ease 0.2s;
+
+            &:hover {
+                color: #fff;
+            }
+        }
 
         input {
             background-color: var(--searchbox-back-color);
@@ -64,6 +85,32 @@
             &:focus {
                 background-color: var(--searchbox-back-color-focused);
                 color: var(--searchbox-text-color-focused);
+            }
+        }
+    }
+
+    @media (max-width: $breakpoints-sm) {
+        flex-direction: column;
+        justify-content: center;
+
+        & > .app-text {
+            & > .app-description {
+                font-size: 12px;
+                line-height: 12px;
+            }
+        }
+
+        & > .search-box {
+            width: 100%;
+            flex-grow: 0;
+            margin-top: 6px;
+
+            .icon-menu {
+                display: inline-block;
+            }
+
+            input {
+                margin: 0 8px 0 0;
             }
         }
     }

@@ -8,6 +8,8 @@
     </div>
 
     <div class="selector">
-        <GroupSelector Groups="Group.SubGroups" OnChangeGroupState="_OnChangeGroupState" />
+        <GroupSelector Groups="Group.SubGroups"
+                       OnChangeGroupState="_OnChangeGroupState"
+                       OnClickGroupLink="@(() => OnClickGroupLink.InvokeAsync())" />
     </div>
 </div>

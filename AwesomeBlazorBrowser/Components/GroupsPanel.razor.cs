@@ -11,6 +11,9 @@ public partial class GroupsPanel
     [Parameter]
     public EventCallback OnChangeGroupState { get; set; }
 
+    [Parameter]
+    public EventCallback OnClickGroupLink { get; set; }
+
     private Task _OnChangeGroupState(AwesomeResourceGroup group)
     {
         return this.OnChangeGroupState.InvokeAsync(group);

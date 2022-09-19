@@ -14,7 +14,7 @@
                     <input type="button" @onclick="@(() => OnClickToggleBox(group))" />
                 </label>
 
-                <a href="#@anchorName" class="link" @onclick="@(() => OnClickGroupLink(anchorName))" @onclick:preventDefault="true">
+                <a href="#@anchorName" class="link" @onclick="@(() => _OnClickGroupLink(anchorName))" @onclick:preventDefault="true">
                     @group.Title
                 </a>
 
@@ -30,7 +30,8 @@
                 <div class="sub-group" style="height:@GetSubGroupsHeight(group);">
                     <GroupSelector ParentGroupAnchor="@anchorName"
                                    Groups="group.SubGroups"
-                                   OnChangeGroupState="_OnChangeSubGroupState" />
+                                   OnChangeGroupState="_OnChangeSubGroupState"
+                                   OnClickGroupLink="@(()=> OnClickGroupLink.InvokeAsync())"/>
                 </div>
             }
         </div>

@@ -10,10 +10,8 @@
         </div>
     </div>
 
-    <div class="search-box">
-        @if (EnableSearchBox)
-        {
-            <input type="text" placeholder="Search" @bind="Keywords" @oninput="OnInputKeywords" />
-        }
+    <div class="search-box @CssClass(new{EnableSearchBox})">
+        <a class="icon icon-menu" @onclick="@(()=> this.OnClickGroupPanelMenu.InvokeAsync())"></a>
+        <input type="text" placeholder="Search" @bind="Keywords" @oninput="OnInputKeywords" />
     </div>
 </div>
