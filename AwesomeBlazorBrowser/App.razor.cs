@@ -15,23 +15,23 @@ public partial class App
 
     private string Keywords = "";
 
-    private bool ParsingComplete = false;
-
     private bool Loading = true;
 
     private bool GroupPanelExpanded = false;
+
+    private readonly TaskCompletionSource ParsingCompletionSource = new();
 
     protected override async Task OnInitializedAsync()
     {
         var url = "https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/master/README.md";
         var awesomeBlazorContents = await this.HttpClient.GetStringAsync(url);
         this.RootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
-        this.ParsingComplete = true;
+        this.ParsingCompletionSource.SetResult();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (this.ParsingComplete == true && this.Loading == true)
+        if (this.ParsingCompletionSource.Task.IsCompleted == true && this.Loading == true)
         {
             this.Loading = false;
             this.StateHasChanged();
@@ -54,10 +54,16 @@ public partial class App
         this.UpdateRootGroupVisibility();
     }
 
-    private void OnChangeKeywords(string keywords)
+    private async Task OnChangeKeywords(string keywords)
     {
         this.Keywords = keywords;
+
+        await this.ParsingCompletionSource.Task;
+
         this.UpdateRootGroupVisibility();
+
+        var nextUrl = this.NavigationManager.GetUriWithQueryParameter("k", keywords);
+        this.NavigationManager.NavigateTo(nextUrl, new NavigationOptions() { ReplaceHistoryEntry = true });
     }
 
     private void OnClickGroupPanelMenu()
