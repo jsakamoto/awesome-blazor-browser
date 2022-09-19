@@ -20,6 +20,7 @@ footer {
         color: var(--footer-text-color);
         height: 24px;
         line-height: 24px;
+        white-space: nowrap;
 
         &.blazor {
             &:after {
@@ -45,6 +46,19 @@ footer {
             }
 
             padding-left: 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 0 8px;
+        font-size: 11.2px;
+
+        & > .footer-item {
+            margin-right: 8px;
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }

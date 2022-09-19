@@ -515,6 +515,7 @@ footer > .footer-item {
   color: var(--footer-text-color);
   height: 24px;
   line-height: 24px;
+  white-space: nowrap;
 }
 footer > .footer-item.blazor {
   padding-left: 24px;
@@ -537,4 +538,16 @@ footer > .footer-item.github:after {
   position: absolute;
   top: 0;
   left: 0;
+}
+@media (max-width: 480px) {
+  footer {
+    padding: 0 8px;
+    font-size: 11.2px;
+  }
+  footer > .footer-item {
+    margin-right: 8px;
+  }
+  footer > .footer-item:last-child {
+    margin-right: 0;
+  }
 }
