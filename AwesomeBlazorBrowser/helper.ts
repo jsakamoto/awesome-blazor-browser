@@ -1,11 +1,16 @@
 ﻿export const scrollToAnchor = (anchorName: string, smooth?: boolean, changeUrl?: boolean): void => {
-    const element = document.querySelector(`a[name=${anchorName}]`);
-    if (element !== null) {
-        element.scrollIntoView({ behavior: smooth === true ? 'smooth' : 'auto' });
-        if (changeUrl === true) {
-            const href = location.href.split('#')[0];
-            history.pushState(null, document.title, `${href}#${anchorName}`);
+    try {
+        const element = document.querySelector(`a[name=${anchorName}]`);
+        if (element !== null) {
+            element.scrollIntoView({ behavior: smooth === true ? 'smooth' : 'auto' });
+            if (changeUrl === true) {
+                const href = location.href.split('#')[0];
+                history.pushState(null, document.title, `${href}#${anchorName}`);
+            }
         }
+    }
+    catch (error) {
+        console.error(error);
     }
 }
 

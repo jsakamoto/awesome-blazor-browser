@@ -1,4 +1,5 @@
-﻿using AwesomeBlazor.Models;
+﻿using System.Web;
+using AwesomeBlazor.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser;
@@ -66,9 +67,10 @@ public partial class App
 
         this.UpdateRootGroupVisibility();
 
-        var nextUrl = this.NavigationManager.GetUriWithQueryParameter("k", keywords);
-        var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
-        if (uriFragment != "") nextUrl += uriFragment;
+        var uri = new Uri(this.NavigationManager.Uri);
+        var queryStrings = HttpUtility.ParseQueryString(uri.Query);
+        queryStrings["k"] = keywords;
+        var nextUrl = new UriBuilder(uri) { Query = queryStrings.ToString() }.Uri.ToString();
         this.NavigationManager.NavigateTo(nextUrl, new NavigationOptions() { ReplaceHistoryEntry = true });
 
         this.GroupPanelExpanded = false;

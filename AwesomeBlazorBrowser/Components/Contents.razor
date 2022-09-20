@@ -6,7 +6,7 @@
         <div class="@CssClass("group", new { group.Visible })" @key="group.Id">
 
             <div class="group-title">
-                <a class="group-anchor" name="@anchorName" href="#@(anchorName)"></a>
+                <a class="group-anchor" name="@anchorName" href="#@(anchorName)" @onclick="@(() => OnClickGroupLink(anchorName))" @onclick:preventDefault="true"></a>
                 @((MarkupString)group.TitleHtml)
             </div>
 
