@@ -21,7 +21,13 @@ public partial class GroupsPanel
 
     private Task OnClickToggleBox(AwesomeResourceGroup group)
     {
-        group.SelectionState = group.SelectionState != SelectionState.Selected ? SelectionState.Selected : SelectionState.Unselected;
+        group.SelectionState = group.SelectionState switch
+        {
+            SelectionState.Selected => SelectionState.Unselected,
+            SelectionState.Unselected => SelectionState.Selected,
+            _ => SelectionState.Selected
+        };
+
         return this.OnChangeGroupState.InvokeAsync(group);
     }
 }
