@@ -376,9 +376,8 @@ a.clickable:hover {
   padding-left: 46px;
   min-width: 280px;
 }
-.app-bar > .app-text:after {
+.app-bar > .app-text .app-icon {
   font-family: "Awesome-Blazor-Browser-Icons";
-  content: "\e906";
   font-size: 32px;
   position: absolute;
   top: -2px;
@@ -392,10 +391,9 @@ a.clickable:hover {
   font-size: 18px;
 }
 .app-bar > .app-text > .app-description {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--weaked-text-color);
   line-height: 14px;
-  margin-top: -4px;
 }
 .app-bar > .search-box {
   margin-left: 16px;

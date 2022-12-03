@@ -20,6 +20,7 @@
     <PackageReference Include="PublishSPAforGitHubPages.Build" Version="2.0.2" />
     <PackageReference Include="BlazorWasmPreRendering.Build" Version="2.0.0-preview.4" />
     <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="2.0.0" />
+    <PackageReference Include="Toolbelt.Blazor.GradatedText" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

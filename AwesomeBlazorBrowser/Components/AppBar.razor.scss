@@ -18,9 +18,8 @@
         margin-left: 16px;
         padding-left: 46px;
 
-        &:after {
+        .app-icon {
             font-family: '#{$icomoon-font-family}';
-            content: $icon-logo-blazor-large;
             font-size: 32px;
             position: absolute;
             top: -2px;
@@ -39,10 +38,9 @@
         }
 
         & > .app-description {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--weaked-text-color);
             line-height: 14px;
-            margin-top: -4px;
         }
     }
 
