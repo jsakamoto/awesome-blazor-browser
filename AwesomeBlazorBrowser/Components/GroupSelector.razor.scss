@@ -18,6 +18,10 @@ $group-title-size: 26px;
                     text-decoration: none;
                 }
             }
+
+            .toggle-box {
+                color: var(--deadlink-text-color);
+            }
         }
 
         & > .group-title {

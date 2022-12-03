@@ -508,6 +508,9 @@ a.clickable:hover {
 .group-selector > .group:not(.visible) a.link:hover {
   text-decoration: none;
 }
+.group-selector > .group:not(.visible) .toggle-box {
+  color: var(--deadlink-text-color);
+}
 .group-selector > .group > .group-title {
   white-space: nowrap;
   height: 26px;
