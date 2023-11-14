@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
-          dotnet-quality: 'preview'
 
       - name: Install .NET WebAssembly Tools
         run: dotnet workload install wasm-tools
