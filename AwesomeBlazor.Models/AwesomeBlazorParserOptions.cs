@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace AwesomeBlazor.Models;
 
-namespace AwesomeBlazor.Models
+public class AwesomeBlazorParserOptions
 {
-    public class AwesomeBlazorParserOptions
-    {
-        public List<string> SkipCategoryNames { get; set; } = new List<string>() { "Contents" };
+    public List<string> SkipCategoryNames { get; set; } = new List<string>() { "Contents" };
 
-        public string EndCategoryName { get; set; } = "License";
-    }
+    public string EndCategoryName { get; set; } = "License";
 }

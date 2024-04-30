@@ -1,9 +1,8 @@
-﻿namespace AwesomeBlazor.Models
+﻿namespace AwesomeBlazor.Models;
+
+public enum SelectionState
 {
-    public enum SelectionState
-    {
-        Unselected,
-        SelectedAny,
-        Selected
-    }
+    Unselected,
+    SelectedAny,
+    Selected
 }
