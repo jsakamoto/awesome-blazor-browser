@@ -6,7 +6,7 @@ public static class AwesomeResourceFilter
     {
         var keywordsArray = string.IsNullOrEmpty(keywords) ?
             [] :
-            keywords.ToLower().Split([' '], StringSplitOptions.RemoveEmptyEntries);
+            keywords.ToLower().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
         groups.UpdateVisibiltyByKeywordFilter(keywordsArray);
     }
