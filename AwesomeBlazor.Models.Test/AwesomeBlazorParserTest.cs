@@ -1,10 +1,8 @@
-using Xunit;
-
 namespace AwesomeBlazor.Models.Test;
 
 public class AwesomeBlazorParserTest
 {
-    [Fact]
+    [Test]
     public void Parse_Test()
     {
         var contents = TestFixture.GetContentsForTest();
@@ -85,7 +83,7 @@ public class AwesomeBlazorParserTest
             .Is("Blazor workshop | https://github.com/dotnet-presentations/blazor-workshop/");
     }
 
-    [Fact]
+    [Test]
     public void ParseAsResource_Simplest_Test()
     {
         AwesomeBlazorParser.TryParseAsResource(
@@ -102,7 +100,7 @@ public class AwesomeBlazorParserTest
         resource.DescriptionText.Is("This is fizz buzz.");
     }
 
-    [Fact]
+    [Test]
     public void ParseAsResource_FullSet_Test()
     {
         AwesomeBlazorParser.TryParseAsResource(
@@ -127,7 +125,7 @@ public class AwesomeBlazorParserTest
             "<a href=\"https://youtube.com/\" target=\"_blank\">[Video]</a>.");
     }
 
-    [Fact]
+    [Test]
     public void ParseAsResource_with_Missing_Hyphen_Test()
     {
         AwesomeBlazorParser.TryParseAsResource(
@@ -144,7 +142,7 @@ public class AwesomeBlazorParserTest
         resource.DescriptionText.Is("This is fizz buzz.");
     }
 
-    [Fact]
+    [Test]
     public void ParseAsResource_with_Missing_Bullet_Test()
     {
         AwesomeBlazorParser.TryParseAsResource(

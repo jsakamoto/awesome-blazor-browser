@@ -1,10 +1,8 @@
-﻿using Xunit;
-
-namespace AwesomeBlazor.Models.Test;
+﻿namespace AwesomeBlazor.Models.Test;
 
 public class AwesomeResourceFilterTest
 {
-    [Fact]
+    [Test]
     public void UpdateVisibiltyByKeywordFilter_Hit_in_Description_Test()
     {
         var contents = TestFixture.GetContentsForTest();
@@ -28,7 +26,7 @@ public class AwesomeResourceFilterTest
             .Is("Blazor workshop");
     }
 
-    [Fact]
+    [Test]
     public void UpdateVisibiltyByKeywordFilter_Hit_in_Level2_Title_Test()
     {
         var contents = TestFixture.GetContentsForTest();
@@ -53,7 +51,7 @@ public class AwesomeResourceFilterTest
             .Is("BlazorFile2Azure");
     }
 
-    [Fact]
+    [Test]
     public void UpdateVisibiltyByKeywordFilter_Hit_MultiKeywords_Test()
     {
         var contents = TestFixture.GetContentsForTest();

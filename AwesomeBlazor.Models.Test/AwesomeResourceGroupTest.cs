@@ -1,10 +1,8 @@
-﻿using Xunit;
-
-namespace AwesomeBlazor.Models.Test;
+﻿namespace AwesomeBlazor.Models.Test;
 
 public class AwesomeResourceGroupTest
 {
-    [Fact]
+    [Test]
     public void SelectionState_Test()
     {
         var contents = TestFixture.GetContentsForTest();
@@ -34,7 +32,7 @@ public class AwesomeResourceGroupTest
         childGroup2.SelectionState.Is(SelectionState.Unselected);
     }
 
-    [Fact]
+    [Test]
     public void GetExpandedDescendantsCount_Test()
     {
         var root = new AwesomeResourceGroup

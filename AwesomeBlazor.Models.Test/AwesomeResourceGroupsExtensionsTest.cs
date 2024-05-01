@@ -1,10 +1,8 @@
-﻿using Xunit;
-
-namespace AwesomeBlazor.Models.Test;
+﻿namespace AwesomeBlazor.Models.Test;
 
 public class AwesomeResourceGroupsExtensionsTest
 {
-    [Fact]
+    [Test]
     public void EnumGroupsDescendants_Test()
     {
         var contents = TestFixture.GetContentsForTest();
