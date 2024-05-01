@@ -2,7 +2,7 @@
 
 public class AwesomeBlazorParserOptions
 {
-    public List<string> SkipCategoryNames { get; set; } = new List<string>() { "Contents" };
+    public List<string> SkipCategoryNames { get; set; } = ["Contents"];
 
     public string EndCategoryName { get; set; } = "License";
 }

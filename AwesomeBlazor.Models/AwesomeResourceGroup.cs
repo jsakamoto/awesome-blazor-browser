@@ -35,9 +35,9 @@ public class AwesomeResourceGroup
 
     public string TitleHtml { get; }
 
-    public List<AwesomeResourceGroup> SubGroups { get; } = new List<AwesomeResourceGroup>();
+    public List<AwesomeResourceGroup> SubGroups { get; } = [];
 
-    public List<AwesomeResource> Resources { get; } = new List<AwesomeResource>();
+    public List<AwesomeResource> Resources { get; } = [];
 
     public string ParagraphsHtml { get; set; } = "";
 
