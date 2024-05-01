@@ -3,6 +3,20 @@
 public class AwesomeResourceGroupTest
 {
     [Test]
+    public void ParentId_Test()
+    {
+        var root = new AwesomeResourceGroup { Id = "/" };
+        var child1 = new AwesomeResourceGroup { Id = "/foo/" };
+        var child2 = new AwesomeResourceGroup { Id = "/foo/bar/" };
+        var child3 = new AwesomeResourceGroup { Id = "/foo/bar/fizz/" };
+
+        root.ParentId.Is("/");
+        child1.ParentId.Is("/");
+        child2.ParentId.Is("/foo/");
+        child3.ParentId.Is("/foo/bar/");
+    }
+
+    [Test]
     public void SelectionState_Test()
     {
         var contents = TestFixture.GetContentsForTest();

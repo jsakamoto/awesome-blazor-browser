@@ -1,13 +1,21 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace AwesomeBlazor.Models;
 
 public class AwesomeResourceGroup
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    [JsonIgnore]
+    public string Id { get; init; } = Guid.NewGuid().ToString();
+
+    public string? _parentId;
+
+    [JsonIgnore]
+    public string ParentId => this._parentId ??= this.Id == "/" ? "/" : string.Join('/', this.Id.TrimEnd('/').Split('/')[0..^1]) + '/';
 
     private bool Selected = true;
 
+    [JsonIgnore]
     public SelectionState SelectionState
     {
         get
@@ -27,32 +35,31 @@ public class AwesomeResourceGroup
         }
     }
 
+    [JsonIgnore]
     public bool Visible { get; set; } = true;
 
+    [JsonIgnore]
     public bool Expanded { get; set; } = true;
 
-    public string Title { get; }
+    public string Title { get; init; } = "";
 
-    public string TitleHtml { get; }
+    public string TitleHtml { get; init; } = "";
 
+    [JsonIgnore]
     public List<AwesomeResourceGroup> SubGroups { get; } = [];
 
+    [JsonIgnore]
     public List<AwesomeResource> Resources { get; } = [];
 
     public string ParagraphsHtml { get; set; } = "";
 
-    private readonly string AnchorName;
+    [JsonIgnore]
+    public byte[] Embedding { get; set; } = [];
 
-    public AwesomeResourceGroup() : this(title: "", titleHtml: "")
-    {
-    }
+    private string? _anchorName;
 
-    public AwesomeResourceGroup(string title, string titleHtml)
-    {
-        this.Title = title;
-        this.TitleHtml = titleHtml;
-        this.AnchorName = Regex.Replace(title, "[^a-zA-Z0-9]", "-").ToLower();
-    }
+    [JsonIgnore]
+    public string AnchorName => this._anchorName ??= Regex.Replace(this.Title, "[^a-zA-Z0-9]", "-").ToLower();
 
     public override string ToString()
     {

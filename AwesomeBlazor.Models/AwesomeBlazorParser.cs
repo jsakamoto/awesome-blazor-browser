@@ -50,7 +50,7 @@ public static class AwesomeBlazorParser
                 else
                 {
                     var titleHtml = PostProcessHtml(Markdown.ToHtml(title), stripParagraphTag: true);
-                    currentGroup = new AwesomeResourceGroup(title: HtmlToText(titleHtml), titleHtml: titleHtml);
+                    currentGroup = new() { Title = HtmlToText(titleHtml), TitleHtml = titleHtml };
                     groups[level - 1].SubGroups.Add(currentGroup);
                     groups[level] = currentGroup;
                 }

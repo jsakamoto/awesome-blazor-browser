@@ -18,6 +18,8 @@ public class AwesomeResource
 
     public string DescriptionHtml { get; set; }
 
+    public byte[] Embedding { get; set; } = [];
+
     public AwesomeResource(string title, string resourceUrl, string gitHubStarsUrl, string lastCommitUrl, string descriptionText, string descriptionHtml)
     {
         this.Title = title;
