@@ -49,16 +49,31 @@ public static class AwesomeBlazorParser
                 }
                 else
                 {
+                    var parentGroup = groups[level - 1];
                     var titleHtml = PostProcessHtml(Markdown.ToHtml(title), stripParagraphTag: true);
-                    currentGroup = new() { Title = HtmlToText(titleHtml), TitleHtml = titleHtml };
-                    groups[level - 1].SubGroups.Add(currentGroup);
+                    var titleText = HtmlToText(titleHtml);
+
+                    // Ensure the id is unique
+                    var id = parentGroup.Id + TextToAnchor(titleText);
+                    var idSuffix = "";
+                    var idSuffixCounter = 0;
+                    while (parentGroup.SubGroups.Any(g => g.Id == id + idSuffix + "/")) { idSuffix = $"-{idSuffixCounter++}"; }
+
+                    currentGroup = new()
+                    {
+                        Id = id + idSuffix + "/",
+                        Order = parentGroup.SubGroups.Count,
+                        Title = titleText,
+                        TitleHtml = titleHtml
+                    };
+                    parentGroup.SubGroups.Add(currentGroup);
                     groups[level] = currentGroup;
                 }
             }
 
             else if (currentGroup != null)
             {
-                if (TryParseAsResource(current, out var resource))
+                if (TryParseAsResource(currentGroup, current, out var resource))
                 {
                     prevLineType = LineTypes.Resource;
                     currentGroup.Resources.Add(resource);
@@ -101,7 +116,12 @@ public static class AwesomeBlazorParser
             .Trim();
     }
 
-    internal static bool TryParseAsResource(string contents, [NotNullWhen(true)] out AwesomeResource? resource)
+    private static string TextToAnchor(string text)
+    {
+        return Regex.Replace(text, "[^a-zA-Z0-9]", "-").ToLower();
+    }
+
+    internal static bool TryParseAsResource(AwesomeResourceGroup parentGroup, string contents, [NotNullWhen(true)] out AwesomeResource? resource)
     {
         resource = null;
 
@@ -123,16 +143,26 @@ public static class AwesomeBlazorParser
         });
 
 
+        var title = m1.Groups["title"].Value;
         var descriptionHtml = PostProcessHtml(Markdown.ToHtml(body), stripParagraphTag: true);
-        var descriptionText = HtmlToText(descriptionHtml);
-        resource = new AwesomeResource(
-            m1.Groups["title"].Value,
-            m1.Groups["url"].Value,
-            gitHubStarsUrl,
-            lastCommitUrl,
-            descriptionText,
-            descriptionHtml
-        );
+
+        // Ensure the id is unique
+        var id = parentGroup.Id + TextToAnchor(title);
+        var idSuffix = "";
+        var idSuffixCounter = 0;
+        while (parentGroup.Resources.Any(r => r.Id == id + idSuffix)) { idSuffix = $"-{idSuffixCounter++}"; }
+
+        resource = new AwesomeResource
+        {
+            Id = id + idSuffix,
+            Order = parentGroup.Resources.Count,
+            Title = title,
+            ResourceUrl = m1.Groups["url"].Value,
+            GitHubStarsUrl = gitHubStarsUrl,
+            LastCommitUrl = lastCommitUrl,
+            DescriptionText = HtmlToText(descriptionHtml),
+            DescriptionHtml = descriptionHtml
+        };
         return true;
     }
 }

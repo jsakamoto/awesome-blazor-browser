@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 using AwesomeBlazor.Models;
 using Azure;
 using Azure.Data.Tables;
@@ -28,5 +29,15 @@ public class AwesomeResourceGroupEntity : ITableEntity
             Content = JsonSerializer.Serialize(resourceGroup),
             Embedding = resourceGroup.Embedding
         };
+    }
+
+    private static readonly Lazy<MethodInfo?> _idSetter = new(() => typeof(AwesomeResourceGroup).GetProperty(nameof(AwesomeResourceGroup.Id))?.GetSetMethod());
+
+    public AwesomeResourceGroup ConvertToResourceGroup()
+    {
+        var resourceGroup = JsonSerializer.Deserialize<AwesomeResourceGroup>(this.Content ?? "{}") ?? new();
+        _idSetter.Value?.Invoke(resourceGroup, [this.RowKey]);
+        resourceGroup.Embedding = this.Embedding;
+        return resourceGroup;
     }
 }

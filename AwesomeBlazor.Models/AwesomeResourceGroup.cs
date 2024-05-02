@@ -6,28 +6,30 @@ namespace AwesomeBlazor.Models;
 public class AwesomeResourceGroup
 {
     [JsonIgnore]
-    public string Id { get; init; } = Guid.NewGuid().ToString();
+    public string Id { get; init; } = "/";
 
     public string? _parentId;
 
     [JsonIgnore]
     public string ParentId => this._parentId ??= this.Id == "/" ? "/" : string.Join('/', this.Id.TrimEnd('/').Split('/')[0..^1]) + '/';
 
-    private bool Selected = true;
+    public int Order { get; init; }
+
+    private bool _selected = true;
 
     [JsonIgnore]
     public SelectionState SelectionState
     {
         get
         {
-            if (!this.SubGroups.Any()) return this.Selected ? SelectionState.Selected : SelectionState.Unselected;
+            if (!this.SubGroups.Any()) return this._selected ? SelectionState.Selected : SelectionState.Unselected;
             if (this.SubGroups.All(g => g.SelectionState == SelectionState.Unselected)) return SelectionState.Unselected;
             if (this.SubGroups.All(g => g.SelectionState == SelectionState.Selected)) return SelectionState.Selected;
             return SelectionState.SelectedAny;
         }
         set
         {
-            if (!this.SubGroups.Any()) this.Selected = value == SelectionState.Selected;
+            if (!this.SubGroups.Any()) this._selected = value == SelectionState.Selected;
             foreach (var subGropup in this.SubGroups)
             {
                 subGropup.SelectionState = value;
@@ -54,7 +56,7 @@ public class AwesomeResourceGroup
     public string ParagraphsHtml { get; set; } = "";
 
     [JsonIgnore]
-    public byte[] Embedding { get; set; } = [];
+    public byte[]? Embedding { get; set; }
 
     private string? _anchorName;
 
