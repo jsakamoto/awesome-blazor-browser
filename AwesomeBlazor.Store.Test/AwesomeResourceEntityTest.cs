@@ -25,8 +25,8 @@ internal class AwesomeResourceEntityTest
         var entity = AwesomeResourceEntity.CreateFrom(resource);
 
         // Then
-        entity.PartitionKey.Is("/hello/");
-        entity.RowKey.Is("/hello/world");
+        entity.PartitionKey.Is("%hello%");
+        entity.RowKey.Is("%hello%world");
         entity.Embedding.Is([0x07, 0x08, 0x09, 0x0a]);
         entity.Content.Is("{" +
             "\"Order\":34," +
@@ -45,8 +45,8 @@ internal class AwesomeResourceEntityTest
         // Given
         var entity = new AwesomeResourceEntity
         {
-            PartitionKey = "/foo/bar/",
-            RowKey = "/foo/bar/fizz",
+            PartitionKey = "%foo%bar%",
+            RowKey = "%foo%bar%fizz",
             Content = "{" +
                 "\"Order\":56," +
                 "\"Title\":\"Fizz Buzz!\"," +

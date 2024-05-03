@@ -1,5 +1,4 @@
 ﻿using AwesomeBlazor.Models;
-using Azure;
 using Azure.Data.Tables;
 
 namespace AwesomeBlazor.Store;
@@ -46,26 +45,6 @@ public class AwesomeBlazorStore(
         internal TableClient Resources { get; } = tableServiceClient.GetTableClient("resources");
     }
 
-    internal class Entry : ITableEntity
-    {
-        public required string PartitionKey { get; set; }
-
-        public required string RowKey { get; set; }
-
-        public required string Title { get; set; }
-
-        public required string Description { get; set; }
-
-        public bool Indexed { get; set; }
-
-        public DateTimeOffset? Timestamp { get; set; }
-
-        public ETag ETag { get; set; }
-
-        public byte[]? Buff { get; set; }
-    }
-
-
     internal async ValueTask SaveToTableStorageAsync(AwesomeResourceGroup rootGroup)
     {
         await tableServiceClient.CreateTableIfNotExistsAsync("groups");
@@ -81,6 +60,13 @@ public class AwesomeBlazorStore(
         {
             var groupEntity = AwesomeResourceGroupEntity.CreateFrom(group);
             await tableClients.Groups.AddEntityAsync(groupEntity);
+
+            foreach (var resource in group.Resources)
+            {
+                var resourceEntity = AwesomeResourceEntity.CreateFrom(resource);
+                await tableClients.Resources.AddEntityAsync(resourceEntity);
+            }
+
             await this.SaveToTableStorageAsync(tableClients, group);
         }
     }

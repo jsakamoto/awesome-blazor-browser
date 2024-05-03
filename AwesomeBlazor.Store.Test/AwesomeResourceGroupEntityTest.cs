@@ -38,8 +38,8 @@ internal class AwesomeResourceGroupEntityTest
         // Given
         var entity = new AwesomeResourceGroupEntity
         {
-            PartitionKey = "/foo/",
-            RowKey = "/foo/bar/",
+            PartitionKey = "%foo%",
+            RowKey = "%foo%bar%",
             Content = "{" +
                 "\"Order\":12," +
                 "\"Title\":\"Hello, World!\"," +

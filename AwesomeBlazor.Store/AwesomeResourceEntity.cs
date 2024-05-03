@@ -22,10 +22,11 @@ public class AwesomeResourceEntity : ITableEntity
 
     public static AwesomeResourceEntity CreateFrom(AwesomeResource resource)
     {
+        static string encode(string value) => value.Replace("/", "%");
         return new AwesomeResourceEntity
         {
-            PartitionKey = resource.ParentId,
-            RowKey = resource.Id,
+            PartitionKey = encode(resource.ParentId),
+            RowKey = encode(resource.Id),
             Content = JsonSerializer.Serialize(resource),
             Embedding = resource.Embedding
         };
@@ -35,8 +36,9 @@ public class AwesomeResourceEntity : ITableEntity
 
     public AwesomeResource ConvertToResource()
     {
+        static string decode(string value) => value.Replace("%", "/");
         var resourceGroup = JsonSerializer.Deserialize<AwesomeResource>(this.Content ?? "{}") ?? new();
-        _idSetter.Value?.Invoke(resourceGroup, [this.RowKey]);
+        _idSetter.Value?.Invoke(resourceGroup, [decode(this.RowKey)]);
         resourceGroup.Embedding = this.Embedding;
         return resourceGroup;
     }
