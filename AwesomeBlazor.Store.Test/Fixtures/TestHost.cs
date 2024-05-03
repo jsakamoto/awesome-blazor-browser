@@ -18,9 +18,12 @@ internal class TestHost : IDisposable, IServiceProvider
 
     public object? GetService(Type serviceType) => this._serviceProvider.GetService(serviceType);
 
-    public async ValueTask StartAzuriteAsync()
+    public async ValueTask StartAzuriteAsync(string? localtion = null)
     {
-        this._azurite = XProcess.Start("azurite", "--inMemoryPersistence");
+        this._azurite = XProcess.Start("azurite",
+            localtion != null ?
+                $"-l \"{localtion}\"" :
+                "--inMemoryPersistence");
         await this._azurite.WaitForOutputAsync(output => output.StartsWith("Azurite Table service is successfully listening"), millsecondsTimeout: 5000);
     }
 

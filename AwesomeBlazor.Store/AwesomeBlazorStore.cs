@@ -33,17 +33,48 @@ public class AwesomeBlazorStore(
 
         return this._rootGroup;
     }
-
-    internal async ValueTask<AwesomeResourceGroup?> TryLoadFromTableStorageAsync()
-    {
-        throw new NotImplementedException();
-    }
-
     private class TableClients(TableServiceClient tableServiceClient)
     {
         internal TableClient Groups { get; } = tableServiceClient.GetTableClient("groups");
         internal TableClient Resources { get; } = tableServiceClient.GetTableClient("resources");
     }
+
+    internal async ValueTask<AwesomeResourceGroup?> TryLoadFromTableStorageAsync()
+    {
+        var tableClients = new TableClients(tableServiceClient);
+
+        var groups = new Dictionary<string, AwesomeResourceGroup>();
+        await foreach (var groupEntty in tableClients.Groups.QueryAsync<AwesomeResourceGroupEntity>())
+        {
+            var group = groupEntty.ConvertToResourceGroup();
+            groups.Add(group.Id, group);
+        }
+
+        var rootGroup = new AwesomeResourceGroup();
+        groups.Add(rootGroup.Id, rootGroup);
+        foreach (var group in groups.Values)
+        {
+            if (group.Id == "/") continue;
+            if (groups.TryGetValue(group.ParentId, out var parentGroup))
+            {
+                parentGroup.SubGroups.Add(group);
+            }
+        }
+
+        await foreach (var resourceEntty in tableClients.Resources.QueryAsync<AwesomeResourceEntity>())
+        {
+            var resource = resourceEntty.ConvertToResource();
+            if (groups.TryGetValue(resource.ParentId, out var parentGroup))
+            {
+                parentGroup.Resources.Add(resource);
+            }
+        }
+
+        rootGroup.ReorderChildren();
+
+        return rootGroup;
+    }
+
 
     internal async ValueTask SaveToTableStorageAsync(AwesomeResourceGroup rootGroup)
     {

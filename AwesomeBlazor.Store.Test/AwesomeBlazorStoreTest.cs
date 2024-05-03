@@ -52,7 +52,7 @@ internal class AwesomeBlazorStoreTest
         };
 
         // When
-        await testHost.StartAzuriteAsync();
+        await testHost.StartAzuriteAsync(localtion: @"c:\temp\l1");
         var store = testHost.GetRequiredService<AwesomeBlazorStore>();
         await store.SaveToTableStorageAsync(rootGroup);
 
@@ -85,5 +85,69 @@ internal class AwesomeBlazorStoreTest
             results.Add(dump(entity));
         }
         return results;
+    }
+
+    [Test]
+    public async Task TryLoadFromTableStorageAsync_Test()
+    {
+        // Given
+        using var testHost = new TestHost(services =>
+        {
+            services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
+            services.AddSingleton<HttpClient>();
+            services.AddSingleton<AwesomeBlazorStore>();
+        });
+        await testHost.StartAzuriteAsync();
+
+        var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
+
+        var groupEntities = new AwesomeResourceGroupEntity[] {
+            new() { PartitionKey = "%", RowKey = "%libraries%", Content = "{\"Order\":1,\"Title\":\"Libraries\"}", Embedding = [0xc1, 0xc2, 0xc3] },
+            new() { PartitionKey = "%", RowKey = "%samples%", Content = "{\"Order\":0,\"Title\":\"Samples\"}" },
+            new() { PartitionKey = "%libraries%", RowKey = "%libraries%charts%", Content = "{\"Order\":1,\"Title\":\"Charts\"}" },
+            new() { PartitionKey = "%libraries%", RowKey = "%libraries%maps%", Content = "{\"Order\":0,\"Title\":\"Maps\"}" },
+        };
+        await tableServiceClient.CreateTableAsync("groups");
+        var groupTableClient = tableServiceClient.GetTableClient("groups");
+        foreach (var groupEntity in groupEntities) { await groupTableClient.AddEntityAsync(groupEntity); }
+
+        var resourceEntities = new AwesomeResourceEntity[] {
+            new() { PartitionKey = "%libraries%charts%", RowKey = "%libraries%charts%blazing-bar-chart", Content = "{\"Order\":1,\"Title\":\"Blazing Bar Chart\"}" },
+            new() { PartitionKey = "%libraries%charts%", RowKey = "%libraries%charts%blazing-line-chart", Content = "{\"Order\":0,\"Title\":\"Blazing Line Chart\"}" },
+            new() { PartitionKey = "%libraries%maps%", RowKey = "%libraries%maps%blazor-maps", Content = "{\"Order\":0,\"Title\":\"Blazor Maps\"}" },
+            new() { PartitionKey = "%samples%", RowKey = "%samples%blazing-pizza", Content = "{\"Order\":0,\"Title\":\"Blazing Pizza\"}" },
+        };
+        await tableServiceClient.CreateTableAsync("resources");
+        var resourceTableClient = tableServiceClient.GetTableClient("resources");
+        foreach (var resourceEntity in resourceEntities) { await resourceTableClient.AddEntityAsync(resourceEntity); }
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.TryLoadFromTableStorageAsync();
+
+        // Then
+        rootGroup.IsNotNull();
+
+        rootGroup.SubGroups.Select(g => $"{g.Id}|{g.Title}")
+            .Is("/samples/|Samples",
+                "/libraries/|Libraries");
+        var samplesGroup = rootGroup.SubGroups[0];
+        samplesGroup.SubGroups.Count.Is(0);
+        samplesGroup.Resources.Select(r => $"{r.Id}|{r.Title}")
+            .Is("/samples/blazing-pizza|Blazing Pizza");
+        var librariesGroup = rootGroup.SubGroups[1];
+        librariesGroup.Resources.Count.Is(0);
+        librariesGroup.SubGroups.Select(g => $"{g.Id}|{g.Title}")
+            .Is("/libraries/maps/|Maps",
+                "/libraries/charts/|Charts");
+        var mapsSubGroup = librariesGroup.SubGroups[0];
+        mapsSubGroup.SubGroups.Count.Is(0);
+        mapsSubGroup.Resources.Select(r => $"{r.Id}|{r.Title}")
+            .Is("/libraries/maps/blazor-maps|Blazor Maps");
+        var chartsSubGroup = librariesGroup.SubGroups[1];
+        chartsSubGroup.SubGroups.Count.Is(0);
+        chartsSubGroup.Resources.Select(r => $"{r.Id}|{r.Title}")
+            .Is("/libraries/charts/blazing-line-chart|Blazing Line Chart",
+                "/libraries/charts/blazing-bar-chart|Blazing Bar Chart");
     }
 }

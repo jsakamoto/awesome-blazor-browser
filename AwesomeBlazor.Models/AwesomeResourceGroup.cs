@@ -81,4 +81,19 @@ public class AwesomeResourceGroup
         var descendantsCount = this.SubGroups.Select(subGrp => subGrp.GetExpandedDescendantsCount()).Sum();
         return childrenCount + descendantsCount;
     }
+
+    public void ReorderChildren()
+    {
+        foreach (var subGroup in this.SubGroups) subGroup.ReorderChildren();
+
+        if (this.SubGroups.Count != 0)
+        {
+            this.SubGroups.Sort((a, b) => a.Order - b.Order);
+        }
+
+        if (this.Resources.Count != 0)
+        {
+            this.Resources.Sort((a, b) => a.Order - b.Order);
+        }
+    }
 }
