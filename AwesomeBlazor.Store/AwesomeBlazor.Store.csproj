@@ -15,4 +15,8 @@
     <ProjectReference Include="..\AwesomeBlazor.Models\AwesomeBlazor.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="AwesomeBlazor.Store.Test" />
+  </ItemGroup>
+
 </Project>

@@ -21,8 +21,8 @@ internal class AwesomeResourceGroupEntityTest
         var entity = AwesomeResourceGroupEntity.CreateFrom(resourceGroup);
 
         // Then
-        entity.PartitionKey.Is("/");
-        entity.RowKey.Is("/hello-world-/");
+        entity.PartitionKey.Is("%");
+        entity.RowKey.Is("%hello-world-%");
         entity.Embedding.Is([0x01, 0x02, 0x03]);
         entity.Content.Is("{" +
             "\"Order\":0," +
