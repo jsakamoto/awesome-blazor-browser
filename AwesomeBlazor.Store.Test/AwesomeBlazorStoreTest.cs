@@ -52,12 +52,12 @@ internal class AwesomeBlazorStoreTest
         };
 
         // When
-        await testHost.StartAzuriteAsync(localtion: @"c:\temp\l1");
+        await testHost.StartAzuriteAsync();
         var store = testHost.GetRequiredService<AwesomeBlazorStore>();
         await store.SaveToTableStorageAsync(rootGroup);
 
         // Then: groups
-        var groups = await DumpAsync<AwesomeResourceGroupEntity>(testHost, "groups", e => $"{e.PartitionKey}|{e.RowKey}|{e.Content}|{Dump(e.Embedding)}");
+        var groups = await testHost.DumpAsync<AwesomeResourceGroupEntity>("groups", e => $"{e.PartitionKey}|{e.RowKey}|{e.Content}|{e.Embedding.Dump()}");
         groups.Is(
             "%|%libraries%|{\"Order\":1,\"Title\":\"Libraries\",\"TitleHtml\":\"\",\"ParagraphsHtml\":\"\"}|A0-A1-A2",
             "%|%samples%|{\"Order\":0,\"Title\":\"Samples\",\"TitleHtml\":\"\",\"ParagraphsHtml\":\"\"}|(null)",
@@ -65,26 +65,12 @@ internal class AwesomeBlazorStoreTest
             "%libraries%|%libraries%maps%|{\"Order\":0,\"Title\":\"Maps\",\"TitleHtml\":\"\",\"ParagraphsHtml\":\"\"}|(null)");
 
         // Then: resources
-        var resources = await DumpAsync<AwesomeResourceEntity>(testHost, "resources", e => $"{e.PartitionKey}|{e.RowKey}|{e.Content}|{Dump(e.Embedding)}");
+        var resources = await testHost.DumpAsync<AwesomeResourceEntity>("resources", e => $"{e.PartitionKey}|{e.RowKey}|{e.Content}|{e.Embedding.Dump()}");
         resources.Is(
             "%libraries%charts%|%libraries%charts%blazing-bar-chart%|{\"Order\":1,\"Title\":\"Blazing Bar Chart\",\"ResourceUrl\":\"\",\"GitHubStarsUrl\":\"\",\"LastCommitUrl\":\"\",\"DescriptionText\":\"\",\"DescriptionHtml\":\"\"}|(null)",
             "%libraries%charts%|%libraries%charts%blazing-line-chart%|{\"Order\":0,\"Title\":\"Blazing Line Chart\",\"ResourceUrl\":\"\",\"GitHubStarsUrl\":\"\",\"LastCommitUrl\":\"\",\"DescriptionText\":\"\",\"DescriptionHtml\":\"\"}|(null)",
             "%libraries%maps%|%libraries%maps%blazor-maps%|{\"Order\":0,\"Title\":\"Blazor Maps\",\"ResourceUrl\":\"\",\"GitHubStarsUrl\":\"\",\"LastCommitUrl\":\"\",\"DescriptionText\":\"\",\"DescriptionHtml\":\"\"}|B0-B1",
             "%samples%|%samples%blazing-pizza%|{\"Order\":0,\"Title\":\"Blazing Pizza\",\"ResourceUrl\":\"\",\"GitHubStarsUrl\":\"\",\"LastCommitUrl\":\"\",\"DescriptionText\":\"\",\"DescriptionHtml\":\"\"}|(null)");
-    }
-
-    private static string Dump(byte[]? bytes) => bytes is null ? "(null)" : BitConverter.ToString(bytes);
-
-    private static async ValueTask<IEnumerable<string>> DumpAsync<TEntity>(IServiceProvider services, string tableName, Func<TEntity, string> dump)
-        where TEntity : class, ITableEntity
-    {
-        var tableClient = services.GetRequiredService<TableServiceClient>().GetTableClient(tableName);
-        var results = new List<string>();
-        await foreach (var entity in tableClient.QueryAsync<TEntity>())
-        {
-            results.Add(dump(entity));
-        }
-        return results;
     }
 
     [Test]
