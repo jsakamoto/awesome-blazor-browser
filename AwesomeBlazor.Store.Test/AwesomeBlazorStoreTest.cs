@@ -7,16 +7,18 @@ namespace AwesomeBlazor.Store.Test;
 
 internal class AwesomeBlazorStoreTest
 {
+    private static TestHost CreateTestHost() => new(services =>
+    {
+        services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
+        services.AddSingleton<HttpClient>();
+        services.AddSingleton<AwesomeBlazorStore>();
+    });
+
     [Test]
     public async Task SaveToTableStorageAsync_Test()
     {
         // Given
-        using var testHost = new TestHost(services =>
-        {
-            services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
-            services.AddSingleton<HttpClient>();
-            services.AddSingleton<AwesomeBlazorStore>();
-        });
+        using var testHost = CreateTestHost();
 
         var rootGroup = new AwesomeResourceGroup
         {
@@ -77,12 +79,7 @@ internal class AwesomeBlazorStoreTest
     public async Task TryLoadFromTableStorageAsync_Test()
     {
         // Given
-        using var testHost = new TestHost(services =>
-        {
-            services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
-            services.AddSingleton<HttpClient>();
-            services.AddSingleton<AwesomeBlazorStore>();
-        });
+        using var testHost = CreateTestHost();
         await testHost.StartAzuriteAsync();
 
         var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
@@ -135,5 +132,57 @@ internal class AwesomeBlazorStoreTest
         chartsSubGroup.Resources.Select(r => $"{r.Id}|{r.Title}")
             .Is("/libraries/charts/blazing-line-chart|Blazing Line Chart",
                 "/libraries/charts/blazing-bar-chart|Blazing Bar Chart");
+    }
+
+    [Test]
+    public async Task TryLoadFromTableStorageAsync_NoGroupTable_Test()
+    {
+        // Given
+        using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
+        await tableServiceClient.CreateTableAsync("resources");
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.TryLoadFromTableStorageAsync();
+
+        // Then
+        rootGroup.IsNull();
+    }
+
+    [Test]
+    public async Task TryLoadFromTableStorageAsync_NoResourcesTable_Test()
+    {
+        // Given
+        using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
+        await tableServiceClient.CreateTableAsync("groups");
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.TryLoadFromTableStorageAsync();
+
+        // Then
+        rootGroup.IsNull();
+    }
+
+    [Test]
+    public async Task TryLoadFromTableStorageAsync_NoEntities_Test()
+    {
+        // Given
+        using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
+        await tableServiceClient.CreateTableAsync("groups");
+        await tableServiceClient.CreateTableAsync("resources");
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.TryLoadFromTableStorageAsync();
+
+        // Then
+        rootGroup.IsNull();
     }
 }

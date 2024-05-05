@@ -86,14 +86,32 @@ public class AwesomeResourceGroup
     {
         foreach (var subGroup in this.SubGroups) subGroup.ReorderChildren();
 
-        if (this.SubGroups.Count != 0)
+        if (this.SubGroups.Count >= 2)
         {
             this.SubGroups.Sort((a, b) => a.Order - b.Order);
         }
 
-        if (this.Resources.Count != 0)
+        if (this.Resources.Count >= 2)
         {
             this.Resources.Sort((a, b) => a.Order - b.Order);
+        }
+    }
+
+    public async ValueTask ForEachAllAsync(Func<AwesomeResourceGroup, ValueTask> actionForGroup, Func<AwesomeResource, ValueTask> actionForResource)
+    {
+        await ForEachAllAsync(this, actionForGroup, actionForResource);
+    }
+
+    private static async ValueTask ForEachAllAsync(AwesomeResourceGroup resourceGroup, Func<AwesomeResourceGroup, ValueTask> actionForGroup, Func<AwesomeResource, ValueTask> actionForResource)
+    {
+        await actionForGroup(resourceGroup);
+        foreach (var resource in resourceGroup.Resources)
+        {
+            await actionForResource(resource);
+        }
+        foreach (var subGroup in resourceGroup.SubGroups)
+        {
+            await ForEachAllAsync(subGroup, actionForGroup, actionForResource);
         }
     }
 }

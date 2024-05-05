@@ -1,4 +1,5 @@
 ﻿using AwesomeBlazor.Models;
+using AwesomeBlazor.Store.Extensions;
 using Azure.Data.Tables;
 
 namespace AwesomeBlazor.Store;
@@ -41,6 +42,10 @@ public class AwesomeBlazorStore(
 
     internal async ValueTask<AwesomeResourceGroup?> TryLoadFromTableStorageAsync()
     {
+        // check if the "groups" and "resources" tables exist
+        if (!await tableServiceClient.ExistTableAsync("groups")) return null;
+        if (!await tableServiceClient.ExistTableAsync("resources")) return null;
+
         var tableClients = new TableClients(tableServiceClient);
 
         var groups = new Dictionary<string, AwesomeResourceGroup>();
@@ -72,7 +77,7 @@ public class AwesomeBlazorStore(
 
         rootGroup.ReorderChildren();
 
-        return rootGroup;
+        return rootGroup.SubGroups.Any() ? rootGroup : null;
     }
 
 
@@ -82,24 +87,9 @@ public class AwesomeBlazorStore(
         await tableServiceClient.CreateTableIfNotExistsAsync("resources");
 
         var tableClients = new TableClients(tableServiceClient);
-        await this.SaveToTableStorageAsync(tableClients, rootGroup);
+        await rootGroup.ForEachAllAsync(
+            async (group) => { if (group.Id != "/") await tableClients.Groups.AddEntityAsync(AwesomeResourceGroupEntity.CreateFrom(group)); },
+            async (resource) => await tableClients.Resources.AddEntityAsync(AwesomeResourceEntity.CreateFrom(resource))
+        );
     }
-
-    private async ValueTask SaveToTableStorageAsync(TableClients tableClients, AwesomeResourceGroup parentGroup)
-    {
-        foreach (var group in parentGroup.SubGroups)
-        {
-            var groupEntity = AwesomeResourceGroupEntity.CreateFrom(group);
-            await tableClients.Groups.AddEntityAsync(groupEntity);
-
-            foreach (var resource in group.Resources)
-            {
-                var resourceEntity = AwesomeResourceEntity.CreateFrom(resource);
-                await tableClients.Resources.AddEntityAsync(resourceEntity);
-            }
-
-            await this.SaveToTableStorageAsync(tableClients, group);
-        }
-    }
-
 }

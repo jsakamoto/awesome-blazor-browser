@@ -73,4 +73,60 @@ public class AwesomeResourceGroupTest
         };
         root.GetExpandedDescendantsCount().Is(6);
     }
+
+    [Test]
+    public async Task ForEachAll_Test()
+    {
+        // Given
+        var rootGroup = new AwesomeResourceGroup
+        {
+            SubGroups = {
+                new AwesomeResourceGroup{
+                    Id = "/samples/",
+                    Title = "Samples",
+                    Resources = {
+                        new AwesomeResource { Id = "/samples/blazing-pizza/", Title = "Blazing Pizza" },
+                    } },
+                new AwesomeResourceGroup {
+                    Id = "/libraries/",
+                    Title = "Libraries",
+                    SubGroups = {
+                        new AwesomeResourceGroup {
+                            Id = "/libraries/maps/",
+                            Title = "Maps",
+                            Resources = {
+                                new AwesomeResource { Id = "/libraries/maps/blazor-maps/", Title = "Blazor Maps" },
+                            } },
+                        new AwesomeResourceGroup{
+                            Id = "/libraries/charts/",
+                            Title = "Charts",
+                            Resources = {
+                                new AwesomeResource { Id = "/libraries/charts/blazing-line-chart/", Title = "Blazing Line Chart" },
+                                new AwesomeResource { Id = "/libraries/charts/blazing-bar-chart/", Title = "Blazing Bar Chart" },
+                            } },
+                    } },
+            }
+        };
+
+
+        // When
+        var idAndTitles = new List<string>();
+        await rootGroup.ForEachAllAsync(
+            g => { idAndTitles.Add($"{g.Id} | {g.Title}"); return ValueTask.CompletedTask; },
+            r => { idAndTitles.Add($"{r.Id} | {r.Title}"); return ValueTask.CompletedTask; }
+        );
+
+        // Then
+        idAndTitles.Order().Is(
+            "/ | ",
+            "/libraries/ | Libraries",
+            "/libraries/charts/ | Charts",
+            "/libraries/charts/blazing-bar-chart/ | Blazing Bar Chart",
+            "/libraries/charts/blazing-line-chart/ | Blazing Line Chart",
+            "/libraries/maps/ | Maps",
+            "/libraries/maps/blazor-maps/ | Blazor Maps",
+            "/samples/ | Samples",
+            "/samples/blazing-pizza/ | Blazing Pizza"
+        );
+    }
 }
