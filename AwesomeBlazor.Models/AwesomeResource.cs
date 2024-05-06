@@ -2,7 +2,7 @@
 
 namespace AwesomeBlazor.Models;
 
-public class AwesomeResource
+public class AwesomeResource : IEmbeddingSource
 {
     [JsonIgnore]
     public string Id { get; init; } = "/";

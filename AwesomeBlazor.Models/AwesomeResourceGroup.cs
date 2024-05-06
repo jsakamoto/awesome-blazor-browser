@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AwesomeBlazor.Models;
 
-public class AwesomeResourceGroup
+public class AwesomeResourceGroup : IEmbeddingSource
 {
     [JsonIgnore]
     public string Id { get; init; } = "/";

@@ -13,4 +13,17 @@ internal static class TableExtensions
             .GetAsyncEnumerator()
             .MoveNextAsync();
     }
+
+    /// <summary>
+    /// Returns all entities as a list.
+    /// </summary>
+    public static async ValueTask<List<T>> ToListAsync<T>(this TableClient tableClient) where T : class, ITableEntity
+    {
+        var list = new List<T>();
+        await foreach (var entity in tableClient.QueryAsync<T>())
+        {
+            list.Add(entity);
+        }
+        return list;
+    }
 }

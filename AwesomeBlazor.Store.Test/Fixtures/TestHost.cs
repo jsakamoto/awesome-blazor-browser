@@ -3,17 +3,18 @@ using Toolbelt.Diagnostics;
 
 namespace AwesomeBlazor.Store.Test.Fixtures;
 
-internal class TestHost : IDisposable, IServiceProvider
+internal class TestHost : IAsyncDisposable, IServiceProvider
 {
     private XProcess? _azurite;
 
-    private IServiceProvider _serviceProvider;
+    private ServiceProvider _serviceProvider;
 
     public TestHost(Action<IServiceCollection> builder)
     {
         var services = new ServiceCollection();
         builder(services);
         this._serviceProvider = services.BuildServiceProvider();
+
     }
 
     public object? GetService(Type serviceType) => this._serviceProvider.GetService(serviceType);
@@ -27,9 +28,9 @@ internal class TestHost : IDisposable, IServiceProvider
         await this._azurite.WaitForOutputAsync(output => output.StartsWith("Azurite Table service is successfully listening"), millsecondsTimeout: 5000);
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
+        await this._serviceProvider.DisposeAsync();
         this._azurite?.Dispose();
     }
-
 }

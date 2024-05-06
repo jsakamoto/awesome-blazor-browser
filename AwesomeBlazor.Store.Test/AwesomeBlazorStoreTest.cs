@@ -2,6 +2,7 @@
 using AwesomeBlazor.Store.Test.Fixtures;
 using Azure.Data.Tables;
 using Microsoft.Extensions.DependencyInjection;
+using SmartComponents.LocalEmbeddings;
 
 namespace AwesomeBlazor.Store.Test;
 
@@ -11,6 +12,7 @@ internal class AwesomeBlazorStoreTest
     {
         services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
         services.AddSingleton<HttpClient>();
+        services.AddSingleton(_ => new LocalEmbedder());
         services.AddSingleton<AwesomeBlazorStore>();
     });
 
@@ -18,7 +20,7 @@ internal class AwesomeBlazorStoreTest
     public async Task SaveToTableStorageAsync_Test()
     {
         // Given
-        using var testHost = CreateTestHost();
+        await using var testHost = CreateTestHost();
 
         var rootGroup = new AwesomeResourceGroup
         {
@@ -79,7 +81,7 @@ internal class AwesomeBlazorStoreTest
     public async Task TryLoadFromTableStorageAsync_Test()
     {
         // Given
-        using var testHost = CreateTestHost();
+        await using var testHost = CreateTestHost();
         await testHost.StartAzuriteAsync();
 
         var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
@@ -138,7 +140,7 @@ internal class AwesomeBlazorStoreTest
     public async Task TryLoadFromTableStorageAsync_NoGroupTable_Test()
     {
         // Given
-        using var testHost = CreateTestHost();
+        await using var testHost = CreateTestHost();
         await testHost.StartAzuriteAsync();
         var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
         await tableServiceClient.CreateTableAsync("resources");
@@ -155,7 +157,7 @@ internal class AwesomeBlazorStoreTest
     public async Task TryLoadFromTableStorageAsync_NoResourcesTable_Test()
     {
         // Given
-        using var testHost = CreateTestHost();
+        await using var testHost = CreateTestHost();
         await testHost.StartAzuriteAsync();
         var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
         await tableServiceClient.CreateTableAsync("groups");
@@ -172,7 +174,7 @@ internal class AwesomeBlazorStoreTest
     public async Task TryLoadFromTableStorageAsync_NoEntities_Test()
     {
         // Given
-        using var testHost = CreateTestHost();
+        await using var testHost = CreateTestHost();
         await testHost.StartAzuriteAsync();
         var tableServiceClient = testHost.GetRequiredService<TableServiceClient>();
         await tableServiceClient.CreateTableAsync("groups");
@@ -184,5 +186,72 @@ internal class AwesomeBlazorStoreTest
 
         // Then
         rootGroup.IsNull();
+    }
+
+    [Test]
+
+    public async Task GetAwesomeBlazorContentAsync_Returns_NewInstance_Test()
+    {
+        // Given
+        await using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var root1 = await store.GetAwesomeBlazorContentAsync();
+        var root2 = await store.GetAwesomeBlazorContentAsync();
+
+        // Then
+        Object.ReferenceEquals(root1, root2).IsFalse();
+    }
+
+    [Test]
+    public async Task UpdateEmbeddingsAsync_Test()
+    {
+        // Given
+        await using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var sampleContents = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sample.md"));
+        var rootGroup = AwesomeBlazorParser.ParseMarkdown(sampleContents);
+
+        // When
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var embeddings = await store.UpdateEmbeddingsAsync(rootGroup);
+
+        // Then
+        embeddings.Count().Is(16);
+        var embedder = testHost.GetRequiredService<LocalEmbedder>();
+        var embeddingOfKeyword = embedder.Embed<EmbeddingF32>("Learn about Blazor");
+        LocalEmbedder.FindClosest(embeddingOfKeyword, embeddings.Select(e => (e.Key, e.Value)), maxResults: 3)
+            .Is("/tutorials/blazor-workshop",
+                "/introduction/what-is-blazor/",
+                "/awesome-blazor/");
+    }
+
+    [Test]
+    public async Task UpdateEmbeddingsAsync_SaveAndLoadTableStorage_Test()
+    {
+        // Given
+        await using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var sampleContents = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sample.md"));
+        var tempRoot = AwesomeBlazorParser.ParseMarkdown(sampleContents);
+
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        await store.UpdateEmbeddingsAsync(tempRoot);
+        await store.SaveToTableStorageAsync(tempRoot);
+
+        // When
+        var rootGroup = await store.TryLoadFromTableStorageAsync();
+        var embeddings = await store.UpdateEmbeddingsAsync(rootGroup.IsNotNull());
+
+        // Then
+        embeddings.Count().Is(16);
+        var embedder = testHost.GetRequiredService<LocalEmbedder>();
+        var embeddingOfKeyword = embedder.Embed<EmbeddingF32>("Learn about Blazor");
+        LocalEmbedder.FindClosest(embeddingOfKeyword, embeddings.Select(e => (e.Key, e.Value)), maxResults: 3)
+            .Is("/tutorials/blazor-workshop",
+                "/introduction/what-is-blazor/",
+                "/awesome-blazor/");
     }
 }

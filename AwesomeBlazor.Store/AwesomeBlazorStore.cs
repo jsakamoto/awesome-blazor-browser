@@ -1,39 +1,52 @@
 ﻿using AwesomeBlazor.Models;
 using AwesomeBlazor.Store.Extensions;
 using Azure.Data.Tables;
+using Microsoft.Extensions.DependencyInjection;
+using SmartComponents.LocalEmbeddings;
 
 namespace AwesomeBlazor.Store;
 
 public class AwesomeBlazorStore(
+    IServiceProvider services,
     TableServiceClient tableServiceClient,
     HttpClient httpClient
-)
+) : IAsyncDisposable
 {
     private const string _awesomeBlazorUrl = "https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/master/README.md";
 
-    private AwesomeResourceGroup? _rootGroup;
-
     private readonly SemaphoreSlim _syncer = new(1);
+
+    private IEnumerable<AwesomeResourceGroupEntity>? _groupEntities;
+
+    private IEnumerable<AwesomeResourceEntity>? _resourceEntities;
+
+    private readonly Lazy<LocalEmbedder> _embedder = new(() => services.GetRequiredService<LocalEmbedder>());
+
+    private IReadOnlyDictionary<string, EmbeddingF32>? _embeddings;
+
+    private Task? _savingTask;
+
+    private readonly CancellationTokenSource _canceller = new();
 
     public async ValueTask<AwesomeResourceGroup> GetAwesomeBlazorContentAsync()
     {
         await this._syncer.WaitAsync();
         try
         {
-            if (this._rootGroup is null)
+            var rootGroup = await this.TryLoadFromTableStorageAsync();
+            if (rootGroup == null)
             {
-                if ((this._rootGroup = await this.TryLoadFromTableStorageAsync()) == null)
-                {
-                    var awesomeBlazorContents = await httpClient.GetStringAsync(_awesomeBlazorUrl);
-                    this._rootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
-                    await this.SaveToTableStorageAsync(this._rootGroup);
-                }
+                var awesomeBlazorContents = await httpClient.GetStringAsync(_awesomeBlazorUrl);
+                rootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
+                this._savingTask = this.SaveToTableStorageAsync(rootGroup, this._canceller.Token);
+
+                //this._embeddings = await this.UpdateEmbeddingsAsync(rootGroup);
             }
+            return rootGroup;
         }
         finally { this._syncer.Release(); }
-
-        return this._rootGroup;
     }
+
     private class TableClients(TableServiceClient tableServiceClient)
     {
         internal TableClient Groups { get; } = tableServiceClient.GetTableClient("groups");
@@ -43,13 +56,18 @@ public class AwesomeBlazorStore(
     internal async ValueTask<AwesomeResourceGroup?> TryLoadFromTableStorageAsync()
     {
         // check if the "groups" and "resources" tables exist
-        if (!await tableServiceClient.ExistTableAsync("groups")) return null;
-        if (!await tableServiceClient.ExistTableAsync("resources")) return null;
+        if (this._groupEntities == null || this._resourceEntities == null)
+        {
+            if (!await tableServiceClient.ExistTableAsync("groups")) return null;
+            if (!await tableServiceClient.ExistTableAsync("resources")) return null;
 
-        var tableClients = new TableClients(tableServiceClient);
+            var tableClients = new TableClients(tableServiceClient);
+            this._groupEntities = await tableClients.Groups.ToListAsync<AwesomeResourceGroupEntity>();
+            this._resourceEntities = await tableClients.Resources.ToListAsync<AwesomeResourceEntity>();
+        }
 
         var groups = new Dictionary<string, AwesomeResourceGroup>();
-        await foreach (var groupEntty in tableClients.Groups.QueryAsync<AwesomeResourceGroupEntity>())
+        foreach (var groupEntty in this._groupEntities)
         {
             var group = groupEntty.ConvertToResourceGroup();
             groups.Add(group.Id, group);
@@ -66,7 +84,7 @@ public class AwesomeBlazorStore(
             }
         }
 
-        await foreach (var resourceEntty in tableClients.Resources.QueryAsync<AwesomeResourceEntity>())
+        foreach (var resourceEntty in this._resourceEntities)
         {
             var resource = resourceEntty.ConvertToResource();
             if (groups.TryGetValue(resource.ParentId, out var parentGroup))
@@ -80,16 +98,53 @@ public class AwesomeBlazorStore(
         return rootGroup.SubGroups.Any() ? rootGroup : null;
     }
 
-
-    internal async ValueTask SaveToTableStorageAsync(AwesomeResourceGroup rootGroup)
+    internal async Task SaveToTableStorageAsync(AwesomeResourceGroup rootGroup, CancellationToken cancellationToken = default)
     {
+        var groupEntities = new List<AwesomeResourceGroupEntity>();
+        var resourceEntities = new List<AwesomeResourceEntity>();
+        await rootGroup.ForEachAllAsync(
+            (group) => { if (group.Id != "/") groupEntities.Add(AwesomeResourceGroupEntity.CreateFrom(group)); return ValueTask.CompletedTask; },
+            (resource) => { resourceEntities.Add(AwesomeResourceEntity.CreateFrom(resource)); return ValueTask.CompletedTask; }
+        );
+        this._groupEntities = groupEntities;
+        this._resourceEntities = resourceEntities;
+
         await tableServiceClient.CreateTableIfNotExistsAsync("groups");
         await tableServiceClient.CreateTableIfNotExistsAsync("resources");
-
         var tableClients = new TableClients(tableServiceClient);
+        foreach (var groupEntity in groupEntities) await tableClients.Groups.AddEntityAsync(groupEntity, cancellationToken);
+        foreach (var resourceEntity in resourceEntities) await tableClients.Resources.AddEntityAsync(resourceEntity, cancellationToken);
+    }
+
+    internal async ValueTask<IReadOnlyDictionary<string, EmbeddingF32>> UpdateEmbeddingsAsync(AwesomeResourceGroup rootGroup)
+    {
+        var embedder = this._embedder.Value;
+        var embeddings = new Dictionary<string, EmbeddingF32>();
+
+        ValueTask updater<T>(T item, Func<string> getTextExpression) where T : IEmbeddingSource
+        {
+            if (item.Id == "/") return ValueTask.CompletedTask;
+            var embedding = item.Embedding?.Any() == true ? new EmbeddingF32(item.Embedding) : embedder.Embed(getTextExpression());
+            if (item.Embedding?.Any() != true) item.Embedding = embedding.Buffer.ToArray();
+            embeddings.Add(item.Id, embedding);
+            return ValueTask.CompletedTask;
+        }
+
         await rootGroup.ForEachAllAsync(
-            async (group) => { if (group.Id != "/") await tableClients.Groups.AddEntityAsync(AwesomeResourceGroupEntity.CreateFrom(group)); },
-            async (resource) => await tableClients.Resources.AddEntityAsync(AwesomeResourceEntity.CreateFrom(resource))
-        );
+            g => updater(g, () => g.Title + "\n" + g.ParagraphsHtml),
+            r => updater(r, () => r.Title + "\n" + r.DescriptionText));
+        return embeddings;
+    }
+
+    public void UpdateVisibiltyBySemanticFilter(string searchText)
+    {
+        var searchEmbedding = this._embedder.Value.Embed(searchText);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        this._canceller.Cancel();
+        if (this._savingTask != null) try { await this._savingTask; } catch { }
+        this._canceller.Dispose();
     }
 }
