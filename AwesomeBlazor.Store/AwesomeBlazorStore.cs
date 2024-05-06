@@ -22,9 +22,9 @@ public class AwesomeBlazorStore(
 
     private readonly Lazy<LocalEmbedder> _embedder = new(() => services.GetRequiredService<LocalEmbedder>());
 
-    private IReadOnlyDictionary<string, EmbeddingF32>? _embeddings;
-
     private Task? _savingTask;
+
+    private Task<IReadOnlyDictionary<string, EmbeddingF32>>? _embeddingsTask;
 
     private readonly CancellationTokenSource _canceller = new();
 
@@ -39,8 +39,7 @@ public class AwesomeBlazorStore(
                 var awesomeBlazorContents = await httpClient.GetStringAsync(_awesomeBlazorUrl);
                 rootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
                 this._savingTask = this.SaveToTableStorageAsync(rootGroup, this._canceller.Token);
-
-                //this._embeddings = await this.UpdateEmbeddingsAsync(rootGroup);
+                this._embeddingsTask = Task.Run(async () => await this.UpdateEmbeddingsAsync(rootGroup, this._canceller.Token), this._canceller.Token);
             }
             return rootGroup;
         }
@@ -116,23 +115,15 @@ public class AwesomeBlazorStore(
         foreach (var resourceEntity in resourceEntities) await tableClients.Resources.AddEntityAsync(resourceEntity, cancellationToken);
     }
 
-    internal async ValueTask<IReadOnlyDictionary<string, EmbeddingF32>> UpdateEmbeddingsAsync(AwesomeResourceGroup rootGroup)
+    internal async ValueTask<IReadOnlyDictionary<string, EmbeddingF32>> UpdateEmbeddingsAsync(AwesomeResourceGroup rootGroup, CancellationToken cancellationToken = default)
     {
         var embedder = this._embedder.Value;
         var embeddings = new Dictionary<string, EmbeddingF32>();
-
-        void updater<T>(T item, Func<string> getTextExpression) where T : IEmbeddingSource
-        {
-            if (item.Id == "/") return;
-            var embedding = item.Embedding?.Any() == true ? new EmbeddingF32(item.Embedding) : embedder.Embed(getTextExpression());
-            if (item.Embedding?.Any() != true) item.Embedding = embedding.Buffer.ToArray();
-            embeddings.Add(item.Id, embedding);
-        }
-
         rootGroup.ForEachAll(
-            g => updater(g, () => g.Title + "\n" + g.ParagraphsHtml),
-            r => updater(r, () => r.Title + "\n" + r.DescriptionText));
-
+            g => { if (g.Id != "/") embeddings.Add(g.Id, embedder.Embed(g.Title + "\n" + g.ParagraphsHtml)); },
+            r => embeddings.Add(r.Id, embedder.Embed(r.Title + "\n" + r.DescriptionText)),
+            cancellationToken
+        );
         return await ValueTask.FromResult(embeddings);
     }
 
@@ -145,6 +136,7 @@ public class AwesomeBlazorStore(
     {
         this._canceller.Cancel();
         if (this._savingTask != null) try { await this._savingTask; } catch { }
+        if (this._embeddingsTask != null) try { await this._embeddingsTask; } catch { }
         this._canceller.Dispose();
     }
 }

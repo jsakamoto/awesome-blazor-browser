@@ -2,7 +2,7 @@
 
 namespace AwesomeBlazor.Models;
 
-public class AwesomeResource : IEmbeddingSource
+public class AwesomeResource
 {
     [JsonIgnore]
     public string Id { get; init; } = "/";
@@ -28,9 +28,6 @@ public class AwesomeResource : IEmbeddingSource
     public string DescriptionText { get; set; } = "";
 
     public string DescriptionHtml { get; set; } = "";
-
-    [JsonIgnore]
-    public byte[]? Embedding { get; set; }
 
     public override string ToString() => $"{this.Title}";
 }

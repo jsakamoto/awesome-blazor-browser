@@ -17,8 +17,7 @@ internal class AwesomeResourceEntityTest
             GitHubStarsUrl = "https://example.com/github/stars",
             LastCommitUrl = "https://example.com/commits/latest",
             DescriptionText = "Nice to meet you.",
-            DescriptionHtml = "<p>Nice to meet you.</p>",
-            Embedding = [0x07, 0x08, 0x09, 0x0a],
+            DescriptionHtml = "<p>Nice to meet you.</p>"
         };
 
         // When
@@ -27,7 +26,6 @@ internal class AwesomeResourceEntityTest
         // Then
         entity.PartitionKey.Is("%hello%");
         entity.RowKey.Is("%hello%world");
-        entity.Embedding.Is([0x07, 0x08, 0x09, 0x0a]);
         entity.Content.Is("{" +
             "\"Order\":34," +
             "\"Title\":\"Hello, World!\"," +
@@ -55,8 +53,7 @@ internal class AwesomeResourceEntityTest
                 "\"LastCommitUrl\":\"https://example.com/fizz-buzz/commits/latest\"," +
                 "\"DescriptionText\":\"You are welcome.\"," +
                 "\"DescriptionHtml\":\"\\u003Cdiv\\u003EYou are welcome.\\u003C/div\\u003E\"" +
-            "}",
-            Embedding = [0x0b, 0x0C]
+            "}"
         };
 
         // When
@@ -72,6 +69,5 @@ internal class AwesomeResourceEntityTest
         resource.LastCommitUrl.Is("https://example.com/fizz-buzz/commits/latest");
         resource.DescriptionText.Is("You are welcome.");
         resource.DescriptionHtml.Is("<div>You are welcome.</div>");
-        resource.Embedding.Is([0x0b, 0x0c]);
     }
 }

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AwesomeBlazor.Models;
 
-public class AwesomeResourceGroup : IEmbeddingSource
+public class AwesomeResourceGroup
 {
     [JsonIgnore]
     public string Id { get; init; } = "/";
@@ -55,9 +55,6 @@ public class AwesomeResourceGroup : IEmbeddingSource
 
     public string ParagraphsHtml { get; set; } = "";
 
-    [JsonIgnore]
-    public byte[]? Embedding { get; set; }
-
     private string? _anchorName;
 
     [JsonIgnore]
@@ -97,21 +94,23 @@ public class AwesomeResourceGroup : IEmbeddingSource
         }
     }
 
-    public void ForEachAll(Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource)
+    public void ForEachAll(Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource, CancellationToken cancellationToken = default)
     {
-        ForEachAll(this, actionForGroup, actionForResource);
+        ForEachAll(this, actionForGroup, actionForResource, cancellationToken);
     }
 
-    private static void ForEachAll(AwesomeResourceGroup resourceGroup, Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource)
+    private static void ForEachAll(AwesomeResourceGroup resourceGroup, Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         actionForGroup(resourceGroup);
         foreach (var resource in resourceGroup.Resources)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             actionForResource(resource);
         }
         foreach (var subGroup in resourceGroup.SubGroups)
         {
-            ForEachAll(subGroup, actionForGroup, actionForResource);
+            ForEachAll(subGroup, actionForGroup, actionForResource, cancellationToken);
         }
     }
 }
