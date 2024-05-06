@@ -39,8 +39,8 @@ public class AwesomeBlazorStore(
                 var awesomeBlazorContents = await httpClient.GetStringAsync(_awesomeBlazorUrl);
                 rootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
                 this._savingTask = this.SaveToTableStorageAsync(rootGroup, this._canceller.Token);
-                this._embeddingsTask = Task.Run(async () => await this.UpdateEmbeddingsAsync(rootGroup, this._canceller.Token), this._canceller.Token);
             }
+            this._embeddingsTask = Task.Run(async () => await this.UpdateEmbeddingsAsync(rootGroup, this._canceller.Token), this._canceller.Token);
             return rootGroup;
         }
         finally { this._syncer.Release(); }
@@ -127,9 +127,54 @@ public class AwesomeBlazorStore(
         return await ValueTask.FromResult(embeddings);
     }
 
-    public void UpdateVisibiltyBySemanticFilter(string searchText)
+    public async ValueTask UpdateVisibiltyBySemanticSearchAsync(AwesomeResourceGroup rootGroup, string searchText, double sensitivity = 0.7)
     {
+        // Rsset visibility when the search text is empty.
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            rootGroup.ForEachAll(
+                g => g.Visible = g.SelectionState != SelectionState.Unselected,
+                r => r.Visible = true);
+            return;
+        }
+
+        if (this._embeddingsTask == null) throw new InvalidOperationException("The embeddings are not ready yet.");
+        var embeddings = await this._embeddingsTask;
         var searchEmbedding = this._embedder.Value.Embed(searchText);
+        UpdateVisibiltyBySemanticSearch(rootGroup.SubGroups, embeddings, searchEmbedding, sensitivity);
+    }
+
+    private static void UpdateVisibiltyBySemanticSearch(IEnumerable<AwesomeResourceGroup> groups, IReadOnlyDictionary<string, EmbeddingF32> embeddings, EmbeddingF32 searchEmbedding, double sensitivity)
+    {
+        foreach (var group in groups)
+        {
+            UpdateVisibiltyBySemanticSearch(group, embeddings, searchEmbedding, sensitivity);
+        }
+    }
+
+    private static void UpdateVisibiltyBySemanticSearch(AwesomeResourceGroup group, IReadOnlyDictionary<string, EmbeddingF32> embeddings, EmbeddingF32 searchEmbedding, double sensitivity)
+    {
+        group.Visible = group.SelectionState != SelectionState.Unselected;
+        if (!group.Visible) return;
+
+        var groupEmbedding = embeddings[group.Id];
+        var similarity = groupEmbedding.Similarity(searchEmbedding);
+        var groupMatch = similarity > sensitivity;
+
+        foreach (var resource in group.Resources)
+        {
+            var resourceEmbedding = embeddings[resource.Id];
+            resource.Visible = groupMatch || (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
+        }
+
+        UpdateVisibiltyBySemanticSearch(group.SubGroups, embeddings, searchEmbedding, sensitivity);
+
+        group.Visible =
+            // (group.ParagraphsHtml != "" && !keywords.Any()) ||
+            groupMatch ||
+            group.Resources.Any(r => r.Visible) ||
+            group.SubGroups.Any(g => g.Visible);
+
     }
 
     public async ValueTask DisposeAsync()

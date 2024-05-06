@@ -10,8 +10,9 @@ internal class AwesomeBlazorStoreTest
 {
     private static TestHost CreateTestHost() => new(services =>
     {
+        var sampleContents = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sample.md"));
         services.AddSingleton(_ => new TableServiceClient("UseDevelopmentStorage=true"));
-        services.AddSingleton<HttpClient>();
+        services.AddSingleton(_ => new HttpClient(new TestMessageHandler(sampleContents)));
         services.AddSingleton(_ => new LocalEmbedder());
         services.AddSingleton<AwesomeBlazorStore>();
     });
@@ -252,5 +253,61 @@ internal class AwesomeBlazorStoreTest
             .Is("/tutorials/blazor-workshop",
                 "/introduction/what-is-blazor/",
                 "/awesome-blazor/");
+    }
+
+    [Test]
+    public async Task UpdateVisibiltyBySemanticSearchAsync_Test()
+    {
+        // Given
+        await using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.GetAwesomeBlazorContentAsync();
+
+        // When
+        await store.UpdateVisibiltyBySemanticSearchAsync(rootGroup, "Learn about Blazor");
+
+        // Then
+        rootGroup.SubGroups[0].Visible.IsTrue();  // * "/awesome-blazor/"
+        rootGroup.SubGroups[0].SubGroups.Count.Is(0);
+        rootGroup.SubGroups[0].Resources.Count.Is(0);
+
+        rootGroup.SubGroups[1].Visible.IsFalse(); //   "/special-event---virtual-meetup----today--/"
+        rootGroup.SubGroups[1].ForEachAll(
+            g => g.Visible.IsFalse(),
+            r => r.Visible.IsFalse());
+        rootGroup.SubGroups[2].Visible.IsTrue();  // * "/introduction/"
+
+        rootGroup.SubGroups[2].SubGroups[0].Visible.IsTrue();  // * "/introduction/what-is-blazor/"
+        rootGroup.SubGroups[2].SubGroups[1].Visible.IsFalse(); //   "/introduction/get-started/"
+
+        rootGroup.SubGroups[3].Visible.IsTrue();  //   "/general/"
+        rootGroup.SubGroups[4].Visible.IsTrue();  //   "/sample-projects/"
+        rootGroup.SubGroups[5].Visible.IsTrue();  // * "/tutorials/"
+
+        rootGroup.SubGroups[5].Resources[0].Visible.IsTrue();  // * "/tutorials/blazor-workshop"
+    }
+
+    [Test]
+    public async Task UpdateVisibiltyBySemanticSearchAsync_EmptyText_Test()
+    {
+        // Given
+        await using var testHost = CreateTestHost();
+        await testHost.StartAzuriteAsync();
+        var store = testHost.GetRequiredService<AwesomeBlazorStore>();
+        var rootGroup = await store.GetAwesomeBlazorContentAsync();
+
+        // - Make all groups and resources invisible
+        rootGroup.ForEachAll(
+            g => g.Visible = false,
+            r => r.Visible = false);
+
+        // When: with the empty text
+        await store.UpdateVisibiltyBySemanticSearchAsync(rootGroup, "");
+
+        // Then: visibilities of all groups and resources are reseted (visible).
+        rootGroup.ForEachAll(
+            g => g.Visible.IsTrue(),
+            r => r.Visible.IsTrue());
     }
 }
