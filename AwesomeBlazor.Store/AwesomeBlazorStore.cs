@@ -102,9 +102,9 @@ public class AwesomeBlazorStore(
     {
         var groupEntities = new List<AwesomeResourceGroupEntity>();
         var resourceEntities = new List<AwesomeResourceEntity>();
-        await rootGroup.ForEachAllAsync(
-            (group) => { if (group.Id != "/") groupEntities.Add(AwesomeResourceGroupEntity.CreateFrom(group)); return ValueTask.CompletedTask; },
-            (resource) => { resourceEntities.Add(AwesomeResourceEntity.CreateFrom(resource)); return ValueTask.CompletedTask; }
+        rootGroup.ForEachAll(
+            group => { if (group.Id != "/") groupEntities.Add(AwesomeResourceGroupEntity.CreateFrom(group)); },
+            resource => resourceEntities.Add(AwesomeResourceEntity.CreateFrom(resource))
         );
         this._groupEntities = groupEntities;
         this._resourceEntities = resourceEntities;
@@ -121,19 +121,19 @@ public class AwesomeBlazorStore(
         var embedder = this._embedder.Value;
         var embeddings = new Dictionary<string, EmbeddingF32>();
 
-        ValueTask updater<T>(T item, Func<string> getTextExpression) where T : IEmbeddingSource
+        void updater<T>(T item, Func<string> getTextExpression) where T : IEmbeddingSource
         {
-            if (item.Id == "/") return ValueTask.CompletedTask;
+            if (item.Id == "/") return;
             var embedding = item.Embedding?.Any() == true ? new EmbeddingF32(item.Embedding) : embedder.Embed(getTextExpression());
             if (item.Embedding?.Any() != true) item.Embedding = embedding.Buffer.ToArray();
             embeddings.Add(item.Id, embedding);
-            return ValueTask.CompletedTask;
         }
 
-        await rootGroup.ForEachAllAsync(
+        rootGroup.ForEachAll(
             g => updater(g, () => g.Title + "\n" + g.ParagraphsHtml),
             r => updater(r, () => r.Title + "\n" + r.DescriptionText));
-        return embeddings;
+
+        return await ValueTask.FromResult(embeddings);
     }
 
     public void UpdateVisibiltyBySemanticFilter(string searchText)

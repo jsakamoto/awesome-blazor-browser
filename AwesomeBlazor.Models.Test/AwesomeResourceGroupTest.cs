@@ -75,7 +75,7 @@ public class AwesomeResourceGroupTest
     }
 
     [Test]
-    public async Task ForEachAll_Test()
+    public void ForEachAll_Test()
     {
         // Given
         var rootGroup = new AwesomeResourceGroup
@@ -111,9 +111,9 @@ public class AwesomeResourceGroupTest
 
         // When
         var idAndTitles = new List<string>();
-        await rootGroup.ForEachAllAsync(
-            g => { idAndTitles.Add($"{g.Id} | {g.Title}"); return ValueTask.CompletedTask; },
-            r => { idAndTitles.Add($"{r.Id} | {r.Title}"); return ValueTask.CompletedTask; }
+        rootGroup.ForEachAll(
+            g => idAndTitles.Add($"{g.Id} | {g.Title}"),
+            r => idAndTitles.Add($"{r.Id} | {r.Title}")
         );
 
         // Then

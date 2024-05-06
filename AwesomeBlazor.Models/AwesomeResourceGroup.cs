@@ -97,21 +97,21 @@ public class AwesomeResourceGroup : IEmbeddingSource
         }
     }
 
-    public async ValueTask ForEachAllAsync(Func<AwesomeResourceGroup, ValueTask> actionForGroup, Func<AwesomeResource, ValueTask> actionForResource)
+    public void ForEachAll(Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource)
     {
-        await ForEachAllAsync(this, actionForGroup, actionForResource);
+        ForEachAll(this, actionForGroup, actionForResource);
     }
 
-    private static async ValueTask ForEachAllAsync(AwesomeResourceGroup resourceGroup, Func<AwesomeResourceGroup, ValueTask> actionForGroup, Func<AwesomeResource, ValueTask> actionForResource)
+    private static void ForEachAll(AwesomeResourceGroup resourceGroup, Action<AwesomeResourceGroup> actionForGroup, Action<AwesomeResource> actionForResource)
     {
-        await actionForGroup(resourceGroup);
+        actionForGroup(resourceGroup);
         foreach (var resource in resourceGroup.Resources)
         {
-            await actionForResource(resource);
+            actionForResource(resource);
         }
         foreach (var subGroup in resourceGroup.SubGroups)
         {
-            await ForEachAllAsync(subGroup, actionForGroup, actionForResource);
+            ForEachAll(subGroup, actionForGroup, actionForResource);
         }
     }
 }
