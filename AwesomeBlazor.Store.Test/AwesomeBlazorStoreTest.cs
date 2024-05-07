@@ -221,11 +221,11 @@ internal class AwesomeBlazorStoreTest
         // Then
         embeddings.Count().Is(16);
         var embedder = testHost.GetRequiredService<LocalEmbedder>();
-        var embeddingOfKeyword = embedder.Embed<EmbeddingF32>("Learn about Blazor");
+        var embeddingOfKeyword = embedder.Embed<EmbeddingI1>("Learn about Blazor");
         LocalEmbedder.FindClosest(embeddingOfKeyword, embeddings.Select(e => (e.Key, e.Value)), maxResults: 3)
-            .Is("/tutorials/blazor-workshop",
-                "/introduction/what-is-blazor/",
-                "/awesome-blazor/");
+            .Is("/awesome-blazor/",
+                "/tutorials/blazor-workshop",
+                "/introduction/what-is-blazor/");
     }
 
     [Test]
@@ -248,11 +248,11 @@ internal class AwesomeBlazorStoreTest
         // Then
         embeddings.Count().Is(16);
         var embedder = testHost.GetRequiredService<LocalEmbedder>();
-        var embeddingOfKeyword = embedder.Embed<EmbeddingF32>("Learn about Blazor");
+        var embeddingOfKeyword = embedder.Embed<EmbeddingI1>("Learn about Blazor");
         LocalEmbedder.FindClosest(embeddingOfKeyword, embeddings.Select(e => (e.Key, e.Value)), maxResults: 3)
-            .Is("/tutorials/blazor-workshop",
-                "/introduction/what-is-blazor/",
-                "/awesome-blazor/");
+            .Is("/awesome-blazor/",
+                "/tutorials/blazor-workshop",
+                "/introduction/what-is-blazor/");
     }
 
     [Test]
@@ -279,7 +279,7 @@ internal class AwesomeBlazorStoreTest
         rootGroup.SubGroups[2].Visible.IsTrue();  // * "/introduction/"
 
         rootGroup.SubGroups[2].SubGroups[0].Visible.IsTrue();  // * "/introduction/what-is-blazor/"
-        rootGroup.SubGroups[2].SubGroups[1].Visible.IsFalse(); //   "/introduction/get-started/"
+        rootGroup.SubGroups[2].SubGroups[1].Visible.IsTrue(); //   "/introduction/get-started/"
 
         rootGroup.SubGroups[3].Visible.IsTrue();  //   "/general/"
         rootGroup.SubGroups[4].Visible.IsTrue();  //   "/sample-projects/"

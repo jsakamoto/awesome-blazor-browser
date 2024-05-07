@@ -6,6 +6,9 @@ using SmartComponents.LocalEmbeddings;
 
 namespace AwesomeBlazor.Store;
 
+//using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingF32;
+using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingI1;
+
 public class AwesomeBlazorStore(
     IServiceProvider services,
     TableServiceClient tableServiceClient,
@@ -24,7 +27,7 @@ public class AwesomeBlazorStore(
 
     private Task? _savingTask;
 
-    private Task<IReadOnlyDictionary<string, EmbeddingF32>>? _embeddingsTask;
+    private Task<IReadOnlyDictionary<string, EmbeddingType>>? _embeddingsTask;
 
     private readonly CancellationTokenSource _canceller = new();
 
@@ -115,13 +118,13 @@ public class AwesomeBlazorStore(
         foreach (var resourceEntity in resourceEntities) await tableClients.Resources.AddEntityAsync(resourceEntity, cancellationToken);
     }
 
-    internal async ValueTask<IReadOnlyDictionary<string, EmbeddingF32>> UpdateEmbeddingsAsync(AwesomeResourceGroup rootGroup, CancellationToken cancellationToken = default)
+    internal async ValueTask<IReadOnlyDictionary<string, EmbeddingType>> UpdateEmbeddingsAsync(AwesomeResourceGroup rootGroup, CancellationToken cancellationToken = default)
     {
         var embedder = this._embedder.Value;
-        var embeddings = new Dictionary<string, EmbeddingF32>();
+        var embeddings = new Dictionary<string, EmbeddingType>();
         rootGroup.ForEachAll(
-            g => { if (g.Id != "/") embeddings.Add(g.Id, embedder.Embed(g.Title + "\n" + g.ParagraphsHtml)); },
-            r => embeddings.Add(r.Id, embedder.Embed(r.Title + "\n" + r.DescriptionText)),
+            g => { if (g.Id != "/") embeddings.Add(g.Id, embedder.Embed<EmbeddingType>(g.Title + "\n" + g.ParagraphsHtml)); },
+            r => embeddings.Add(r.Id, embedder.Embed<EmbeddingType>(r.Title + "\n" + r.DescriptionText)),
             cancellationToken
         );
         return await ValueTask.FromResult(embeddings);
@@ -140,11 +143,11 @@ public class AwesomeBlazorStore(
 
         if (this._embeddingsTask == null) throw new InvalidOperationException("The embeddings are not ready yet.");
         var embeddings = await this._embeddingsTask;
-        var searchEmbedding = this._embedder.Value.Embed(searchText);
+        var searchEmbedding = this._embedder.Value.Embed<EmbeddingType>(searchText);
         UpdateVisibiltyBySemanticSearch(rootGroup.SubGroups, embeddings, searchEmbedding, sensitivity);
     }
 
-    private static void UpdateVisibiltyBySemanticSearch(IEnumerable<AwesomeResourceGroup> groups, IReadOnlyDictionary<string, EmbeddingF32> embeddings, EmbeddingF32 searchEmbedding, double sensitivity)
+    private static void UpdateVisibiltyBySemanticSearch(IEnumerable<AwesomeResourceGroup> groups, IReadOnlyDictionary<string, EmbeddingType> embeddings, EmbeddingType searchEmbedding, double sensitivity)
     {
         foreach (var group in groups)
         {
@@ -152,7 +155,7 @@ public class AwesomeBlazorStore(
         }
     }
 
-    private static void UpdateVisibiltyBySemanticSearch(AwesomeResourceGroup group, IReadOnlyDictionary<string, EmbeddingF32> embeddings, EmbeddingF32 searchEmbedding, double sensitivity)
+    private static void UpdateVisibiltyBySemanticSearch(AwesomeResourceGroup group, IReadOnlyDictionary<string, EmbeddingType> embeddings, EmbeddingType searchEmbedding, double sensitivity)
     {
         group.Visible = group.SelectionState != SelectionState.Unselected;
         if (!group.Visible) return;
