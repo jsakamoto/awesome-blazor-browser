@@ -44,6 +44,12 @@ public class HelperScriptService : IAsyncDisposable
         await helpder.InvokeVoidAsync("setCurrentTheme", theme.ToKebabCase());
     }
 
+    public async ValueTask ReplaceHistoryStateAsync(string url)
+    {
+        var helpder = await this.GetHelperAsync();
+        await helpder.InvokeVoidAsync("replaceHiostryState", url);
+    }
+
     public async ValueTask DisposeAsync()
     {
         var helpder = await this.GetHelperAsync();

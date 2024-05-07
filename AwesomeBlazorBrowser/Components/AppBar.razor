@@ -19,7 +19,7 @@
 
     <div class="search-box @CssClass(new{EnableSearchBox})">
         <a class="icon icon-menu" @onclick="@(()=> this.OnClickGroupPanelMenu.InvokeAsync())"></a>
-        <input type="text" placeholder="Search" @bind-value="Keywords" @oninput="OnInputKeywords" />
+        <input type="text" placeholder="Search" @bind-value="Keywords" @bind-value:event="oninput" @bind-value:after="OnInputKeywords" />
         <a class="icon icon-settings" @onclick="@(()=> this.OnClickSettings.InvokeAsync())"></a>
     </div>
 </div>

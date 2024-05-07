@@ -8,7 +8,7 @@ public partial class AppBar : IDisposable
 {
     private string Keywords = "";
 
-    private readonly System.Timers.Timer DebounceTimer = new System.Timers.Timer(interval: 500) { AutoReset = false };
+    private readonly System.Timers.Timer DebounceTimer = new(interval: 500) { AutoReset = false };
 
     [Inject] public NavigationManager NavigationManager { get; init; } = null!;
 
@@ -30,16 +30,15 @@ public partial class AppBar : IDisposable
         this.OnChangeKeywords.InvokeAsync(this.Keywords);
     }
 
-    private void OnInputKeywords(ChangeEventArgs args)
+    private void OnInputKeywords()
     {
-        this.Keywords = args.Value?.ToString() ?? "";
         this.DebounceTimer.Stop();
         this.DebounceTimer.Start();
     }
 
     private void DebounceTimer_Elapsed(object? sender, ElapsedEventArgs e)
     {
-        this.OnChangeKeywords.InvokeAsync(this.Keywords);
+        this.InvokeAsync(() => this.OnChangeKeywords.InvokeAsync(this.Keywords));
     }
 
     public void Dispose()

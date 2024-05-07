@@ -1,13 +1,36 @@
-﻿using AwesomeBlazorBrowser;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using AwesomeBlazor.Store;
+using AwesomeBlazorBrowser;
+using Azure.Data.Tables;
+using SmartComponents.LocalEmbeddings;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-ConfigureServices(builder.Services, builder.HostEnvironment);
-await builder.Build().RunAsync();
+var builder = WebApplication.CreateBuilder(args);
 
-void ConfigureServices(IServiceCollection services, IWebAssemblyHostEnvironment hostEnvironment)
+// Add services to the container.
+builder.Services
+    .AddTransient(_ => new TableServiceClient("UseDevelopmentStorage=true"))
+    .AddTransient(_ => new HttpClient())
+    .AddSingleton(_ => new LocalEmbedder())
+    .AddSingleton<AwesomeBlazorStore>()
+    .AddScoped<HelperScriptService>()
+    .AddRazorComponents()
+    .AddInteractiveServerComponents(); ;
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(hostEnvironment.BaseAddress) });
-    services.AddScoped<HelperScriptService>();
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+app.UseAntiforgery();
+
+app.MapRazorComponents<AwesomeBlazorBrowser.Components.Index>()
+    .AddInteractiveServerRenderMode();
+
+app.Run();

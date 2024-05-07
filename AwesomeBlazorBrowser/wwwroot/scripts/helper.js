@@ -21,6 +21,9 @@ export const setCurrentTheme = (theme) => {
     document.body.classList.remove("theme-system-default", "theme-light-mode", "theme-dark-mode");
     document.body.classList.add(theme);
 };
+export const replaceHiostryState = (url) => {
+    history.replaceState(null, document.title, url);
+};
 export const installHashWatcher = () => {
     const locationHashChanged = () => {
         const hash = location.hash.split('#').pop() || '';

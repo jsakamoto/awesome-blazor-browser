@@ -25,6 +25,10 @@ export const setCurrentTheme = (theme: string): void => {
 
 }
 
+export const replaceHiostryState = (url: string): void => {
+    history.replaceState(null, document.title, url);
+}
+
 export const installHashWatcher = (): void => {
 
     const locationHashChanged = (): void => {

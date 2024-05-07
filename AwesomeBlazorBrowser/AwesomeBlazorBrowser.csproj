@@ -1,25 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>$*WarningsAsErrors);nullable</WarningsAsErrors>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-    <None Include="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
-    <PackageReference Include="PublishSPAforGitHubPages.Build" Version="2.2.0" />
-    <PackageReference Include="BlazorWasmPreRendering.Build" Version="4.0.0" />
     <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="3.1.0.1" />
     <PackageReference Include="Toolbelt.Blazor.GradatedText" Version="1.0.0" />
   </ItemGroup>
@@ -32,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AwesomeBlazor.Models\AwesomeBlazor.Models.csproj" />
+    <ProjectReference Include="..\AwesomeBlazor.Store\AwesomeBlazor.Store.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

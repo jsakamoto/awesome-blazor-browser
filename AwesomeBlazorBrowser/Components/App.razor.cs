@@ -2,7 +2,7 @@
 using AwesomeBlazor.Models;
 using Microsoft.AspNetCore.Components;
 
-namespace AwesomeBlazorBrowser;
+namespace AwesomeBlazorBrowser.Components;
 
 public partial class App
 {
@@ -71,7 +71,7 @@ public partial class App
         var queryStrings = HttpUtility.ParseQueryString(uri.Query);
         queryStrings["k"] = keywords;
         var nextUrl = new UriBuilder(uri) { Query = queryStrings.ToString() }.Uri.ToString();
-        this.NavigationManager.NavigateTo(nextUrl, new NavigationOptions() { ReplaceHistoryEntry = true });
+        await this.HelperScript.ReplaceHistoryStateAsync(nextUrl);
 
         this.GroupPanelExpanded = false;
         this.SettingsPanelExpanded = false;
