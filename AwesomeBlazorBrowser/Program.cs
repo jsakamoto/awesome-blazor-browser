@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddTransient(_ => new TableServiceClient("UseDevelopmentStorage=true"))
+    .AddTransient(_ => new TableServiceClient(builder.Configuration.GetConnectionString("AwesomeBlazorStore")))
     .AddTransient(_ => new HttpClient())
     .AddSingleton(_ => new LocalEmbedder())
     .AddSingleton<AwesomeBlazorStore>()
