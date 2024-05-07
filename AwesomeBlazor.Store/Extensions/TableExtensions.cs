@@ -9,7 +9,7 @@ internal static class TableExtensions
     /// </summary>
     public static async ValueTask<bool> ExistTableAsync(this TableServiceClient tableServiceClient, string tableName)
     {
-        return await tableServiceClient.QueryAsync($"TableName eq \"{tableName}\"")
+        return await tableServiceClient.QueryAsync($"TableName eq \'{tableName}\'")
             .GetAsyncEnumerator()
             .MoveNextAsync();
     }
