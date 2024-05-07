@@ -1,16 +1,19 @@
 ﻿using System.Web;
 using AwesomeBlazor.Models;
+using AwesomeBlazor.Store;
 using Microsoft.AspNetCore.Components;
 
 namespace AwesomeBlazorBrowser.Components;
 
 public partial class App
 {
-    [Inject] HttpClient HttpClient { get; init; } = null!;
+    [Inject] AwesomeBlazorStore Store { get; init; } = null!;
 
     [Inject] NavigationManager NavigationManager { get; init; } = null!;
 
     [Inject] public HelperScriptService HelperScript { get; init; } = null!;
+
+    private Task<AwesomeResourceGroup> GettingContentsTask = Task.FromResult<AwesomeResourceGroup>(new());
 
     private AwesomeResourceGroup RootGroup = new();
 
@@ -18,29 +21,26 @@ public partial class App
 
     private bool Loading = true;
 
+    private bool InitialScrolled = false;
+
     private bool GroupPanelExpanded = false;
 
     private bool SettingsPanelExpanded = false;
 
-    private readonly TaskCompletionSource ParsingCompletionSource = new();
-
     protected override async Task OnInitializedAsync()
     {
-        var url = "https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/master/README.md";
-        var awesomeBlazorContents = await this.HttpClient.GetStringAsync(url);
-        this.RootGroup = AwesomeBlazorParser.ParseMarkdown(awesomeBlazorContents);
-        this.ParsingCompletionSource.SetResult();
+        this.GettingContentsTask = this.Store.GetAwesomeBlazorContentAsync().AsTask();
+        this.RootGroup = await this.GettingContentsTask;
+        this.Loading = false;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender) await this.HelperScript.InstallHashWatcherAsync();
 
-        if (this.ParsingCompletionSource.Task.IsCompleted == true && this.Loading == true)
+        if (this.GettingContentsTask.IsCompleted && this.InitialScrolled == false)
         {
-            this.Loading = false;
-            this.StateHasChanged();
-
+            this.InitialScrolled = true;
             var uriFragment = new Uri(this.NavigationManager.Uri).Fragment;
             if (uriFragment != "")
             {
@@ -49,23 +49,23 @@ public partial class App
         }
     }
 
-    private void UpdateRootGroupVisibility()
+    private async ValueTask UpdateRootGroupVisibilityAsync()
     {
-        this.RootGroup.SubGroups.UpdateVisibiltyByKeywordFilter(this.Keywords);
+        await this.Store.UpdateVisibiltyBySemanticSearchAsync(this.RootGroup, this.Keywords, sensitivity: 0.7);
     }
 
-    private void OnChangeGroupState()
+    private async Task OnChangeGroupStateAsync()
     {
-        this.UpdateRootGroupVisibility();
+        await this.UpdateRootGroupVisibilityAsync();
     }
 
     private async Task OnChangeKeywords(string keywords)
     {
         this.Keywords = keywords;
 
-        await this.ParsingCompletionSource.Task;
+        await this.GettingContentsTask;
 
-        this.UpdateRootGroupVisibility();
+        await this.UpdateRootGroupVisibilityAsync();
 
         var uri = new Uri(this.NavigationManager.Uri);
         var queryStrings = HttpUtility.ParseQueryString(uri.Query);
