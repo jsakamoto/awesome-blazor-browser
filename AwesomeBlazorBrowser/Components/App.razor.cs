@@ -51,7 +51,7 @@ public partial class App
 
     private async ValueTask UpdateRootGroupVisibilityAsync()
     {
-        await this.Store.UpdateVisibiltyBySemanticSearchAsync(this.RootGroup, this.Keywords, sensitivity: 0.7);
+        await this.Store.UpdateVisibiltyBySemanticSearchAsync(this.RootGroup, this.Keywords, sensitivity: 0.5);
     }
 
     private async Task OnChangeGroupStateAsync()

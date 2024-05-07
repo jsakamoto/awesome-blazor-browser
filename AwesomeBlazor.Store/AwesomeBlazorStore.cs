@@ -6,8 +6,8 @@ using SmartComponents.LocalEmbeddings;
 
 namespace AwesomeBlazor.Store;
 
-//using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingF32;
-using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingI1;
+using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingF32;
+//using EmbeddingType = SmartComponents.LocalEmbeddings.EmbeddingI1;
 
 public class AwesomeBlazorStore(
     IServiceProvider services,
@@ -160,14 +160,14 @@ public class AwesomeBlazorStore(
         group.Visible = group.SelectionState != SelectionState.Unselected;
         if (!group.Visible) return;
 
-        var groupEmbedding = embeddings[group.Id];
-        var similarity = groupEmbedding.Similarity(searchEmbedding);
-        var groupMatch = similarity > sensitivity;
+        var groupMatch = !string.IsNullOrWhiteSpace(group.ParagraphsHtml) &&
+            embeddings[group.Id].Similarity(searchEmbedding) > sensitivity;
 
         foreach (var resource in group.Resources)
         {
             var resourceEmbedding = embeddings[resource.Id];
-            resource.Visible = groupMatch || (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
+            //resource.Visible = groupMatch || (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
+            resource.Visible = (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
         }
 
         UpdateVisibiltyBySemanticSearch(group.SubGroups, embeddings, searchEmbedding, sensitivity);
