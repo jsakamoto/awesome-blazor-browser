@@ -166,18 +166,15 @@ public class AwesomeBlazorStore(
         foreach (var resource in group.Resources)
         {
             var resourceEmbedding = embeddings[resource.Id];
-            //resource.Visible = groupMatch || (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
             resource.Visible = (resourceEmbedding.Similarity(searchEmbedding) > sensitivity);
         }
 
         UpdateVisibiltyBySemanticSearch(group.SubGroups, embeddings, searchEmbedding, sensitivity);
 
         group.Visible =
-            // (group.ParagraphsHtml != "" && !keywords.Any()) ||
             groupMatch ||
             group.Resources.Any(r => r.Visible) ||
             group.SubGroups.Any(g => g.Visible);
-
     }
 
     public async ValueTask DisposeAsync()
