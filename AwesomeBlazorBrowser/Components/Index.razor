@@ -46,11 +46,12 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    
+    <!-- Supress the "Reconnectiong..." modal UI. -->
+    <div id="components-reconnect-modal" style="display:none;"></div>
 
     <script src="_framework/blazor.web.js" autostart="false"></script>
-    <script>
-        Blazor.start({ ssr: { disableDomPreservation: true } });
-    </script>
+    <script src="scripts/custom-boot.js"></script>
 </body>
 
 </html>
