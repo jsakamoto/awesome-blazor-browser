@@ -52,7 +52,10 @@ public class HelperScriptService : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        var helpder = await this.GetHelperAsync();
-        await helpder.DisposeAsync();
+        if (this._Helper is not null)
+        {
+            try { await this._Helper.DisposeAsync(); } catch (JSDisconnectedException) { }
+            this._Helper = null;
+        }
     }
 }

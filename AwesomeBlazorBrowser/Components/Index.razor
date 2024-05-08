@@ -34,11 +34,11 @@
 </head>
 
 <body>
-    <!-- IMPORTANT: LOAD ""theme-initializer.js" before loading effect appears. -->
+    <!-- IMPORTANT: LOAD "theme-initializer.js" before loading effect appears. -->
     <script src="scripts/theme-initializer.js"></script>
 
     <div id="app">
-        <App @rendermode="new InteractiveServerRenderMode(prerender: false)" />
+        <App @rendermode="new InteractiveServerRenderMode(prerender: true)" />
     </div>
 
     <div id="blazor-error-ui">
