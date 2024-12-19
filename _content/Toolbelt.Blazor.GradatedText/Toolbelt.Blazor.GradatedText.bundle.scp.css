@@ -1,0 +1,10 @@
+/* _content/Toolbelt.Blazor.GradatedText/GradatedText.razor.rz.scp.css */
+.gradated-text[b-wc7soxp7qy] {
+    display: inline-block;
+    background: linear-gradient(128.87deg,#9780e5 14.05%,#e666cc 89.3%);
+    background: -webkit-linear-gradient(38.87deg,#9780e5 14.05%,#e666cc 89.3%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
