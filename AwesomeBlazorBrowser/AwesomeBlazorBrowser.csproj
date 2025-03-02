@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>$*WarningsAsErrors);nullable</WarningsAsErrors>
@@ -15,13 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0-preview.1.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0-preview.1.*" PrivateAssets="all" />
     <PackageReference Include="PublishSPAforGitHubPages.Build" Version="3.0.0" />
-    <PackageReference Include="BlazorWasmPreRendering.Build" Version="5.0.0" />
+    <PackageReference Include="BlazorWasmPreRendering.Build" Version="6.0.0-preview.1" />
     <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="3.1.0.1" />
-    <PackageReference Include="Toolbelt.Blazor.GradatedText" Version="1.0.0" />
+    <!--<PackageReference Include="Toolbelt.Blazor.GradatedText" Version="1.0.0" />-->
   </ItemGroup>
 
   <ItemGroup>

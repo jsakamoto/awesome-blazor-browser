@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>$(WarningsAsErrors);nullable</WarningsAsErrors>
     <LangVersion>Latest</LangVersion>
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.38.0" />
+    <PackageReference Include="Markdig" Version="0.40.0" />
   </ItemGroup>
 
 </Project>
