@@ -23,11 +23,21 @@ public partial class AppBar : IDisposable
     protected override void OnInitialized()
     {
         this.DebounceTimer.Elapsed += this.DebounceTimer_Elapsed;
+    }
 
-        var uri = new Uri(this.NavigationManager.Uri);
-        var queryStrings = HttpUtility.ParseQueryString(uri.Query);
-        this.Keywords = queryStrings["k"] ?? this.Keywords;
-        this.OnChangeKeywords.InvokeAsync(this.Keywords);
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var uri = new Uri(this.NavigationManager.Uri);
+            var queryStrings = HttpUtility.ParseQueryString(uri.Query);
+            var keyword = queryStrings["k"] ?? "";
+            if (keyword != this.Keywords)
+            {
+                this.Keywords = keyword;
+                this.OnChangeKeywords.InvokeAsync(this.Keywords);
+            }
+        }
     }
 
     private void OnInputKeywords(ChangeEventArgs args)
