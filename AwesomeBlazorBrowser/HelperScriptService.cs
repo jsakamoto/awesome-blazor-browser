@@ -21,32 +21,36 @@ public class HelperScriptService : IAsyncDisposable
 
     public async ValueTask InstallHashWatcherAsync()
     {
-        var helpder = await this.GetHelperAsync();
-        await helpder.InvokeVoidAsync("installHashWatcher");
+        var helper = await this.GetHelperAsync();
+        await helper.InvokeVoidAsync("installHashWatcher");
     }
 
     public async ValueTask ScrollToAnchorAsync(string anchorName, bool smooth, bool changeUrl = false)
     {
-        var helpder = await this.GetHelperAsync();
-        await helpder.InvokeVoidAsync("scrollToAnchor", anchorName.TrimStart('#'), smooth, changeUrl);
+        var helper = await this.GetHelperAsync();
+        await helper.InvokeVoidAsync("scrollToAnchor", anchorName.TrimStart('#'), smooth, changeUrl);
     }
 
     public async ValueTask<Theme> GetCurrentThemeAsync()
     {
-        var helpder = await this.GetHelperAsync();
-        var themeStr = await helpder.InvokeAsync<string>("getCurrentTheme");
+        var helper = await this.GetHelperAsync();
+        var themeStr = await helper.InvokeAsync<string>("getCurrentTheme");
         return ThemeExtension.Parse(themeStr);
     }
 
     public async ValueTask SetCurrentThemeAsync(Theme theme)
     {
-        var helpder = await this.GetHelperAsync();
-        await helpder.InvokeVoidAsync("setCurrentTheme", theme.ToKebabCase());
+        var helper = await this.GetHelperAsync();
+        await helper.InvokeVoidAsync("setCurrentTheme", theme.ToKebabCase());
     }
 
     public async ValueTask DisposeAsync()
     {
-        var helpder = await this.GetHelperAsync();
-        await helpder.DisposeAsync();
+        if (this._Helper is not null)
+        {
+            try { await this._Helper.DisposeAsync(); }
+            catch (JSDisconnectedException) { }
+            finally { this._Helper = null; }
+        }
     }
 }
