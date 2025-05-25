@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/README/">
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="THIRD-PARTY-NOTICES.txt" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/gh-pages.yml" />
+  </Folder>
+  <Project Path="AwesomeBlazor.Models.Test/AwesomeBlazor.Models.Test.csproj" />
+  <Project Path="AwesomeBlazor.Models/AwesomeBlazor.Models.csproj" />
+  <Project Path="AwesomeBlazorBrowser/AwesomeBlazorBrowser.csproj" />
+</Solution>
