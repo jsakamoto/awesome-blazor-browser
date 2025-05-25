@@ -4,6 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <base href="./" />
+
+    <script type="importmap"></script>
+
+    <link rel="preload" id="webassembly" />
 
     <title>Awesome Blazor Browser</title>
 
@@ -15,7 +20,6 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="google-site-verification" content="rYEeKrtpu8fNMzZs6wp8ELAI5S7vRBTLjcex_He4ldE" />
 
-    <base href="./" />
     <link rel="shortcut icon" href="./favicon.ico">
     <!-- style for blazor-error-ui -->
     <link rel="stylesheet"
@@ -47,7 +51,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
 </body>
 
 </html>
