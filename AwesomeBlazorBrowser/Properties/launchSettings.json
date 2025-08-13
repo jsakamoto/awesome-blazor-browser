@@ -1,37 +1,21 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:57524/",
-      "sslPort": 44382
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "AwesomeBlazorBrowser": {
+    "https": {
       "commandName": "Project",
       "launchBrowser": true,
       "hotReloadProfile": "blazorwasm",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "http://localhost:57528/;https://localhost:57529/",
+      "applicationUrl": "http://awesome-blazor-browser.dev.localhost:57528/;https://awesome-blazor-browser.dev.localhost:57529/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "AwesomeBlazorBrowser (tunneling)": {
+    "https (tunneling)": {
       "commandName": "Project",
       "launchBrowser": true,
       "hotReloadProfile": "blazorwasm",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "http://localhost:57528/;https://localhost:57529/",
+      "applicationUrl": "http://awesome-blazor-browser.dev.localhost:57528/;https://awesome-blazor-browser.dev.localhost:57529/",
       "createTunnel": true,
       "tunnelAuthentication": "public",
       "environmentVariables": {
