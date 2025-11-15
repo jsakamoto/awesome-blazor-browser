@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <base href="/awesome-blazor-browser/" />
+
+    <script type="importmap">{
+  "imports": {
+    "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.dxiulnrtiv.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.o0qy896u8v.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.t012b7h431.js"
+  },
+  "scopes": {},
+  "integrity": {
+    "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
+    "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
+    "./_framework/dotnet.js": "sha256-rehF1iHzTp9YAvf2m0cfIzEkzRuKjcHZotVC2v1RDW0=",
+    "./_framework/dotnet.native.dxiulnrtiv.js": "sha256-UZwGnzOMBfs6pyZmhkxv2tw7jJwojT1PHUuTtnDyt5c=",
+    "./_framework/dotnet.native.js": "sha256-UZwGnzOMBfs6pyZmhkxv2tw7jJwojT1PHUuTtnDyt5c=",
+    "./_framework/dotnet.runtime.js": "sha256-yJvgPPUUvavYVmu9VD/fYtMcoEnLVaB0Cr7JAE29btw=",
+    "./_framework/dotnet.runtime.o0qy896u8v.js": "sha256-yJvgPPUUvavYVmu9VD/fYtMcoEnLVaB0Cr7JAE29btw=",
+    "./_framework/dotnet.t012b7h431.js": "sha256-rehF1iHzTp9YAvf2m0cfIzEkzRuKjcHZotVC2v1RDW0="
+  }
+}</script>
+
+    <link href="_framework/dotnet.t012b7h431.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-rehF1iHzTp9YAvf2m0cfIzEkzRuKjcHZotVC2v1RDW0=" />
+
+    <title>Awesome Blazor Browser</title>
+
+    <meta property="og:url" content="https://jsakamoto.github.io/awesome-blazor-browser/" />
+    <meta property="og:title" content="Awesome Blazor Browser" />
+    <meta property="og:image" content="https://jsakamoto.github.io/awesome-blazor-browser/css/images/ogp-image.png" />
+    <meta property="og:description" content="A Blazor WebAssembly app for browsing the &quot;Awesome Blazor&quot; resources." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="google-site-verification" content="rYEeKrtpu8fNMzZs6wp8ELAI5S7vRBTLjcex_He4ldE" />
+
+    <link rel="shortcut icon" href="./favicon.ico">
+    <!-- style for blazor-error-ui -->
+    <link rel="stylesheet"
+          href="data:text/css,%23blazor-error-ui%7Bbackground%3A%23ffffe0%3Bbottom%3A0%3Bbox-shadow%3A0%20-1px%202px%20rgba(0%2C0%2C0%2C.2)%3Bdisplay%3Anone%3Bleft%3A0%3Bpadding%3A.6rem%201.25rem%20.7rem%201.25rem%3Bposition%3Afixed%3Bright%3A0%3Bz-index%3A1000%7D%23blazor-error-ui%20.dismiss%7Bcursor%3Apointer%3Bposition%3Aabsolute%3Bright%3A.75rem%3Btop%3A.5rem%7D" />
+    <link href="css/site.min.css" rel="stylesheet" />
+    <link href="AwesomeBlazorBrowser.styles.css" rel="stylesheet" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BPDXSDCR7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6BPDXSDCR7');
+    </script>
+</head>
+
+<body>
+    <!-- IMPORTANT: LOAD ""theme-initializer.js" before loading effect appears. -->
+    <script src="scripts/theme-initializer.js"></script>
+
+    <div id="app">
+        <div style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:var(--default-back-color);z-index:1;"></div>
+        <div class="loading">Loading...</div>
+        <link rel="stylesheet" href="data:text/css,.loading%7Bz-index%3A2%3Bfont-family%3A'Franklin%20Gothic%20Medium'%2C'Arial%20Narrow'%2CArial%2Csans-serif%3Bcolor%3A%2388a%3Bfont-size%3A18px%3Btext-align%3Acenter%3Bwidth%3A150px%3Bheight%3A150px%3Bposition%3Afixed%3Btop%3A0%3Bbottom%3A0%3Bleft%3A0%3Bright%3A0%3Bmargin%3Aauto%7D.loading%3A%3Aafter%7Bcontent%3A''%3Bborder%3Asolid%2010px%3Bborder-color%3A%2388a%20%23eee%20%23eee%3Bborder-radius%3A60px%3Bposition%3Aabsolute%3Bwidth%3A60px%3Bheight%3A60px%3Btop%3A0%3Bbottom%3A0%3Bleft%3A0%3Bright%3A0%3Bmargin%3Aauto%3Banimation%3Arotation%201.5s%20linear%200s%20infinite%7D%40keyframes%20rotation%7B0%25%7Btransform%3Arotate(45deg)%7D100%25%7Btransform%3Arotate(405deg)%7D%7D" />
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.66stpp682q.js" autostart="false"></script>
+    <script src="brotliloader.min.js" type="module"></script>
+</body>
+
+</html>
