@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="11.0.0-preview.6.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Gateway" Version="11.0.0-preview.6.*" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="11.0.0-preview.7.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Gateway" Version="11.0.0-preview.7.*" PrivateAssets="all" />
     <PackageReference Include="PublishSPAforGitHubPages.Build" Version="3.0.3" />
-    <PackageReference Include="BlazorWasmPreRendering.Build" Version="8.1.0-preview.4" />
+    <PackageReference Include="BlazorWasmPreRendering.Build" Version="8.1.0-preview.6" />
     <PackageReference Include="Toolbelt.Web.CssClassInlineBuilder" Version="3.1.0.1" />
     <!--<PackageReference Include="Toolbelt.Blazor.GradatedText" Version="1.0.0" />-->
   </ItemGroup>
