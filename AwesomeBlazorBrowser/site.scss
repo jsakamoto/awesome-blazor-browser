@@ -35,6 +35,48 @@ a {
     }
 }
 
+.loading {
+    z-index: 2;
+    font-family: 'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;
+    color: #88a;
+    font-size: 18px;
+    text-align: center;
+    width: 150px;
+    height: 150px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto
+}
+
+.loading::after {
+    content: '';
+    border: solid 10px;
+    border-color: #88a #eee #eee;
+    border-radius: 60px;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: rotation 1.5s linear 0s infinite
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(45deg)
+    }
+
+    100% {
+        transform: rotate(405deg)
+    }
+}
+
 #blazor-error-ui {
     background: #ffffe0;
     bottom: 0;
