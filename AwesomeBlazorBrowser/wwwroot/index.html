@@ -3,6 +3,18 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="
+          base-uri 'self'; 
+          default-src 'self'; 
+          object-src 'none'; 
+          script-src 'self' 'wasm-unsafe-eval' https://js.sentry-cdn.com https://www.googletagmanager.com 'sha256-+2Rq7FOnx0U3MAazfB0BBPqZYWOZJb3+/vEDLfYmkyc=' 'sha256-{importmap}';
+          style-src 'self' https://fonts.googleapis.com; 
+          style-src-attr 'unsafe-inline'; 
+          font-src 'self' https://fonts.gstatic.com; 
+          img-src 'self' * data:; 
+          connect-src 'self' https://raw.githubusercontent.com/dotnet/ https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/ https://www.google-analytics.com https://*.sentry.io;
+          manifest-src 'self'; 
+          upgrade-insecure-requests" />
     <meta name="viewport" content="width=device-width" />
     <base href="./" />
 
@@ -26,12 +38,7 @@
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BPDXSDCR7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-6BPDXSDCR7');
-    </script>
+    <script>window.dataLayer = window.dataLayer || [];function gtag() { dataLayer.push(arguments); }gtag('js', new Date());gtag('config', 'G-6BPDXSDCR7');</script>
 </head>
 
 <body>
