@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="
+          base-uri 'self'; 
+          default-src 'self'; 
+          object-src 'none'; 
+          script-src 'self' 'wasm-unsafe-eval' https://js.sentry-cdn.com https://www.googletagmanager.com 'sha256-+2Rq7FOnx0U3MAazfB0BBPqZYWOZJb3+/vEDLfYmkyc=' 'sha256-FwcQoQ60RCqAbrq14PaL/d2Tl22kMHp4uzMhhTRN7VA=';
+          style-src 'self' https://fonts.googleapis.com; 
+          style-src-attr 'unsafe-inline'; 
+          font-src 'self' https://fonts.gstatic.com; 
+          img-src 'self' * data:; 
+          connect-src 'self' https://raw.githubusercontent.com/dotnet/ https://raw.githubusercontent.com/AdrienTorris/awesome-blazor/ https://www.google-analytics.com https://*.sentry.io;
+          manifest-src 'self'; 
+          upgrade-insecure-requests" />
+    <meta name="viewport" content="width=device-width" />
+    <base href="/awesome-blazor-browser/" />
+
+    <script type="importmap">{
+  "imports": {
+    "./_framework/dotnet.js": "./_framework/dotnet.lxv4fkjxdu.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.5ertm0qoaz.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.gqgh3r3nhq.js"
+  },
+  "scopes": {},
+  "integrity": {
+    "./_framework/dotnet.js": "sha256-qSli8FEKGON5fxL/bTovBzb/HG8AxhdMs+vDhetLh6E=",
+    "./_framework/dotnet.lxv4fkjxdu.js": "sha256-qSli8FEKGON5fxL/bTovBzb/HG8AxhdMs+vDhetLh6E=",
+    "./_framework/dotnet.native.5ertm0qoaz.js": "sha256-E1qDJTGsr3r7idwp+juj5zOtS+emm+f6gMrx5rPejHQ=",
+    "./_framework/dotnet.native.js": "sha256-E1qDJTGsr3r7idwp+juj5zOtS+emm+f6gMrx5rPejHQ=",
+    "./_framework/dotnet.runtime.gqgh3r3nhq.js": "sha256-CHJJM/ZgtVetJLyVfm7XXfr1VQfR5EEU6T/EgGPi+Fc=",
+    "./_framework/dotnet.runtime.js": "sha256-CHJJM/ZgtVetJLyVfm7XXfr1VQfR5EEU6T/EgGPi+Fc="
+  }
+}</script>
+
+    <link href="_framework/dotnet.lxv4fkjxdu.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-qSli8FEKGON5fxL/bTovBzb/HG8AxhdMs+vDhetLh6E=" />
+
+    <title>Awesome Blazor Browser</title>
+
+    <meta property="og:url" content="https://jsakamoto.github.io/awesome-blazor-browser/" />
+    <meta property="og:title" content="Awesome Blazor Browser" />
+    <meta property="og:image" content="https://jsakamoto.github.io/awesome-blazor-browser/css/images/ogp-image.png" />
+    <meta property="og:description" content="A Blazor WebAssembly app for browsing the &quot;Awesome Blazor&quot; resources." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="google-site-verification" content="rYEeKrtpu8fNMzZs6wp8ELAI5S7vRBTLjcex_He4ldE" />
+
+    <link rel="shortcut icon" href="./favicon.ico">
+
+    <link href="css/site.min.css" rel="stylesheet" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BPDXSDCR7"></script>
+    <script>window.dataLayer = window.dataLayer || [];function gtag() { dataLayer.push(arguments); }gtag('js', new Date());gtag('config', 'G-6BPDXSDCR7');</script>
+</head>
+
+<body>
+    <!-- IMPORTANT: LOAD ""theme-initializer.js" before loading effect appears. -->
+    <script src="scripts/theme-initializer.js"></script>
+
+    <div id="app">
+        <div style="position:fixed;inset:0;background-color:var(--default-back-color);z-index:1;"></div>
+        <div class="loading">Loading...</div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script src="brotliloader.min.js" type="module"></script>
+</body>
+
+</html>
